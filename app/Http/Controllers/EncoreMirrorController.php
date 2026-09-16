@@ -67,7 +67,7 @@ class EncoreMirrorController extends Controller
     public function handle(Request $request, ?path = null): Response
     {
         $origin = rtrim((string) config('encore-mirror.origin', 'https://encorelacrosse.com'), '/');
-        $path = trim((string) $path, '/');
+        $path = $path === null ? trim($request->path(), '/') : trim($path, '/');
         $path = $this->legacyPathMap[$path] ?? $path;
 
         $url = $origin . ($path !== '' ? '/' . $path : '/');
@@ -182,7 +182,7 @@ class EncoreMirrorController extends Controller
         // Absolute links back to the source storefront should stay inside the clone.
         $quotedOrigin = preg_quote($origin, '#');
         $html = preg_replace_callback(
-            '#(href|action)=([' . "'\"" . '])' . $quotedOrigin . '(/[^' . "'\"" . ']*)\2#i',
+            '#(href|action)=([\'\"])' . $quotedOrigin . '(/[^\'\"]*)\2#i',
             fn (array $m) => $m[1] . '=' . $m[2] . $this->localPath($basePath, $m[3]) . $m[2],
             $html
         ) ?? $html;
@@ -191,7 +191,7 @@ class EncoreMirrorController extends Controller
         // left on the source domain/CDN so animations, fonts, videos and imagery are
         // identical to the production Shopify site.
         $html = preg_replace_callback(
-            '#\b(href|action)=([' . "'\"" . '])(/(?!/)[^' . "'\"" . ']*)\2#i',
+            '#\b(href|action)=([\'\"])(/(?!/)[^\'\"]*)\2#i',
             function (array $m) use ($basePath, $origin) {
                 $path = $m[3];
 
@@ -205,14 +205,14 @@ class EncoreMirrorController extends Controller
         ) ?? $html;
 
         $html = preg_replace_callback(
-            '#\b(src|poster|data-src|data-video-src)=([' . "'\"" . '])(/(?!/)[^' . "'\"" . ']*)\2#i',
+            '#\b(src|poster|data-src|data-video-src)=([\'\"])(/(?!/)[^\'\"]*)\2#i',
             fn (array $m) => $m[1] . '=' . $m[2] . $origin . $m[3] . $m[2],
             $html
         ) ?? $html;
 
         // Shopify often emits root-relative entries inside srcset attributes.
         $html = preg_replace_callback(
-            '#\b(srcset|data-srcset)=([' . "'\"" . '])([^' . "'\"" . ']*)\2#i',
+            '#\b(srcset|data-srcset)=([\'\"])([^\'\"]*)\2#i',
             function (array $m) use ($origin) {
                 $value = preg_replace('#(^|,\s*)(/[^,\s]+)#', '$1' . $origin . '$2', $m[3]) ?? $m[3];
                 return $m[1] . '=' . $m[2] . $value . $m[2];
