@@ -1,25 +1,21 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Source storefront
-    |--------------------------------------------------------------------------
-    |
-    | The Laravel project mirrors this storefront. Keeping the public Shopify
-    | CDN references means the same theme CSS, JavaScript, fonts, images and
-    | video animations are used instead of maintaining a second asset bundle.
-    |
-    */
+    /* Source storefront used to build the local copy. */
     'origin' => env('ENCORE_MIRROR_ORIGIN', 'https://encorelacrosse.com'),
 
-    /* Maximum upstream request time in seconds. */
+    /* HTML/page request timeout. */
     'timeout' => (int) env('ENCORE_MIRROR_TIMEOUT', 30),
 
+    /* Large video/image/font downloads may need longer than page requests. */
+    'asset_timeout' => (int) env('ENCORE_MIRROR_ASSET_TIMEOUT', 120),
+
+    /* Maximum number of sitemap pages downloaded by encore:mirror-sync. */
+    'max_pages' => (int) env('ENCORE_MIRROR_MAX_PAGES', 5000),
+
     /*
-    | SSL verification should stay enabled in production. If a local WAMP PHP
-    | installation has no CA bundle configured, set ENCORE_MIRROR_VERIFY_SSL=false
-    | in the local .env file rather than changing application code.
+    | Keep SSL verification enabled in production. On a local WAMP install that
+    | has no CA bundle configured you may temporarily set this to false in .env.
     */
     'verify_ssl' => filter_var(
         env('ENCORE_MIRROR_VERIFY_SSL', true),
