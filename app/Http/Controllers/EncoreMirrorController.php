@@ -64,7 +64,7 @@ class EncoreMirrorController extends Controller
         'private-training' => 'pages/private-training',
     ];
 
-    public function handle(Request $request, ?path = null): Response
+    public function handle(Request $request, ?string $path = null): Response
     {
         $origin = rtrim((string) config('encore-mirror.origin', 'https://encorelacrosse.com'), '/');
         $path = $path === null ? trim($request->path(), '/') : trim($path, '/');
