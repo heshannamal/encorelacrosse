@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\EncoreMirrorController;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +21,19 @@ use Illuminate\Support\Facades\Route;
 | Existing Laravel URLs are kept as named routes for backwards compatibility;
 | EncoreMirrorController maps them to their equivalent /pages/... URLs.
 |
-| Shopify forms/AJAX requests carry Shopify's own request data rather than a
-| Laravel CSRF token, so CSRF validation is disabled only for this mirror group.
+| Shopify owns the storefront cookies, forms and AJAX payloads. Laravel's web
+| cookie/session/CSRF middleware is removed only from the mirror routes so it
+| does not encrypt Shopify cart cookies or reject Shopify form submissions.
 |
 */
 
-Route::withoutMiddleware([ValidateCsrfToken::class])->group(function () {
+Route::withoutMiddleware([
+    EncryptCookies::class,
+    AddQueuedCookiesToResponse::class,
+    StartSession::class,
+    ShareErrorsFromSession::class,
+    ValidateCsrfToken::class,
+])->group(function () {
     Route::any('/', [EncoreMirrorController::class, 'handle'])->name('home');
 
     Route::prefix('shop')->name('shop.')->group(function () {
