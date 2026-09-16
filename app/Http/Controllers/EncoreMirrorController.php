@@ -13,8 +13,8 @@ class EncoreMirrorController extends Controller
 {
     /**
      * Legacy Laravel URLs that existed before the storefront mirror was enabled.
-     * They are mapped to the equivalent Shopify page so old bookmarks continue
-     * to display the same content as encorelacrosse.com.
+     * They are mapped to the equivalent production page so old bookmarks continue
+     * to render the same page as encorelacrosse.com.
      */
     private array $legacyPathMap = [
         'shop/mens-tops' => 'pages/mens-tops',
@@ -31,7 +31,7 @@ class EncoreMirrorController extends Controller
         'teamwear/mensReversibles' => 'pages/mens-reversibles',
         'teamwear/womensRacerbacks' => 'pages/womens-racerbacks',
         'teamwear/womensShortsKilts' => 'pages/womens-shorts-and-kilts',
-        'teamwear/womensShooters' => 'pages/womens-shooters',
+        'teamwear/womensShooters' => 'pages/womens-shooter-shirts',
         'teamwear/outerwear' => 'pages/outerwear',
         'teamwear/hoodies' => 'pages/hoodies',
         'teamwear/joggersSweats' => 'pages/joggers-and-sweatpants',
@@ -39,16 +39,16 @@ class EncoreMirrorController extends Controller
 
         'custom/team-stores' => 'pages/team-store',
         'custom/custom-graphic-design' => 'pages/custom-graphic-design',
-        'custom/sizing-charts' => 'pages/sizing-guidelines',
-        'custom/fabric' => 'pages/fabrics',
+        'custom/sizing-charts' => 'pages/sizing',
+        'custom/fabric' => 'pages/fabric',
         'custom/embellishment' => 'pages/embellishment',
 
         'events/battle-of-the-bay' => 'pages/battle-of-the-bay',
         'events/impact10-showcase' => 'pages/impact10-showcase',
         'events/hawaii-youth-lacrosse-classic' => 'pages/hawaii-youth-lacrosse-classic',
-        'events/las-vegas-lacrosse-showcase' => 'pages/las-vegas-lacrosse-showcase',
+        'events/las-vegas-lacrosse-showcase' => 'pages/las-vegas-ls',
         'events/kings-showcase' => 'pages/kings-showcase',
-        'events/buffalo-wings-box-lacrosse' => 'pages/buffalo-wings-box-lacrosse',
+        'events/buffalo-wings-box-lacrosse' => 'pages/box-lacrosse',
 
         'international' => 'pages/international',
         'international/sri-lanka' => 'pages/sri-lanka',
@@ -100,12 +100,23 @@ class EncoreMirrorController extends Controller
             'Referer' => $origin . '/',
         ];
 
-        foreach (['X-Requested-With', 'X-Section-Id', 'X-Section-Ids', 'Shopify-Storefront-Private-Token'] as $header) {
+        if ($request->hasHeader('Origin')) {
+            $headers['Origin'] = $origin;
+        }
+
+        foreach ([
+            'X-Requested-With',
+            'X-Section-Id',
+            'X-Section-Ids',
+            'Shopify-Storefront-Private-Token',
+        ] as $header) {
             if ($request->hasHeader($header)) {
                 $headers[$header] = $request->header($header);
             }
         }
 
+        // These are the original Shopify cookies after the route group disables
+        // Laravel cookie encryption. Forwarding them keeps cart state consistent.
         if ($request->hasHeader('Cookie')) {
             $headers['Cookie'] = $request->header('Cookie');
         }
@@ -128,7 +139,7 @@ class EncoreMirrorController extends Controller
             if ($body !== '') {
                 $client = $client->withBody($body, $contentType ?: 'application/octet-stream');
             } elseif ($request->all()) {
-                // PHP may consume a traditional form body before getContent() is read.
+                // PHP can consume a normal form body before getContent() is read.
                 $options['form_params'] = $request->all();
             }
         }
@@ -148,7 +159,7 @@ class EncoreMirrorController extends Controller
         $response = response($body, $upstream->status());
         $response->headers->set('Content-Type', $contentType);
 
-        foreach (['Cache-Control', 'ETag', 'Last-Modified', 'Vary'] as $header) {
+        foreach (['Cache-Control', 'ETag', 'Last-Modified', 'Vary', 'Content-Disposition'] as $header) {
             $value = $upstream->header($header);
             if ($value) {
                 $response->headers->set($header, $value);
@@ -161,12 +172,24 @@ class EncoreMirrorController extends Controller
 
         // Keep Shopify cart/session cookies usable on the Laravel host. Domain is
         // removed so the browser treats the cookie as belonging to this clone.
-        $setCookies = $upstream->headers()['Set-Cookie'] ?? [];
+        $headers = $upstream->headers();
+        $setCookies = $headers['Set-Cookie'] ?? $headers['set-cookie'] ?? [];
+        $basePath = rtrim($request->getBaseUrl(), '/');
+
         foreach ($setCookies as $cookie) {
             $cookie = preg_replace('/;\s*Domain=[^;]+/i', '', $cookie) ?? $cookie;
 
+            if ($basePath !== '') {
+                $cookie = preg_replace(
+                    '/;\s*Path=\/(?=;|$)/i',
+                    '; Path=' . $basePath . '/',
+                    $cookie
+                ) ?? $cookie;
+            }
+
             if (! $request->isSecure()) {
                 $cookie = preg_replace('/;\s*Secure/i', '', $cookie) ?? $cookie;
+                $cookie = preg_replace('/;\s*SameSite=None/i', '; SameSite=Lax', $cookie) ?? $cookie;
             }
 
             $response->headers->set('Set-Cookie', $cookie, false);
@@ -178,20 +201,21 @@ class EncoreMirrorController extends Controller
     private function rewriteHtml(Request $request, string $html, string $origin): string
     {
         $basePath = rtrim($request->getBaseUrl(), '/');
+        $host = (string) parse_url($origin, PHP_URL_HOST);
+        $quotedHost = preg_quote(preg_replace('/^www\./i', '', $host) ?: $host, '#');
 
-        // Absolute links back to the source storefront should stay inside the clone.
-        $quotedOrigin = preg_quote($origin, '#');
+        // Any absolute/protocol-relative link back to the production storefront
+        // remains inside this Laravel copy. Static CDN/media URLs are handled below.
         $html = preg_replace_callback(
-            '#(href|action)=([\'\"])' . $quotedOrigin . '(/[^\'\"]*)\2#i',
+            "#\\b(href|action)=([\"'])(?:https?:)?//(?:www\\.)?{$quotedHost}(/[^\"']*)\\2#i",
             fn (array $m) => $m[1] . '=' . $m[2] . $this->localPath($basePath, $m[3]) . $m[2],
             $html
         ) ?? $html;
 
-        // Navigation/forms use the local Laravel clone. Static/media source URLs are
-        // left on the source domain/CDN so animations, fonts, videos and imagery are
-        // identical to the production Shopify site.
+        // Navigation and form paths stay local. Asset links retain the source host
+        // so the exact Shopify theme CSS/JS/fonts/images/videos continue to be used.
         $html = preg_replace_callback(
-            '#\b(href|action)=([\'\"])(/(?!/)[^\'\"]*)\2#i',
+            "#\\b(href|action)=([\"'])(/(?!/)[^\"']*)\\2#i",
             function (array $m) use ($basePath, $origin) {
                 $path = $m[3];
 
@@ -204,15 +228,17 @@ class EncoreMirrorController extends Controller
             $html
         ) ?? $html;
 
+        // Media/script source attributes must load from the real storefront when
+        // Shopify emitted them as root-relative URLs.
         $html = preg_replace_callback(
-            '#\b(src|poster|data-src|data-video-src)=([\'\"])(/(?!/)[^\'\"]*)\2#i',
+            "#\\b(src|poster|data-src|data-video-src)=([\"'])(/(?!/)[^\"']*)\\2#i",
             fn (array $m) => $m[1] . '=' . $m[2] . $origin . $m[3] . $m[2],
             $html
         ) ?? $html;
 
-        // Shopify often emits root-relative entries inside srcset attributes.
+        // Shopify often emits root-relative entries inside responsive image srcsets.
         $html = preg_replace_callback(
-            '#\b(srcset|data-srcset)=([\'\"])([^\'\"]*)\2#i',
+            "#\\b(srcset|data-srcset)=([\"'])([^\"']*)\\2#i",
             function (array $m) use ($origin) {
                 $value = preg_replace('#(^|,\s*)(/[^,\s]+)#', '$1' . $origin . '$2', $m[3]) ?? $m[3];
                 return $m[1] . '=' . $m[2] . $value . $m[2];
@@ -220,11 +246,32 @@ class EncoreMirrorController extends Controller
             $html
         ) ?? $html;
 
-        // On WAMP the project is commonly opened from /encorelacrosse.com/public.
-        // Shopify JavaScript expects a domain-root install. This small compatibility
-        // shim makes fetch/XHR/beacon calls honor Laravel's base path without touching
-        // the original Shopify theme JavaScript.
+        // Preserve root-relative image/video/font paths used by inline styles and
+        // theme blocks such as background-image:url('/cdn/shop/files/...').
+        $html = preg_replace_callback(
+            "#url\\(([\"']?)(/(?!/)[^\\)\"']+)\\1\\)#i",
+            fn (array $m) => 'url(' . $m[1] . $origin . $m[2] . $m[1] . ')',
+            $html
+        ) ?? $html;
+
+        // Root-relative Shopify asset strings can also appear inside inline JSON or
+        // JavaScript rather than normal HTML attributes.
+        $html = preg_replace_callback(
+            "#([\"'])(/(?:cdn|wpm|shopifycloud|services|assets|fonts)/[^\"']*)\\1#i",
+            fn (array $m) => $m[1] . $origin . $m[2] . $m[1],
+            $html
+        ) ?? $html;
+
         if ($basePath !== '') {
+            // WAMP is commonly opened as /encorelacrosse.com/public. Rewrite common
+            // storefront paths embedded in theme JSON/JS so navigation still stays
+            // inside that subdirectory.
+            $html = preg_replace_callback(
+                "#([\"'])(/(?:pages|products|collections|cart|search|account|blogs|policies|recommendations|localization)[^\"']*)\\1#i",
+                fn (array $m) => $m[1] . $this->localPath($basePath, $m[2]) . $m[1],
+                $html
+            ) ?? $html;
+
             $shim = $this->basePathShim($basePath);
             $html = preg_replace('/<head(\s[^>]*)?>/i', '$0' . $shim, $html, 1) ?? $html;
         }
@@ -264,9 +311,14 @@ class EncoreMirrorController extends Controller
     private function rewriteLocation(Request $request, string $location, string $origin): string
     {
         $basePath = rtrim($request->getBaseUrl(), '/');
+        $host = (string) parse_url($origin, PHP_URL_HOST);
 
-        if (Str::startsWith($location, $origin)) {
-            $location = Str::after($location, $origin);
+        if ($host !== '') {
+            $location = preg_replace(
+                '#^(?:https?:)?//(?:www\.)?' . preg_quote(preg_replace('/^www\./i', '', $host) ?: $host, '#') . '#i',
+                '',
+                $location
+            ) ?? $location;
         }
 
         if (Str::startsWith($location, '/') && ! Str::startsWith($location, '//')) {
@@ -324,6 +376,40 @@ class EncoreMirrorController extends Controller
             return nativeBeacon(fix(url), data);
         };
     }
+
+    var nativePushState = history.pushState.bind(history);
+    history.pushState = function (state, title, url) {
+        if (arguments.length > 2) arguments[2] = fix(url);
+        return nativePushState.apply(history, arguments);
+    };
+
+    var nativeReplaceState = history.replaceState.bind(history);
+    history.replaceState = function (state, title, url) {
+        if (arguments.length > 2) arguments[2] = fix(url);
+        return nativeReplaceState.apply(history, arguments);
+    };
+
+    var nativeWindowOpen = window.open;
+    window.open = function (url) {
+        arguments[0] = fix(url);
+        return nativeWindowOpen.apply(window, arguments);
+    };
+
+    document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!link) return;
+        var href = link.getAttribute('href');
+        var fixed = fix(href);
+        if (fixed !== href) link.setAttribute('href', fixed);
+    }, true);
+
+    document.addEventListener('submit', function (event) {
+        var form = event.target;
+        if (!form || !form.getAttribute) return;
+        var action = form.getAttribute('action');
+        var fixed = fix(action);
+        if (fixed !== action) form.setAttribute('action', fixed);
+    }, true);
 })();
 </script>
 HTML;
