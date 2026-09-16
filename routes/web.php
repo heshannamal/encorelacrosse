@@ -13,10 +13,11 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 | Encore Lacrosse local storefront mirror
 |--------------------------------------------------------------------------
 |
-| HTML is mirrored from encorelacrosse.com, while CSS, JavaScript, fonts,
-| images and video are downloaded into this Laravel project's storage cache
-| and served through /__encore/asset. The browser no longer needs Shopify/CDN
-| URLs for the storefront presentation.
+| HTML is mirrored from encorelacrosse.com. The production CSS and JavaScript
+| are downloaded into this Laravel project's storage cache and served through
+| /__encore/asset. Images, videos and font binaries stay on their source URLs.
+| Using the original theme CSS preserves Encore's typography, animations and
+| responsive styling without keeping the old handcrafted Bootstrap clone.
 |
 */
 
