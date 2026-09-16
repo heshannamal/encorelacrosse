@@ -2,17 +2,30 @@
 
 namespace Tests\Feature;
 
+use App\Services\EncoreMirrorService;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class EncoreMirrorTest extends TestCase
 {
-    public function test_homepage_uses_source_storefront_html_and_assets(): void
+    protected function setUp(): void
+    {
+        parent::setUp();
+        app(EncoreMirrorService::class)->clearCache();
+    }
+
+    protected function tearDown(): void
+    {
+        app(EncoreMirrorService::class)->clearCache();
+        parent::tearDown();
+    }
+
+    public function test_homepage_localizes_css_and_js_but_keeps_media_remote(): void
     {
         Http::fake([
             'https://encorelacrosse.com/' => Http::response(
-                '<!doctype html><html><head><link rel="stylesheet" href="/cdn/theme.css"></head><body><a href="/pages/about">About</a><img src="/cdn/hero.jpg"><form action="/cart/add"></form></body></html>',
+                '<!doctype html><html><head><link rel="stylesheet" href="/cdn/theme.css"><script src="/cdn/theme.js"></script></head><body><a href="/pages/about">About</a><img src="/cdn/hero.jpg"><form action="/cart/add"></form></body></html>',
                 200,
                 ['Content-Type' => 'text/html; charset=UTF-8']
             ),
@@ -21,10 +34,12 @@ class EncoreMirrorTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('href="/pages/about"', false);
-        $response->assertSee('href="https://encorelacrosse.com/cdn/theme.css"', false);
+        $response->assertSee('/__encore/asset/', false);
         $response->assertSee('src="https://encorelacrosse.com/cdn/hero.jpg"', false);
+        $response->assertSee('href="/pages/about"', false);
         $response->assertSee('action="/cart/add"', false);
+        $response->assertDontSee('href="https://encorelacrosse.com/cdn/theme.css"', false);
+        $response->assertDontSee('src="https://encorelacrosse.com/cdn/theme.js"', false);
 
         Http::assertSent(fn (ClientRequest $request) => $request->url() === 'https://encorelacrosse.com/');
     }
