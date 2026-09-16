@@ -1,16 +1,16 @@
 <?php
 
 return [
-    /* Source storefront used to build the local copy. */
+    /* Source storefront used to build the Laravel visual copy. */
     'origin' => env('ENCORE_MIRROR_ORIGIN', 'https://encorelacrosse.com'),
 
     /* HTML/page request timeout. */
     'timeout' => (int) env('ENCORE_MIRROR_TIMEOUT', 30),
 
-    /* Large video/image/font downloads may need longer than page requests. */
+    /* CSS and JavaScript downloads may need longer than page requests. */
     'asset_timeout' => (int) env('ENCORE_MIRROR_ASSET_TIMEOUT', 120),
 
-    /* Maximum number of sitemap pages downloaded by encore:mirror-sync. */
+    /* Maximum number of sitemap pages checked by encore:mirror-sync. */
     'max_pages' => (int) env('ENCORE_MIRROR_MAX_PAGES', 5000),
 
     /*
