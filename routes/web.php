@@ -1,69 +1,86 @@
 <?php
 
+use App\Http\Controllers\EncoreMirrorController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\TeamwearController;
-use App\Http\Controllers\CustomController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\InternationalController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+|--------------------------------------------------------------------------
+| Encore Lacrosse storefront mirror
+|--------------------------------------------------------------------------
+|
+| encorelacrosse.com is the visual/source storefront for this Laravel copy.
+| The mirror controller returns the same public Shopify HTML and keeps the
+| original public CSS/JS/CDN assets, so every page, responsive layout and
+| front-end animation stays in sync with the source site.
+|
+| Existing Laravel URLs are kept as named routes for backwards compatibility;
+| EncoreMirrorController maps them to their equivalent /pages/... URLs.
+|
+*/
 
-// Route::get('/shop/mens-tops', function () { return view('shop.mens_tops'); })->name('shop.mens-tops');
+Route::any('/', [EncoreMirrorController::class, 'handle'])->name('home');
 
 Route::prefix('shop')->name('shop.')->group(function () {
-    Route::get('/mens-tops', [ShopController::class, 'mensTops'])->name('mens-tops');
-    Route::get('/mens-bottoms', [ShopController::class, 'mensBottoms'])->name('mens-bottoms');
-    Route::get('/womens-tops', [ShopController::class, 'womensTops'])->name('womens-tops');
-    Route::get('/womens-bottoms', [ShopController::class, 'womensBottoms'])->name('womens-bottoms');
-    Route::get('/hats', [ShopController::class, 'hats'])->name('hats');
-    Route::get('/bags', [ShopController::class, 'bags'])->name('bags');
+    Route::any('/mens-tops', [EncoreMirrorController::class, 'handle'])->name('mens-tops');
+    Route::any('/mens-bottoms', [EncoreMirrorController::class, 'handle'])->name('mens-bottoms');
+    Route::any('/womens-tops', [EncoreMirrorController::class, 'handle'])->name('womens-tops');
+    Route::any('/womens-bottoms', [EncoreMirrorController::class, 'handle'])->name('womens-bottoms');
+    Route::any('/hats', [EncoreMirrorController::class, 'handle'])->name('hats');
+    Route::any('/bags', [EncoreMirrorController::class, 'handle'])->name('bags');
 });
 
 Route::prefix('teamwear')->name('teamwear.')->group(function () {
-    Route::get('/', [TeamwearController::class, 'allTeamwear'])->name('allTeamwear');
-    Route::get('/mensGameJerseys', [TeamwearController::class, 'mensGameJerseys'])->name('mensGameJerseys');
-    Route::get('/mensShorts', [TeamwearController::class, 'mensShorts'])->name('mensShorts');
-    Route::get('/mensShooters', [TeamwearController::class, 'mensShooters'])->name('mensShooters');
-    Route::get('/mensReversibles', [TeamwearController::class, 'mensReversibles'])->name('mensReversibles');
-    Route::get('/womensRacerbacks', [TeamwearController::class, 'womensRacerbacks'])->name('womensRacerbacks');
-    Route::get('/womensShortsKilts', [TeamwearController::class, 'womensShortsKilts'])->name('womensShortsKilts');
-    Route::get('/womensShooters', [TeamwearController::class, 'womensShooters'])->name('womensShooters');
-    Route::get('/outerwear', [TeamwearController::class, 'outerwear'])->name('outerwear');
-    Route::get('/hoodies', [TeamwearController::class, 'hoodies'])->name('hoodies');
-    Route::get('/joggersSweats', [TeamwearController::class, 'joggersSweats'])->name('joggersSweats');
-    Route::get('/lpp', [TeamwearController::class, 'lpp'])->name('lpp');
+    Route::any('/', [EncoreMirrorController::class, 'handle'])->name('allTeamwear');
+    Route::any('/mensGameJerseys', [EncoreMirrorController::class, 'handle'])->name('mensGameJerseys');
+    Route::any('/mensShorts', [EncoreMirrorController::class, 'handle'])->name('mensShorts');
+    Route::any('/mensShooters', [EncoreMirrorController::class, 'handle'])->name('mensShooters');
+    Route::any('/mensReversibles', [EncoreMirrorController::class, 'handle'])->name('mensReversibles');
+    Route::any('/womensRacerbacks', [EncoreMirrorController::class, 'handle'])->name('womensRacerbacks');
+    Route::any('/womensShortsKilts', [EncoreMirrorController::class, 'handle'])->name('womensShortsKilts');
+    Route::any('/womensShooters', [EncoreMirrorController::class, 'handle'])->name('womensShooters');
+    Route::any('/outerwear', [EncoreMirrorController::class, 'handle'])->name('outerwear');
+    Route::any('/hoodies', [EncoreMirrorController::class, 'handle'])->name('hoodies');
+    Route::any('/joggersSweats', [EncoreMirrorController::class, 'handle'])->name('joggersSweats');
+    Route::any('/lpp', [EncoreMirrorController::class, 'handle'])->name('lpp');
 });
 
-Route::prefix('custom')->name('custom.')->group(function() {
-    Route::get('/team-stores', [CustomController::class, 'teamStores'])->name('teamStores');
-    Route::get('/custom-graphic-design', [CustomController::class, 'customGraphicDesign'])->name('customGraphicDesign');
-    Route::get('/sizing-charts', [CustomController::class, 'sizingCharts'])->name('sizingCharts');
-    Route::get('/fabric', [CustomController::class, 'fabric'])->name('fabric');
-    Route::get('/embellishment', [CustomController::class, 'embellishment'])->name('embellishment');
+Route::prefix('custom')->name('custom.')->group(function () {
+    Route::any('/team-stores', [EncoreMirrorController::class, 'handle'])->name('teamStores');
+    Route::any('/custom-graphic-design', [EncoreMirrorController::class, 'handle'])->name('customGraphicDesign');
+    Route::any('/sizing-charts', [EncoreMirrorController::class, 'handle'])->name('sizingCharts');
+    Route::any('/fabric', [EncoreMirrorController::class, 'handle'])->name('fabric');
+    Route::any('/embellishment', [EncoreMirrorController::class, 'handle'])->name('embellishment');
 });
 
 Route::prefix('events')->name('events.')->group(function () {
-    Route::get('/battle-of-the-bay', [EventController::class, 'battleOfTheBay'])->name('battleOfTheBay');
-    Route::get('/impact10-showcase', [EventController::class, 'impact10Showcase'])->name('impact10Showcase');
-    Route::get('/hawaii-youth-lacrosse-classic', [EventController::class, 'hawaiiYouthLacrosseClassic'])->name('hawaiiYouthLacrosseClassic');
-    Route::get('/las-vegas-lacrosse-showcase', [EventController::class, 'lasVegasLacrosseShowcase'])->name('lasVegasLacrosseShowcase');
-    Route::get('/kings-showcase', [EventController::class, 'kingsShowcase'])->name('kingsShowcase');
-    Route::get('/buffalo-wings-box-lacrosse', [EventController::class, 'buffaloWingsBoxLacrosse'])->name('buffaloWingsBoxLacrosse');
+    Route::any('/battle-of-the-bay', [EncoreMirrorController::class, 'handle'])->name('battleOfTheBay');
+    Route::any('/impact10-showcase', [EncoreMirrorController::class, 'handle'])->name('impact10Showcase');
+    Route::any('/hawaii-youth-lacrosse-classic', [EncoreMirrorController::class, 'handle'])->name('hawaiiYouthLacrosseClassic');
+    Route::any('/las-vegas-lacrosse-showcase', [EncoreMirrorController::class, 'handle'])->name('lasVegasLacrosseShowcase');
+    Route::any('/kings-showcase', [EncoreMirrorController::class, 'handle'])->name('kingsShowcase');
+    Route::any('/buffalo-wings-box-lacrosse', [EncoreMirrorController::class, 'handle'])->name('buffaloWingsBoxLacrosse');
 });
 
 Route::prefix('international')->name('international.')->group(function () {
-    Route::get('/sri-lanka', [InternationalController::class, 'sriLanka'])->name('sriLanka');
-    Route::get('/philippines', [InternationalController::class, 'philippines'])->name('philippines');
-    Route::get('/ecuador', [InternationalController::class, 'ecuador'])->name('ecuador');
-    Route::get('/uganda', [InternationalController::class, 'uganda'])->name('uganda');
-    Route::get('/japan', [InternationalController::class, 'japan'])->name('japan');
-    Route::get('/berlin', [InternationalController::class, 'berlin'])->name('berlin');
-    Route::get('/colombia', [InternationalController::class, 'colombia'])->name('colombia');
-    Route::get('/trinidad-and-tobago', [InternationalController::class, 'trinidadAndTobago'])->name('trinidadAndTobago');
+    Route::any('/', [EncoreMirrorController::class, 'handle'])->name('index');
+    Route::any('/sri-lanka', [EncoreMirrorController::class, 'handle'])->name('sriLanka');
+    Route::any('/philippines', [EncoreMirrorController::class, 'handle'])->name('philippines');
+    Route::any('/ecuador', [EncoreMirrorController::class, 'handle'])->name('ecuador');
+    Route::any('/uganda', [EncoreMirrorController::class, 'handle'])->name('uganda');
+    Route::any('/japan', [EncoreMirrorController::class, 'handle'])->name('japan');
+    Route::any('/berlin', [EncoreMirrorController::class, 'handle'])->name('berlin');
+    Route::any('/colombia', [EncoreMirrorController::class, 'handle'])->name('colombia');
+    Route::any('/trinidad-and-tobago', [EncoreMirrorController::class, 'handle'])->name('trinidadAndTobago');
 });
 
-Route::get('/about', function() { return view('about'); })->name('about');
-Route::get('/private-training', function() { return view('private-training'); })->name('privateTraining');
+Route::any('/about', [EncoreMirrorController::class, 'handle'])->name('about');
+Route::any('/private-training', [EncoreMirrorController::class, 'handle'])->name('privateTraining');
+
+/*
+| Catch every Shopify-style route: /pages, /products, /collections, /cart,
+| /search, section-rendering endpoints, JSON/AJAX requests, and future pages
+| added to encorelacrosse.com without needing another Laravel route.
+*/
+Route::any('/{path?}', [EncoreMirrorController::class, 'handle'])
+    ->where('path', '.*')
+    ->name('encore.mirror');
