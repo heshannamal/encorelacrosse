@@ -231,7 +231,6 @@
 </section>
 
 <section>
-    <div class="container my-5">
   <div class="row g-0">
 
     <!-- Product 1 -->
@@ -254,7 +253,6 @@
       </div>
     </div>
   </div>
-</div>
 </section>
 
 @include('components.servicesCarousel')
