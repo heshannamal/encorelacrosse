@@ -19,28 +19,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    // Add restrained scroll reveals to major content sections without changing layout.
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const revealTargets = document.querySelectorAll(
-        '.site-main > section, .site-main .container-fluid.py-5, .site-main .container.py-5'
-    );
-
-    if (!reducedMotion && 'IntersectionObserver' in window) {
-        revealTargets.forEach((element, index) => {
-            if (element.classList.contains('home-opening-hero') || element.classList.contains('showcase-hero')) return;
-            element.classList.add('encore-reveal');
-            element.style.transitionDelay = `${Math.min(index % 3, 2) * 45}ms`;
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
-
-        document.querySelectorAll('.encore-reveal').forEach((element) => observer.observe(element));
-    }
 });
