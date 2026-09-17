@@ -7,7 +7,11 @@ use App\Http\Controllers\CustomController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InternationalController;
 
-Route::view('/', 'home.index')->name('home');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route::get('/shop/mens-tops', function () { return view('shop.mens_tops'); })->name('shop.mens-tops');
 
 Route::prefix('shop')->name('shop.')->group(function () {
     Route::get('/mens-tops', [ShopController::class, 'mensTops'])->name('mens-tops');
@@ -33,7 +37,7 @@ Route::prefix('teamwear')->name('teamwear.')->group(function () {
     Route::get('/lpp', [TeamwearController::class, 'lpp'])->name('lpp');
 });
 
-Route::prefix('custom')->name('custom.')->group(function () {
+Route::prefix('custom')->name('custom.')->group(function() {
     Route::get('/team-stores', [CustomController::class, 'teamStores'])->name('teamStores');
     Route::get('/custom-graphic-design', [CustomController::class, 'customGraphicDesign'])->name('customGraphicDesign');
     Route::get('/sizing-charts', [CustomController::class, 'sizingCharts'])->name('sizingCharts');
@@ -61,10 +65,5 @@ Route::prefix('international')->name('international.')->group(function () {
     Route::get('/trinidad-and-tobago', [InternationalController::class, 'trinidadAndTobago'])->name('trinidadAndTobago');
 });
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
-Route::get('/private-training', function () {
-    return view('private-training');
-})->name('privateTraining');
+Route::get('/about', function() { return view('about'); })->name('about');
+Route::get('/private-training', function() { return view('private-training'); })->name('privateTraining');
