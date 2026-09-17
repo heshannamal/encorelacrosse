@@ -9,6 +9,8 @@ use App\Services\Encore\OrderApiService;
 use App\Services\Encore\PaymentApiService;
 use App\Services\Encore\ProfileApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -60,14 +62,17 @@ class CheckoutController extends Controller
                 throw new \RuntimeException($paymentResponse['message'] ?? 'Unable to calculate checkout totals.');
             }
 
+            $billing = $this->readBillingDraft($request);
+
             return view('shop.checkout', [
                 'cartIds' => $cartIds,
                 'customer' => $customerResponse['data'] ?? [],
                 'countries' => collect($countriesResponse['data'] ?? []),
                 'payment' => data_get($paymentResponse, 'data.payment', []),
                 'subPayment' => data_get($paymentResponse, 'data.sub_payment', []),
-                'billing' => $request->session()->get('encore_checkout_billing', []),
-                'billingSaved' => (bool) $request->session()->get('encore_billing_saved', false),
+                'billing' => $billing,
+                'billingSaved' => !empty($billing) || (bool) session('encore_billing_saved', false),
+                'months' => [1=>'01',2=>'02',3=>'03',4=>'04',5=>'05',6=>'06',7=>'07',8=>'08',9=>'09',10=>'10',11=>'11',12=>'12'],
             ]);
         } catch (Throwable $e) {
             Log::error('Encore checkout page failed.', ['message' => $e->getMessage()]);
@@ -89,6 +94,7 @@ class CheckoutController extends Controller
         try {
             return response()->json($this->payment->paymentDetails());
         } catch (Throwable $e) {
+            Log::error('Encore payment details failed.', ['message' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
                 'message' => 'We could not calculate your order total. Please try again.',
@@ -109,32 +115,32 @@ class CheckoutController extends Controller
 
         $sameAsBilling = $request->boolean('use_same_as_billing_address');
         $rules = [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'street' => ['nullable', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'state' => ['required', 'string', 'max:255'],
-            'country_id' => ['required', 'integer'],
-            'country' => ['nullable', 'string', 'max:255'],
-            'postal_code' => ['required', 'string', 'max:50'],
-            'phone' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'email', 'max:255'],
+            'first_name' => ['required','string','max:255'],
+            'last_name' => ['required','string','max:255'],
+            'address' => ['required','string','max:255'],
+            'street' => ['nullable','string','max:255'],
+            'city' => ['required','string','max:255'],
+            'state' => ['required','string','max:255'],
+            'country_id' => ['required','integer'],
+            'country' => ['nullable','string','max:255'],
+            'postal_code' => ['required','string','max:50'],
+            'phone' => ['required','string','max:50'],
+            'email' => ['required','email','max:255'],
         ];
 
         if (!$sameAsBilling) {
             $rules = array_merge($rules, [
-                'shipping_first_name' => ['required', 'string', 'max:255'],
-                'shipping_last_name' => ['required', 'string', 'max:255'],
-                'shipping_address' => ['required', 'string', 'max:255'],
-                'shipping_street' => ['nullable', 'string', 'max:255'],
-                'shipping_city' => ['required', 'string', 'max:255'],
-                'shipping_state' => ['required', 'string', 'max:255'],
-                'shipping_country_id' => ['required', 'integer'],
-                'shipping_country' => ['nullable', 'string', 'max:255'],
-                'shipping_postal_code' => ['required', 'string', 'max:50'],
-                'shipping_phone' => ['required', 'string', 'max:50'],
-                'shipping_email' => ['required', 'email', 'max:255'],
+                'shipping_first_name' => ['required','string','max:255'],
+                'shipping_last_name' => ['required','string','max:255'],
+                'shipping_address' => ['required','string','max:255'],
+                'shipping_street' => ['nullable','string','max:255'],
+                'shipping_city' => ['required','string','max:255'],
+                'shipping_state' => ['required','string','max:255'],
+                'shipping_country_id' => ['required','integer'],
+                'shipping_country' => ['nullable','string','max:255'],
+                'shipping_postal_code' => ['required','string','max:50'],
+                'shipping_phone' => ['required','string','max:50'],
+                'shipping_email' => ['required','email','max:255'],
             ]);
         }
 
@@ -192,19 +198,11 @@ class CheckoutController extends Controller
             $data['use_same_as_billing_address'] = $sameAsBilling ? 1 : 0;
 
             $cartIdsResponse = $this->cart->authenticatedCartIds();
-            $cartIds = collect($cartIdsResponse['cart_item_ids'] ?? [])
-                ->map(fn ($id) => (int) $id)
-                ->filter()
-                ->values();
+            $cartIds = collect($cartIdsResponse['cart_item_ids'] ?? [])->map(fn ($id)=>(int)$id)->filter()->values();
             $data['cart_ids'] = json_encode($cartIds->all());
 
             $apiData = $data;
-            unset(
-                $apiData['country_id'],
-                $apiData['country_code'],
-                $apiData['shipping_country_id'],
-                $apiData['shipping_country_code']
-            );
+            unset($apiData['country_id'], $apiData['country_code'], $apiData['shipping_country_id'], $apiData['shipping_country_code']);
 
             $saved = $this->payment->updateBillingDetails($apiData);
             if (!($saved['success'] ?? false)) {
@@ -222,6 +220,8 @@ class CheckoutController extends Controller
             $billing['country_id'] = (int) data_get($billingCountry, 'id');
             $billing['country'] = (string) data_get($billingCountry, 'name', '');
             $billing['country_code'] = (string) data_get($billingCountry, 'code', '');
+            $billing['use_same_as_billing_address'] = $sameAsBilling ? 1 : 0;
+            $billing['is_shipping_address_available'] = $sameAsBilling ? 0 : 1;
 
             if (!$sameAsBilling && $shippingCountry) {
                 $billing['shipping_country_id'] = (int) data_get($shippingCountry, 'id');
@@ -229,9 +229,14 @@ class CheckoutController extends Controller
                 $billing['shipping_country_code'] = (string) data_get($shippingCountry, 'code', '');
             }
 
-            $request->session()->put('encore_checkout_billing', $billing);
-            $request->session()->put('encore_billing_saved', true);
-            $request->session()->put('encore_temp_billing_detail_id', data_get($saved, 'data.id'));
+            $this->storeBillingDraft($request, $billing);
+
+            $sessionUser = is_array(session('encore_user')) ? session('encore_user') : [];
+            $sessionUser['name'] = trim($billing['first_name'] . ' ' . $billing['last_name']);
+            $sessionUser['first_name'] = $billing['first_name'];
+            $sessionUser['last_name'] = $billing['last_name'];
+            $sessionUser['email'] = $billing['email'];
+            session(['encore_user' => $sessionUser]);
 
             $totals = $this->payment->paymentDetails();
             if (!($totals['success'] ?? false)) {
@@ -250,17 +255,10 @@ class CheckoutController extends Controller
             ]);
         } catch (Throwable $e) {
             Log::error('Encore billing save failed.', ['message' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'message' => 'We could not save your details. Please try again.',
-            ], 500);
+            return response()->json(['success' => false, 'message' => 'We could not save your details. Please try again.'], 500);
         }
     }
 
-    /**
-     * Final payment uses a provider-issued payment token. The browser must not
-     * post raw card data to this Laravel controller.
-     */
     public function placeOrder(Request $request)
     {
         if (!$this->ensureSignedIn()) {
@@ -272,48 +270,48 @@ class CheckoutController extends Controller
             ], 401);
         }
 
+        $currentYear = (int) date('Y');
         $validator = Validator::make($request->all(), [
-            'payment_token' => ['required', 'string', 'max:2048'],
-            'payment_method' => ['nullable', 'string', 'max:50'],
+            'card_type' => ['required','integer','in:1,2,3'],
+            'card_holder_name' => ['required','string','max:100'],
+            'card_number' => ['required','string','max:32', function ($attribute, $value, $fail) {
+                $digits = preg_replace('/\D+/', '', (string) $value);
+                if (strlen($digits) < 12 || strlen($digits) > 19) {
+                    $fail('Please enter a valid card number.');
+                }
+            }],
+            'card_expiry_month' => ['required','integer','between:1,12'],
+            'card_expiry_year' => ['required','integer','between:' . $currentYear . ',' . ($currentYear + 20)],
+            'card_csv' => ['required','digits_between:3,4'],
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'payment_setup_required' => true,
-                'message' => 'A secure payment token is required to place the order.',
-            ], 422);
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()], 422);
         }
 
         try {
             if (!session('encore_billing_saved')) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Please save your billing and shipping details first.',
-                ], 422);
+                return response()->json(['success' => false, 'message' => 'Please save your billing and shipping details first.'], 422);
             }
 
             $cartIdsResponse = $this->cart->authenticatedCartIds();
-            $cartIds = collect($cartIdsResponse['cart_item_ids'] ?? [])
-                ->map(fn ($id) => (int) $id)
-                ->filter()
-                ->values();
+            if (!($cartIdsResponse['success'] ?? false)) {
+                return response()->json(['success' => false, 'message' => $cartIdsResponse['message'] ?? 'Unable to load your cart.'], 422);
+            }
 
+            $cartIds = collect($cartIdsResponse['cart_item_ids'] ?? [])->map(fn ($id)=>(int)$id)->filter()->values();
             if ($cartIds->isEmpty()) {
                 return response()->json(['success' => false, 'message' => 'Your cart is empty.'], 422);
             }
 
             $totalsResponse = $this->payment->paymentDetails();
             if (!($totalsResponse['success'] ?? false)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $totalsResponse['message'] ?? 'Unable to calculate your order total.',
-                ], 422);
+                return response()->json(['success' => false, 'message' => $totalsResponse['message'] ?? 'Unable to calculate your order total.'], 422);
             }
 
             $payment = data_get($totalsResponse, 'data.payment', []);
             $subPayment = data_get($totalsResponse, 'data.sub_payment', []);
-            $validated = $validator->validated();
+            $card = $validator->validated();
 
             $payload = [
                 'cart_ids' => json_encode($cartIds->all()),
@@ -327,12 +325,16 @@ class CheckoutController extends Controller
                 'processing_fee' => data_get($payment, 'processing_fee', '0.00'),
                 'amount_to_pay' => data_get($payment, 'amount_to_pay', '0.00'),
                 'temp_billing_detail_id' => session('encore_temp_billing_detail_id'),
-                'payment_token' => $validated['payment_token'],
-                'payment_method' => $validated['payment_method'] ?? null,
+                'card_type' => (int) $card['card_type'],
+                'card_holder_name' => trim($card['card_holder_name']),
+                'card_number' => preg_replace('/\D+/', '', $card['card_number']),
+                'card_expiry_month' => str_pad((string) $card['card_expiry_month'], 2, '0', STR_PAD_LEFT),
+                'card_expiry_year' => (string) $card['card_expiry_year'],
+                'card_csv' => (string) $card['card_csv'],
             ];
 
             $response = $this->orders->store($payload);
-            unset($payload['payment_token']);
+            unset($payload['card_number'], $payload['card_csv'], $payload['card_holder_name']);
 
             if (!($response['success'] ?? false)) {
                 return response()->json([
@@ -341,13 +343,9 @@ class CheckoutController extends Controller
                 ], (int) ($response['_http_status'] ?? 422));
             }
 
-            $request->session()->forget([
-                'encore_checkout_billing',
-                'encore_billing_saved',
-                'encore_temp_billing_detail_id',
-                'encore_cart_merge_pending',
-            ]);
-            $request->session()->put('encore_cart_temp_id', (string) Str::uuid());
+            $this->clearCheckoutDraft($request);
+            session(['encore_cart_temp_id' => (string) Str::uuid()]);
+            session()->forget('encore_cart_merge_pending');
 
             return response()->json([
                 'success' => true,
@@ -356,10 +354,7 @@ class CheckoutController extends Controller
             ]);
         } catch (Throwable $e) {
             Log::error('Encore place order failed.', ['message' => $e->getMessage()]);
-            return response()->json([
-                'success' => false,
-                'message' => 'Payment could not be completed. Please try again.',
-            ], 500);
+            return response()->json(['success' => false, 'message' => 'Payment could not be completed. Please try again.'], 500);
         }
     }
 
@@ -374,5 +369,70 @@ class CheckoutController extends Controller
         } catch (Throwable $e) {
             return false;
         }
+    }
+
+    protected function storeBillingDraft(Request $request, array $billing): void
+    {
+        $request->session()->put('encore_checkout_billing', $billing);
+        $request->session()->put('encore_billing_saved', true);
+        $request->session()->put('encore_temp_billing_detail_id', data_get($billing, 'id'));
+        $request->session()->save();
+
+        try {
+            Cache::store('file')->put(
+                $this->billingCacheKey(),
+                Crypt::encryptString(json_encode($billing, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)),
+                now()->addDays(7)
+            );
+        } catch (Throwable $e) {
+            Log::warning('Encore checkout draft cache write failed.', ['message' => $e->getMessage()]);
+        }
+    }
+
+    protected function readBillingDraft(Request $request): array
+    {
+        $billing = $request->session()->get('encore_checkout_billing', []);
+        if (is_array($billing) && !empty($billing)) {
+            return $billing;
+        }
+
+        try {
+            $encrypted = Cache::store('file')->get($this->billingCacheKey());
+            if (!$encrypted) return [];
+
+            $decoded = json_decode(Crypt::decryptString($encrypted), true);
+            if (!is_array($decoded) || empty($decoded)) return [];
+
+            $request->session()->put('encore_checkout_billing', $decoded);
+            $request->session()->put('encore_billing_saved', true);
+            $request->session()->put('encore_temp_billing_detail_id', data_get($decoded, 'id'));
+            return $decoded;
+        } catch (Throwable $e) {
+            return [];
+        }
+    }
+
+    protected function clearCheckoutDraft(Request $request): void
+    {
+        try {
+            Cache::store('file')->forget($this->billingCacheKey());
+        } catch (Throwable $e) {
+            // Continue local cleanup.
+        }
+
+        $request->session()->forget([
+            'encore_checkout_billing',
+            'encore_billing_saved',
+            'encore_temp_billing_detail_id',
+        ]);
+    }
+
+    protected function billingCacheKey(): string
+    {
+        return 'encorelacrosse:checkout:billing:' . (int) data_get(
+            session('encore_user'),
+            'id',
+            session('auth_user_id', 0)
+        );
     }
 }
