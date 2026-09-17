@@ -1,0 +1,187 @@
+name: Download Actual Teamwear Assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/download-actual-teamwear-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download exact live Encore assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          dl() {
+            local url="$1"
+            local path="$2"
+            mkdir -p "$(dirname "$path")"
+            echo "Downloading $path"
+            curl -L --fail --retry 3 --retry-delay 2 -A 'Mozilla/5.0' "$url" -o "$path"
+          }
+
+          # Women's Shorts & Kilts - hero, products, customize, gallery
+          dl 'https://ucarecdn.com/86c6b449-c418-4a6e-90b2-0f9f1e4deb6f/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/download%20_23_.webp' 'public/images/teamwear/womensShortsKilts/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sCollegiateshortsforBasketball01_480x480_b69d4e23-34df-4bf4-af60-3712e8ee0766_2048x2048.webp?v=1723657117' 'public/images/teamwear/womensShortsKilts/collegiate-short-front.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sCollegiateshortsforBasketball03_480x480_19c18138-caf8-471e-87f3-188ee1be906c_2048x2048.webp?v=1723657117' 'public/images/teamwear/womensShortsKilts/collegiate-short-back.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sCollegiateshortsforBasketball06_480x480_29a6dc04-961b-42ac-b943-ada72e9167f0_2048x2048.webp?v=1723657117' 'public/images/teamwear/womensShortsKilts/collegiate-short-right.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sCollegiateshortsforBasketball04_480x480_712c7d24-be45-4d8b-96b3-6f724c3cd517_2048x2048.webp?v=1723657117' 'public/images/teamwear/womensShortsKilts/collegiate-short-left.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sProKilt-Front_1_480x480_cd47ef9a-6ab9-42ab-a020-07ff8d5540da_2048x2048.webp?v=1723657944' 'public/images/teamwear/womensShortsKilts/pro-kilt-front.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sProKilt-Back_1_480x480_e0ab20c4-fd55-4cf5-b308-1213621b0f3c_2048x2048.webp?v=1723657944' 'public/images/teamwear/womensShortsKilts/pro-kilt-back.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sProKilt-Rightside_1_480x480_0f6f404d-cabd-4055-a0ab-adbff53919dd_2048x2048.webp?v=1723657944' 'public/images/teamwear/womensShortsKilts/pro-kilt-right.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sProKilt-Leftside_1_480x480_66e83d47-dcd3-4812-be84-8fc3ebaa800f_2048x2048.webp?v=1723657944' 'public/images/teamwear/womensShortsKilts/pro-kilt-left.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Front_29ed933e-f5b8-4f7f-9229-84eb9754c98e_2048x2048.jpg?v=1723657419' 'public/images/teamwear/womensShortsKilts/rise-up-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Back_311cd363-d106-453a-b906-7157554be6a9_2048x2048.jpg?v=1723657419' 'public/images/teamwear/womensShortsKilts/rise-up-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/FrontSide_edbd6b2e-286b-452c-9c21-7c07e41cf8f4_2048x2048.jpg?v=1723657420' 'public/images/teamwear/womensShortsKilts/rise-up-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/BackSide_0a3d1bfb-add1-47c2-b48b-628692bd01f4_2048x2048.jpg?v=1723657419' 'public/images/teamwear/womensShortsKilts/rise-up-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sDigVolleyballCompressionShort-Front_480x480_e5338d3c-363b-4016-8f74-f55e81ec10af_2048x2048.webp?v=1723657750' 'public/images/teamwear/womensShortsKilts/dig-front.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sDigVolleyballCompressionShort-Back_480x480_10541dfa-a64f-4039-9fec-225f90f92fdb_2048x2048.webp?v=1723657750' 'public/images/teamwear/womensShortsKilts/dig-back.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sDigVolleyballCompressionShort-Side_480x480_c188c5cd-691c-41b1-b949-3ebe61a192c3_2048x2048.webp?v=1723657750' 'public/images/teamwear/womensShortsKilts/dig-right.webp'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sDigVolleyballCompressionShort-Sideii_480x480_c9f08472-69ac-4fa7-8f3f-536fbe56399e_2048x2048.webp?v=1723657750' 'public/images/teamwear/womensShortsKilts/dig-left.webp'
+          dl 'https://ucarecdn.com/2027b858-3370-457f-bab5-b8669b070a5d/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/customize-01.jpg'
+          dl 'https://ucarecdn.com/74c92a02-ec9a-4192-a383-1bf8fc731182/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/customize-02.jpg'
+          dl 'https://ucarecdn.com/0aa890a4-7a14-40dd-a752-2a4fe316af8f/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/customize-03.jpg'
+          dl 'https://ucarecdn.com/3c81b16e-81ab-4cc0-a9e4-7615799ddead/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/customize-04.jpg'
+          dl 'https://ucarecdn.com/a9a9da85-6fa1-4cfd-b7b0-28535ea83230/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/customize-05.jpg'
+          dl 'https://ucarecdn.com/9ad43407-d70b-4723-9ae4-0020efb68825/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/gallery-01.jpg'
+          dl 'https://ucarecdn.com/a05a49ad-b66c-43b8-8728-c93348c18576/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/gallery-02.jpg'
+          dl 'https://ucarecdn.com/cb42bcf8-ee6b-4217-81aa-8fb1839a1607/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/gallery-03.jpg'
+          dl 'https://ucarecdn.com/179da901-917a-4b69-a2be-21e3ebf1b339/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/gallery-04.jpg'
+          dl 'https://ucarecdn.com/6c14bdb4-61b1-4fad-abc7-b366356d2e98/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShortsKilts/gallery-05.jpg'
+
+          # Women's Shooter Shirts
+          dl 'https://ucarecdn.com/b93621de-5cf0-4e85-8eb2-deca1385cec5/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/Shooter-03.jpg' 'public/images/teamwear/womensShooters/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SPROSHOOTERFront_2048x2048.jpg?v=1690550970' 'public/images/teamwear/womensShooters/pro-shooter-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SPROSHOOTERBACK_2048x2048.jpg?v=1690550970' 'public/images/teamwear/womensShooters/pro-shooter-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SPROSHOOTERRIGHT_2048x2048.jpg?v=1690550970' 'public/images/teamwear/womensShooters/pro-shooter-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SPROSHOOTERLEFT_2048x2048.jpg?v=1690550970' 'public/images/teamwear/womensShooters/pro-shooter-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sCollLSShooterFront_2048x2048.jpg?v=1690559971' 'public/images/teamwear/womensShooters/collegiate-ls-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Men_sLSCollegiateShooterBACK_a90cf321-1aae-4254-a3f7-ee7c0b4f417b_2048x2048.jpg?v=1690560099' 'public/images/teamwear/womensShooters/collegiate-ls-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/Women_sLSCollegiateShooterRIGHT_2048x2048.jpg?v=1690560099' 'public/images/teamwear/womensShooters/collegiate-ls-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/LSCollegiateShooterLEFT_2048x2048.jpg?v=1690560099' 'public/images/teamwear/womensShooters/collegiate-ls-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SCOLLEGIATESSSHOOTERFront_2048x2048.jpg?v=1690550951' 'public/images/teamwear/womensShooters/collegiate-ss-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SCOLLEGIATESSSHOOTERBACK_2048x2048.jpg?v=1690550951' 'public/images/teamwear/womensShooters/collegiate-ss-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SCOLLEGIATESSSHOOTERRIGHT_2048x2048.jpg?v=1690550951' 'public/images/teamwear/womensShooters/collegiate-ss-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/WOMEN_SCOLLEGIATESSSHOOTERLEFT_2048x2048.jpg?v=1690550951' 'public/images/teamwear/womensShooters/collegiate-ss-left.jpg'
+          dl 'https://ucarecdn.com/531ddc83-04b2-4889-acba-8e7270b9375a/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShooters/customize-01.jpg'
+          dl 'https://ucarecdn.com/5db019a2-ed64-4fbf-a454-ed5ed90fb4b4/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShooters/customize-02.jpg'
+          dl 'https://ucarecdn.com/c1424108-7a13-467c-a75a-b081fe9aafa9/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShooters/customize-03.jpg'
+          dl 'https://ucarecdn.com/22aa1447-52e6-4e4b-8edd-94e6c46f08ee/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/womensShooters/customize-04.jpg'
+          dl 'https://ucarecdn.com/c982c27c-0bc3-4b94-995f-bff2b1a7eeb9/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShooters/gallery-01.jpg'
+          dl 'https://ucarecdn.com/266879c5-d6d5-4220-a40b-927f620fb21f/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShooters/gallery-02.jpg'
+          dl 'https://ucarecdn.com/6c14bdb4-61b1-4fad-abc7-b366356d2e98/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShooters/gallery-03.jpg'
+          dl 'https://ucarecdn.com/429d6e6f-60d4-410e-a402-911fbc7107a2/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShooters/gallery-04.jpg'
+          dl 'https://ucarecdn.com/b60049c5-7d10-4999-b8cc-189039ac4c88/-/format/jpeg/-/preview/2560x2560/-/quality/lighter/' 'public/images/teamwear/womensShooters/gallery-05.jpg'
+
+          # Outerwear
+          dl 'https://ucarecdn.com/527f78ce-ad56-47cf-8bfe-91e0e153b6c9/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/download%20_25_.webp' 'public/images/teamwear/outerwear/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SamuraiJacketFront_2048x2048.jpg?v=1688465020' 'public/images/teamwear/outerwear/samurai-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SamuraiJacketBack_2048x2048.jpg?v=1688465019' 'public/images/teamwear/outerwear/samurai-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SamuraiJacketRight_2048x2048.jpg?v=1688465019' 'public/images/teamwear/outerwear/samurai-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SamuraiJacketLeft_2048x2048.jpg?v=1688465019' 'public/images/teamwear/outerwear/samurai-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/PandaVestFront_2048x2048.jpg?v=1688464997' 'public/images/teamwear/outerwear/panda-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/PandaVest_2048x2048.jpg?v=1688464996' 'public/images/teamwear/outerwear/panda-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/PandaVestRight_2048x2048.jpg?v=1688464997' 'public/images/teamwear/outerwear/panda-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/PandaVestLeft_2048x2048.jpg?v=1688464997' 'public/images/teamwear/outerwear/panda-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/VALENCIAJACKETFront_2048x2048.jpg?v=1688465047' 'public/images/teamwear/outerwear/valencia-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/VALENCIAJACKETBack_2048x2048.jpg?v=1688465047' 'public/images/teamwear/outerwear/valencia-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/VALENCIAJACKETright_2048x2048.jpg?v=1688465046' 'public/images/teamwear/outerwear/valencia-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/VALENCIAJACKETLeft_2048x2048.jpg?v=1688465047' 'public/images/teamwear/outerwear/valencia-left.jpg'
+          dl 'https://ucarecdn.com/57fb9023-c715-42e9-8c50-ef98e20e95e1/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/customize-01.jpg'
+          dl 'https://ucarecdn.com/72440527-cb99-48b4-94fb-2bd68dc2af62/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/customize-02.jpg'
+          dl 'https://ucarecdn.com/e868a410-9942-4616-b2ae-7161edd40f91/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/customize-03.jpg'
+          dl 'https://ucarecdn.com/328940a6-0d9c-45d1-98c4-f1a6ee56d71b/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/customize-04.jpg'
+          dl 'https://ucarecdn.com/88fde579-1200-464a-8c67-d75c968a87cb/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-01.jpg'
+          dl 'https://ucarecdn.com/dfddfd57-ad20-435d-ac81-a2742e248e18/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-02.jpg'
+          dl 'https://ucarecdn.com/c66a5b43-0f63-4dcc-aa62-1436d16290ac/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-03.jpg'
+          dl 'https://ucarecdn.com/96532835-1d91-4963-b94f-8f1f9bff0f5e/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-04.jpg'
+          dl 'https://ucarecdn.com/2829a3bd-9954-4125-b873-ad3a8a26cab4/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-05.jpg'
+          dl 'https://ucarecdn.com/f1d70e27-c010-455a-b60b-f03e670d064b/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-06.jpg'
+          dl 'https://ucarecdn.com/4f61b153-33f1-4a1f-8235-bd604094bfeb/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/outerwear/gallery-07.jpg'
+
+          # Hoodies
+          dl 'https://ucarecdn.com/e145a9f4-586e-43fb-89df-7c4dfbd11696/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/ClassicHoodieFront_2048x2048.jpg?v=1688465284' 'public/images/teamwear/hoodies/classic-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/ClassicHoodieBack_2048x2048.jpg?v=1688465285' 'public/images/teamwear/hoodies/classic-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/ClassicHoodieRight_2048x2048.jpg?v=1688465285' 'public/images/teamwear/hoodies/classic-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/ClassicHoodieLeft_2048x2048.jpg?v=1688465284' 'public/images/teamwear/hoodies/classic-left.jpg'
+          dl 'https://ucarecdn.com/2d2ad3b2-9374-42b4-9125-722c31ca8f27/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/3piece%20hoodie.jpg' 'public/images/teamwear/hoodies/three-piece.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CLASSICCREWNECKFront_2048x2048.jpg?v=1688465262' 'public/images/teamwear/hoodies/crewneck-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CLASSICCREWNECKBack_2048x2048.jpg?v=1688465262' 'public/images/teamwear/hoodies/crewneck-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CLASSICCREWNECKRight_2048x2048.jpg?v=1688465262' 'public/images/teamwear/hoodies/crewneck-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CLASSICCREWNECKLeft_2048x2048.jpg?v=1688465262' 'public/images/teamwear/hoodies/crewneck-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/BSEHoodieFront_2048x2048.jpg?v=1688465227' 'public/images/teamwear/hoodies/bse-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/BSEHoodieBack_2048x2048.jpg?v=1688465227' 'public/images/teamwear/hoodies/bse-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/BSEHoodieRight_2048x2048.jpg?v=1688465228' 'public/images/teamwear/hoodies/bse-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/BSEHoodieLeft_2048x2048.jpg?v=1688465228' 'public/images/teamwear/hoodies/bse-left.jpg'
+          dl 'https://ucarecdn.com/5ec327e2-26c3-4859-9d54-7cd9e412cb85/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/customize-01.jpg'
+          dl 'https://ucarecdn.com/945dd9db-2c0e-4126-9bd4-6685fba5f447/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/customize-02.jpg'
+          dl 'https://ucarecdn.com/76f8867d-2adc-4d2a-b3aa-d26695afccd5/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/customize-03.jpg'
+          dl 'https://ucarecdn.com/4baf5314-1fcf-494b-b911-2b6bdb5159af/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/customize-04.jpg'
+          dl 'https://ucarecdn.com/367be50f-6b1a-422a-90c1-d1434b1a15b8/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-01.jpg'
+          dl 'https://ucarecdn.com/2ba4a55f-bd65-4c4d-8943-e5ec0bf58f52/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-02.jpg'
+          dl 'https://ucarecdn.com/3945cb1f-c4b7-409c-adcc-9e3822700d3a/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-03.jpg'
+          dl 'https://ucarecdn.com/092fab57-3900-4a20-ace1-e6d400031b9b/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-04.jpg'
+          dl 'https://ucarecdn.com/aa857aba-fee4-4c4e-9b00-501f431ce8cf/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-05.jpg'
+          dl 'https://ucarecdn.com/53ce92f0-ac25-45b5-811e-7c634e6991b9/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-06.jpg'
+          dl 'https://ucarecdn.com/81305105-3364-46a2-9dde-445b7819a702/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/hoodies/gallery-07.jpg'
+
+          # Joggers & Sweatpants
+          dl 'https://ucarecdn.com/c85f1234-9bd0-47ef-988d-c4042f2e6551/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SidelineSweatpantFront_2048x2048.jpg?v=1688465158' 'public/images/teamwear/joggersSweats/sideline-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SidelineSweatpantBack_2048x2048.jpg?v=1688465159' 'public/images/teamwear/joggersSweats/sideline-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SidelineSweatpantLeftFront_2048x2048.jpg?v=1688465159' 'public/images/teamwear/joggersSweats/sideline-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/SidelineSweatpantLeft_2048x2048.jpg?v=1688465159' 'public/images/teamwear/joggersSweats/sideline-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CAVALRYSWEATPANTFront_2048x2048.jpg?v=1688465133' 'public/images/teamwear/joggersSweats/cavalry-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CAVALRYSWEATPANTBack_2048x2048.jpg?v=1688465133' 'public/images/teamwear/joggersSweats/cavalry-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CAVALRYSWEATPANTRight_2048x2048.jpg?v=1688465133' 'public/images/teamwear/joggersSweats/cavalry-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/CAVALRYSWEATPANTLeft_2048x2048.jpg?v=1688465134' 'public/images/teamwear/joggersSweats/cavalry-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/TechJoggerFront_2048x2048.jpg?v=1688465194' 'public/images/teamwear/joggersSweats/tech-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/TechJoggerBack_2048x2048.jpg?v=1688465194' 'public/images/teamwear/joggersSweats/tech-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/TechJoggerRight_2048x2048.jpg?v=1688465194' 'public/images/teamwear/joggersSweats/tech-right.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/TechJoggerLeft_2048x2048.jpg?v=1688465194' 'public/images/teamwear/joggersSweats/tech-left.jpg'
+          dl 'https://ucarecdn.com/b0a1d53e-0cf9-4a13-a236-4e9cec2b5ea3/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/customize-01.jpg'
+          dl 'https://ucarecdn.com/ef954ccf-cc8d-4a9f-abfe-10c8c17a838e/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/customize-02.jpg'
+          dl 'https://ucarecdn.com/e7d27a0b-8a62-46f0-a653-6dc79a27e888/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/customize-03.jpg'
+          dl 'https://ucarecdn.com/54919e5d-abf8-413f-9b5e-8e21a9bb7047/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/customize-04.jpg'
+          dl 'https://ucarecdn.com/0a4406e0-ec46-405d-8d7f-4f1ee1370579/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-01.jpg'
+          dl 'https://ucarecdn.com/cb9bfa3f-8d37-4f29-bb17-9e73be99e2b2/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-02.jpg'
+          dl 'https://ucarecdn.com/3945cb1f-c4b7-409c-adcc-9e3822700d3a/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-03.jpg'
+          dl 'https://ucarecdn.com/9d4674ee-7d68-4c38-8272-8f8921642e18/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-04.jpg'
+          dl 'https://ucarecdn.com/51891ff8-b50c-4a21-a277-d67b38187a90/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-05.jpg'
+          dl 'https://ucarecdn.com/df4abaf3-8470-4876-b108-76d180f35c1d/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-06.jpg'
+          dl 'https://ucarecdn.com/d8866256-d250-448f-8105-77453e3c7cba/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/' 'public/images/teamwear/joggersSweats/gallery-07.jpg'
+
+          # LPP
+          dl 'https://ucarecdn.com/d5b3c7ac-69ed-4b5b-933c-b1a43871eb43/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/download%20_3_.jpg' 'public/images/teamwear/lpp/hero.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/HOLSTERARMPADSFront_2048x2048.jpg?v=1688465078' 'public/images/teamwear/lpp/holster-front.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/HOLSTERARMPADSBack_2048x2048.jpg?v=1688465077' 'public/images/teamwear/lpp/holster-back.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/HOLSTERARMPADSLeft_2048x2048.jpg?v=1688465077' 'public/images/teamwear/lpp/holster-left.jpg'
+          dl 'https://encorelacrosse.com/cdn/shop/files/HOLSTERARMPADSRight_2048x2048.jpg?v=1688465077' 'public/images/teamwear/lpp/holster-right.jpg'
+          dl 'https://ucarecdn.com/2a323bd8-2162-4baf-bb1d-2be0c2c2ed48/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/Holster%20Arm%20Pads%20And%20SoakTek%20Shooter.jpg' 'public/images/teamwear/lpp/customize-01.jpg'
+          dl 'https://ucarecdn.com/b1ee879e-05f6-4272-b5f1-297dcbd47971/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/Holster%20Arm%20Pads%20And%20SoakTek%20Shooter%20-%20Back%20_1_.jpg' 'public/images/teamwear/lpp/customize-02.jpg'
+          dl 'https://ucarecdn.com/8ce8a105-e797-44e5-85f3-6803b8e0ff76/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/SoakTek%20Shooter%20_1_.jpg' 'public/images/teamwear/lpp/customize-03.jpg'
+          dl 'https://ucarecdn.com/4656ced8-4c9a-472f-bfec-2e3102fabf9e/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/SoakTek%20Shooter%20-%20Back.jpg' 'public/images/teamwear/lpp/customize-04.jpg'
+          dl 'https://ucarecdn.com/60cf5b18-762c-4fbf-b470-ceb8647ec1fd/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/DSC05585.jpg' 'public/images/teamwear/lpp/gallery-01.jpg'
+          dl 'https://ucarecdn.com/cb81dce0-e2dc-468d-9c30-3bc1cf347d30/-/format/jpeg/-/preview/3000x3000/-/quality/lighter/DSC05592.jpg' 'public/images/teamwear/lpp/gallery-02.jpg'
+
+      - name: Commit exact downloaded assets
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/teamwear
+          if git diff --cached --quiet; then
+            echo 'No asset changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Replace Teamwear images with exact live Encore assets'
+          git push
