@@ -285,6 +285,21 @@ class ProductApiService
             }
         }
 
+        $selectedSport = $filters['selectedSport'] ?? null;
+        if ($selectedSport && (string) $selectedSport !== '18') {
+            $sportIds = $this->relatedIds($item, [
+                'product_details.product_sport',
+                'productDetails.productSport',
+                'product_details.product_sports',
+                'productDetails.productSports',
+            ], ['sport_id', 'sport.id', 'id']);
+
+            // Encore treats sport 18 as All and includes it for every sport.
+            if ($sportIds && !in_array((int) $selectedSport, $sportIds, true) && !in_array(18, $sportIds, true)) {
+                return false;
+            }
+        }
+
         $selectedStyle = $filters['selectedStyle'] ?? null;
         if ($selectedStyle && !in_array((string) $selectedStyle, ['0', 'All'], true)) {
             $styleIds = $this->relatedIds($item, [
