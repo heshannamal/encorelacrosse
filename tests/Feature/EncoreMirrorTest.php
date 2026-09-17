@@ -21,11 +21,11 @@ class EncoreMirrorTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_homepage_localizes_css_and_js_but_keeps_media_remote(): void
+    public function test_homepage_localizes_css_js_and_fonts_but_keeps_media_remote(): void
     {
         Http::fake([
             'https://encorelacrosse.com/' => Http::response(
-                '<!doctype html><html><head><link rel="stylesheet" href="/cdn/theme.css"><script src="/cdn/theme.js"></script></head><body><a href="/pages/about">About</a><img src="/cdn/hero.jpg"><form action="/cart/add"></form></body></html>',
+                '<!doctype html><html><head><link rel="stylesheet" href="/cdn/theme.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,700"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Oswald:400"><script src="/cdn/theme.js"></script></head><body><a href="/pages/about">About</a><img src="/cdn/hero.jpg"><form action="/cart/add"></form></body></html>',
                 200,
                 ['Content-Type' => 'text/html; charset=UTF-8']
             ),
@@ -40,6 +40,9 @@ class EncoreMirrorTest extends TestCase
         $response->assertSee('action="/cart/add"', false);
         $response->assertDontSee('href="https://encorelacrosse.com/cdn/theme.css"', false);
         $response->assertDontSee('src="https://encorelacrosse.com/cdn/theme.js"', false);
+        $response->assertDontSee('href="https://fonts.googleapis.com/css?family=Oswald:400"', false);
+        $response->assertSee('font-family: "Oswald", Arial, sans-serif', false);
+        $response->assertSee('font-family: "Open Sans", Arial, sans-serif', false);
 
         Http::assertSent(fn (ClientRequest $request) => $request->url() === 'https://encorelacrosse.com/');
     }
