@@ -1,0 +1,44 @@
+name: Update Teamwear Hero Paths
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-teamwear-hero-paths.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Point pages to downloaded live hero images
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          replacements = {
+              'resources/views/teamwear/womensShortsKilts.blade.php': ("images/teamwear/landing/teamwear-07.webp", "images/teamwear/womensShortsKilts/hero.jpg"),
+              'resources/views/teamwear/womensShooters.blade.php': ("images/teamwear/landing/teamwear-07.webp", "images/teamwear/womensShooters/hero.jpg"),
+              'resources/views/teamwear/outerwear.blade.php': ("images/teamwear/landing/teamwear-09.webp", "images/teamwear/outerwear/hero.jpg"),
+              'resources/views/teamwear/hoodies.blade.php': ("images/teamwear/landing/teamwear-09.webp", "images/teamwear/hoodies/hero.jpg"),
+              'resources/views/teamwear/joggersSweats.blade.php': ("images/teamwear/landing/teamwear-09.webp", "images/teamwear/joggersSweats/hero.jpg"),
+              'resources/views/teamwear/lpp.blade.php': ("images/teamwear/landing/teamwear-13.webp", "images/teamwear/lpp/hero.jpg"),
+          }
+          for filename, (old, new) in replacements.items():
+              path = Path(filename)
+              text = path.read_text()
+              if old not in text:
+                  raise SystemExit(f'Expected hero path not found in {filename}: {old}')
+              path.write_text(text.replace(old, new, 1))
+          PY
+      - name: Commit hero path changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add resources/views/teamwear
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Use exact live hero images on Teamwear pages'
+          git push
