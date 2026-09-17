@@ -155,7 +155,7 @@ class TeamwearController extends Controller
 
     public function womensRacerbacks()
     {
-        $title = 'Women\'s Racerbacks';
+        $title = 'Women\'s Game Jerseys';
         return view('teamwear.womensRacerbacks', compact('title'));
     }
 
