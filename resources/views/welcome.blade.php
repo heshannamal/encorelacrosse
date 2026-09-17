@@ -9,45 +9,6 @@
     </video>
 </section>
 
-<!-- Upcoming Events Section -->
-<section id="upcoming-events" class="position-relative py-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 bg-white bg-opacity-75 rounded shadow p-4 text-center">
-                <h5 class="text-danger fw-bold mb-3">
-                    <i class="bi bi-calendar-event"></i> UPCOMING <span class="text-dark">ENCORE EVENTS</span>
-                </h5>
-
-                <div class="row text-center">
-                    <!-- Event 1 -->
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
-                        <h6 class="fw-bold">Vegas Lacrosse Showcase</h6>
-                        <h2 id="countdown1" class="fw-bold display-6">28</h2>
-                        <p class="text-uppercase small">Days</p>
-                        <p class="text-muted mb-0">November 1 – 2, 2025</p>
-                    </div>
-
-                    <!-- Event 2 -->
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
-                        <h6 class="fw-bold">King’s Showcase</h6>
-                        <h2 id="countdown2" class="fw-bold display-6">80</h2>
-                        <p class="text-uppercase small">Days</p>
-                        <p class="text-muted mb-0">January 24 – 25, 2026</p>
-                    </div>
-
-                    <!-- Event 3 -->
-                    <div class="col-12 col-md-4">
-                        <h6 class="fw-bold">The Battle of the Bay</h6>
-                        <h2 id="countdown3" class="fw-bold display-6">213</h2>
-                        <p class="text-uppercase small">Days</p>
-                        <p class="text-muted mb-0">June 6 – 7, 2026</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Hero Slider Section -->
 <section id="heroSlider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
 
