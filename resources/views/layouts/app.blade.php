@@ -1,64 +1,245 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="Our vision is to share lacrosse culture with the global community, and in turn, help make it better through those very same multicultural experiences and values that transcend the sport.">
+    <!-- <title>{{ config('app.name', 'Encore Lacrosse Apparel') }}</title> -->
 
-    <title>@if(isset($title) && !empty($title)){{ $title }} - @endif Encore Lacrosse Apparel</title>
+    <title>
+        @if (isset($title) && !empty($title))
+        {{ $title }} -
+        @endif
 
-    <link rel="icon" href="{{ asset('images/Encore_Logo.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        {{ config('app.name', 'Encore') }} Lacrosse Apparel
+    </title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Oswald:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Steelfish Regular:wght@500&display=swap" rel="stylesheet">
+    <style>
+        /* Critical CSS for immediate rendering */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #303030;
+            overflow-x: hidden;
+        }
 
-    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
-    @stack('styles')
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .navbar-nav .nav-link,
+        .btn-custom {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .video-bg {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* .navbar-brand img {
+            height: 40px;
+        } */
+
+        footer {
+            background: #111;
+            color: #bbb;
+            padding: 2rem 0;
+        }
+
+        footer a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100vh;
+        }
+
+        /* .carousel-caption {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        } */
+
+        /* Remove all spacing */
+        .event-section {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            margin: 0;
+            padding: 0;
+        }
+
+        .row.g-0 {
+            margin: 0;
+        }
+
+        .col-md-6.col-lg-3 {
+            padding: 0;
+        }
+
+        /* Card styling */
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .event-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.3s ease;
+        }
+
+        .event-card:hover .event-img {
+            transform: scale(1.05);
+            filter: brightness(0.50);
+        }
+
+        /* Centered button */
+        .event-button {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            /* transform: translate(-50%, 0); */
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .event-card:hover .event-button {
+            opacity: 1;
+            /* transform: translate(-50%, -5px); */
+        }
+
+        /* Button style */
+        .btn-danger {
+            width: 100%;
+            border-radius: 0;
+            background-color: #d71920;
+            border: none;
+            padding: 10px 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #b3121a;
+        }
+    </style>
 </head>
-<body>
-    @include('layouts.navbar')
 
-    <main class="site-main">
+<body>
+
+    <!-- Navbar -->
+    @extends('layouts.navbar')
+
+    <main class="pt-5">
         @yield('content')
     </main>
 
-    <footer class="site-footer">
-        <div class="container-fluid px-3 px-md-4">
-            <nav class="footer-nav" aria-label="Footer navigation">
-                <a href="{{ route('shop.mens-tops') }}">Shop</a>
-                <a href="{{ route('teamwear.allTeamwear') }}">Teamwear</a>
-                <a href="{{ route('custom.customGraphicDesign') }}">Custom</a>
-                <a href="{{ route('events.battleOfTheBay') }}">Events</a>
-                <a href="{{ route('international.sriLanka') }}">International</a>
-                <a href="{{ route('about') }}">About</a>
-                <a href="{{ route('privateTraining') }}">Private Training</a>
-            </nav>
-
-            <div class="footer-socials" aria-label="Social links">
-                <a href="https://facebook.com/encorebrand" target="_blank" rel="noopener" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                <a href="https://twitter.com/encorelacrosse" target="_blank" rel="noopener" aria-label="X / Twitter"><i class="bi bi-twitter-x"></i></a>
-                <a href="https://instagram.com/encorelacrosse" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                <a href="https://www.youtube.com/user/encorebrand" target="_blank" rel="noopener" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+    <!-- Footer -->
+    <footer class="text-center text-muted text-bold text-lg-start border-top mt-5" style="background-color:#d3d3d3;">
+        <div class="container py-4">
+            <!-- Top navigation links -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto">
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Shop</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Teamwear</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Custom</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Events</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">International</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">About</a>
+                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Private Training</a>
+                </div>
             </div>
 
-            <p class="footer-copy">© {{ now()->year }} Encore Lacrosse Apparel &nbsp; | &nbsp; Powered by Encore Custom</p>
+            <!-- Social media icons -->
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto">
+                    <a href="#" class="text-dark mx-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-dark mx-2"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-dark mx-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-dark mx-2"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
 
-            <div class="footer-payments" aria-label="Accepted payment methods">
-                <span class="footer-payment">VISA</span>
-                <span class="footer-payment">MC</span>
-                <span class="footer-payment">AMEX</span>
-                <span class="footer-payment">PAYPAL</span>
-                <span class="footer-payment">APPLE PAY</span>
+            <!-- Copyright -->
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <p class="small mb-1">© 2025 Encore Lacrosse Apparel | Powered by Encore Custom</p>
+                </div>
+            </div>
+
+            <!-- Payment icons -->
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <img src="visa.png" alt="Visa" class="mx-1" style="height:24px;">
+                    <img src="mastercard.png" alt="Mastercard" class="mx-1" style="height:24px;">
+                    <img src="paypal.png" alt="PayPal" class="mx-1" style="height:24px;">
+                    <img src="applepay.png" alt="Apple Pay" class="mx-1" style="height:24px;">
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/site.js') }}"></script>
-    @stack('scripts')
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- <link href="css/bootstrap-icons.css" rel="stylesheet"> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
+
 </body>
+
 </html>
