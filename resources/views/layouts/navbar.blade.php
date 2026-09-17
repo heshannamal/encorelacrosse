@@ -85,10 +85,10 @@
 
         <div class="encore-header-tools" aria-label="Header tools">
             <a href="#" class="encore-tool" aria-label="Search"><i class="bi bi-search"></i></a>
-            <a href="/account/login" class="encore-tool" aria-label="Account"><i class="bi bi-person"></i></a>
-            <a href="/cart" class="encore-tool encore-cart" aria-label="Cart">
+            <a href="{{ route('login') }}" class="encore-tool" aria-label="Account"><i class="bi bi-person"></i></a>
+            <a href="{{ route('cart') }}" class="encore-tool encore-cart" aria-label="Cart">
                 <i class="bi bi-bag"></i>
-                <span class="encore-cart-count">0</span>
+                <span class="encore-cart-count" data-encore-cart-count>0</span>
             </a>
         </div>
     </div>
@@ -100,7 +100,7 @@
 
         <div class="encore-mobile-actions">
             <a href="#" aria-label="Search"><i class="bi bi-search"></i></a>
-            <a href="/cart" class="encore-mobile-cart" aria-label="Cart"><i class="bi bi-bag"></i><span>0</span></a>
+            <a href="{{ route('cart') }}" class="encore-mobile-cart" aria-label="Cart"><i class="bi bi-bag"></i><span data-encore-cart-count>0</span></a>
             <button class="encore-mobile-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#encoreMobileMenu" aria-controls="encoreMobileMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span><span></span><span></span>
             </button>

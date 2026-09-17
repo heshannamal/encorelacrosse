@@ -6,9 +6,10 @@
 @php
     $products = isset($products) ? collect($products) : collect();
     $mainCategories = $mainCategories ?? [];
+    $sports = $sports ?? [];
     $productCategories = $productCategories ?? [];
     $apiError = $apiError ?? null;
-    $hasFilters = request()->filled('selectedStyle') || request()->filled('selectedGender') || request()->filled('search') || request()->filled('sort') || (request()->filled('selectedCategory') && (string)request('selectedCategory') !== '5');
+    $hasFilters = request()->filled('selectedSport') || request()->filled('selectedStyle') || request()->filled('selectedGender') || request()->filled('search') || request()->filled('sort') || (request()->filled('selectedCategory') && (string)request('selectedCategory') !== '5');
 @endphp
 @include('shop.ecommerce._styles')
 @include('shop.ecommerce._loader')
@@ -34,6 +35,16 @@
                     @foreach($mainCategories as $category)
                         @php($categoryId = (string)data_get($category, 'id'))
                         <option value="{{ $categoryId }}" {{ (string)request('selectedCategory', '5') === $categoryId ? 'selected' : '' }}>{{ data_get($category, 'category_name') }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="ec-filter">
+                <label>Sport</label>
+                <select name="selectedSport" class="js-ec-auto-filter">
+                    <option value="">All Sports</option>
+                    @foreach($sports as $sport)
+                        <option value="{{ data_get($sport, 'id') }}" {{ (string)request('selectedSport') === (string)data_get($sport, 'id') ? 'selected' : '' }}>{{ data_get($sport, 'sport_name') }}</option>
                     @endforeach
                 </select>
             </div>
@@ -80,6 +91,7 @@
         <div class="ec-active-filters">
             @if(request('search'))<a class="ec-chip" href="{{ route('allProduct', request()->except('search')) }}">Search: {{ request('search') }} <span>×</span></a>@endif
             @if(request('selectedCategory') && (string)request('selectedCategory') !== '5')<a class="ec-chip" href="{{ route('allProduct', array_merge(request()->except('selectedCategory'), ['selectedCategory' => 5])) }}">Category <span>×</span></a>@endif
+            @if(request('selectedSport'))<a class="ec-chip" href="{{ route('allProduct', request()->except('selectedSport')) }}">Sport <span>×</span></a>@endif
             @if(request('selectedStyle'))<a class="ec-chip" href="{{ route('allProduct', request()->except('selectedStyle')) }}">Style <span>×</span></a>@endif
             @if(request('selectedGender'))<a class="ec-chip" href="{{ route('allProduct', request()->except('selectedGender')) }}">{{ request('selectedGender') }} <span>×</span></a>@endif
             <a class="ec-chip ec-chip-clear" href="{{ route('allProduct') }}">Clear All</a>

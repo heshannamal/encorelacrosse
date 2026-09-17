@@ -21,13 +21,11 @@ class StorefrontController extends Controller
                 ? $request->input('selectedCategory')
                 : 5;
 
-            // Sport is intentionally not a public Shop filter.
-            $request->query->remove('selectedSport');
-
             // Search locally after normalization so display_product_name is searchable.
             $response = $this->products->products([
                 'selectedCategory' => $selectedCategory,
                 'selectedGender' => $request->input('selectedGender'),
+                'selectedSport' => $request->input('selectedSport'),
                 'selectedStyle' => $request->input('selectedStyle'),
                 'search' => null,
             ]);
@@ -59,6 +57,7 @@ class StorefrontController extends Controller
             return view('shop.all-products', [
                 'products' => $products,
                 'mainCategories' => $this->shopMainCategories(),
+                'sports' => $this->listFrom(fn () => $this->products->sports(), 'sports'),
                 'productCategories' => $this->listFrom(fn () => $this->products->productCategories(), 'product_categories'),
                 'apiError' => null,
             ]);
@@ -66,6 +65,7 @@ class StorefrontController extends Controller
             return view('shop.all-products', [
                 'products' => collect(),
                 'mainCategories' => $this->fallbackCategories(),
+                'sports' => [],
                 'productCategories' => $this->fallbackStyles(),
                 'apiError' => $e->getMessage(),
             ]);

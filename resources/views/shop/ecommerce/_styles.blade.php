@@ -31,7 +31,7 @@
 
 /* Listing toolbar */
 .ec-shop-toolbar{position:sticky;top:90px;z-index:800;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-top:1px solid var(--ec-line);border-bottom:1px solid var(--ec-line)}
-.ec-shop-toolbar-inner{padding:13px 32px;display:grid;grid-template-columns:1.1fr 1.5fr 1fr 1fr minmax(180px,1.3fr);gap:14px;align-items:end}
+.ec-shop-toolbar-inner{padding:13px 32px;display:grid;grid-template-columns:1.05fr 1.05fr 1.35fr .9fr .95fr minmax(180px,1.3fr);gap:14px;align-items:end}
 .ec-filter label{display:block;margin-bottom:4px;color:#999;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .ec-filter select,.ec-filter input{width:100%;height:37px;border:0;border-bottom:1px solid #ddd;border-radius:0;background:#fff;color:#333;font:inherit;font-size:13px;outline:0}
 .ec-filter-search{position:relative}.ec-filter-search input{padding:0 34px 0 4px}.ec-filter-search button{position:absolute;right:0;bottom:0;width:34px;height:37px;border:0;background:transparent;color:#444}
