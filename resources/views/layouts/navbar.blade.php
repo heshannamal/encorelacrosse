@@ -9,7 +9,7 @@
         <nav class="encore-header-center" aria-label="Primary navigation">
             <ul class="encore-main-nav">
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('shop.mens-tops') }}" class="encore-nav-link">Shop <span class="encore-chevron"></span></a>
+                    <a href="{{ url('/collections/all-products') }}" class="encore-nav-link">Shop <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-shop">
                         <li><a href="{{ route('shop.mens-tops') }}">Men's Tops</a></li>
                         <li><a href="{{ route('shop.mens-bottoms') }}">Men's Bottoms</a></li>
@@ -21,7 +21,7 @@
                 </li>
 
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('teamwear.allTeamwear') }}" class="encore-nav-link">Teamwear <span class="encore-chevron"></span></a>
+                    <a href="{{ url('/pages/teamwear') }}" class="encore-nav-link">Teamwear <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-wide">
                         <li><a href="{{ route('teamwear.allTeamwear') }}">All Teamwear</a></li>
                         <li><a href="{{ route('teamwear.mensGameJerseys') }}">Men's Game Jerseys</a></li>
@@ -39,7 +39,7 @@
                 </li>
 
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('custom.customGraphicDesign') }}" class="encore-nav-link">Custom <span class="encore-chevron"></span></a>
+                    <a href="{{ url('/') }}" class="encore-nav-link">Custom <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-wide">
                         <li><a href="{{ route('custom.teamStores') }}">Team Stores</a></li>
                         <li><a href="{{ route('custom.customGraphicDesign') }}">Custom Graphic Design</a></li>
@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('events.battleOfTheBay') }}" class="encore-nav-link">Events <span class="encore-chevron"></span></a>
+                    <a href="#" class="encore-nav-link">Events <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-wide">
                         <li><a href="{{ route('events.battleOfTheBay') }}">Battle of the Bay</a></li>
                         <li><a href="{{ route('events.impact10Showcase') }}">Impact10 Showcase</a></li>
@@ -62,7 +62,7 @@
                 </li>
 
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('international.sriLanka') }}" class="encore-nav-link">International <span class="encore-chevron"></span></a>
+                    <a href="{{ url('/pages/international') }}" class="encore-nav-link">International <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-wide">
                         <li><a href="{{ route('international.sriLanka') }}">Sri Lanka</a></li>
                         <li><a href="{{ route('international.philippines') }}">Philippines</a></li>
@@ -107,11 +107,11 @@
         </div>
 
         <div class="collapse encore-mobile-menu" id="encoreMobileMenu">
-            <a href="{{ route('shop.mens-tops') }}">Shop</a>
-            <a href="{{ route('teamwear.allTeamwear') }}">Teamwear</a>
-            <a href="{{ route('custom.customGraphicDesign') }}">Custom</a>
-            <a href="{{ route('events.battleOfTheBay') }}">Events</a>
-            <a href="{{ route('international.sriLanka') }}">International</a>
+            <a href="{{ url('/collections/all-products') }}">Shop</a>
+            <a href="{{ url('/pages/teamwear') }}">Teamwear</a>
+            <a href="{{ url('/') }}">Custom</a>
+            <a href="#">Events</a>
+            <a href="{{ url('/pages/international') }}">International</a>
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('privateTraining') }}">Private Training</a>
         </div>
