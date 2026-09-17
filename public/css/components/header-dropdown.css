@@ -1,0 +1,98 @@
+/* Encore storefront header dropdown alignment.
+   Measurements are based on the supplied desktop reference screenshot. */
+
+@media (min-width: 1200px) {
+    .site-nav-item {
+        position: relative;
+    }
+
+    .site-dropdown {
+        top: 42px;
+        left: -12px;
+        min-width: 196px;
+        width: max-content;
+        max-width: 330px;
+        margin: 0;
+        padding: 7px 0 10px;
+        border: 1px solid #e9e9e9;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .025);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(5px);
+        transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+    }
+
+    .site-dropdown a {
+        min-height: 46px;
+        padding: 7px 15px;
+        display: flex;
+        align-items: center;
+        color: #5a5a5a;
+        background: #fff;
+        font-family: var(--encore-heading);
+        font-size: 24px;
+        font-weight: 300;
+        line-height: 1.35;
+        letter-spacing: 0;
+        white-space: nowrap;
+        text-transform: uppercase;
+    }
+
+    .site-dropdown a:hover,
+    .site-dropdown a:focus-visible {
+        color: var(--encore-red);
+        background: #fafafa;
+    }
+
+    .site-nav-item:hover > .site-dropdown,
+    .site-nav-item:focus-within > .site-dropdown,
+    .site-nav-item.is-open > .site-dropdown {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    /* Longer menus keep the same visual style while allowing their labels
+       to fit on one line. */
+    .site-nav-item:nth-child(2) > .site-dropdown,
+    .site-nav-item:nth-child(3) > .site-dropdown,
+    .site-nav-item:nth-child(4) > .site-dropdown,
+    .site-nav-item:nth-child(5) > .site-dropdown {
+        min-width: 235px;
+    }
+}
+
+@media (min-width: 750px) and (max-width: 1199.98px) {
+    .site-dropdown {
+        top: 38px;
+        left: -8px;
+        min-width: 178px;
+        width: max-content;
+        max-width: 300px;
+        padding: 6px 0 8px;
+        border: 1px solid #e9e9e9;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .025);
+        transform: translateY(4px);
+    }
+
+    .site-dropdown a {
+        min-height: 39px;
+        padding: 6px 13px;
+        display: flex;
+        align-items: center;
+        color: #5a5a5a;
+        font-size: 19px;
+        font-weight: 300;
+        line-height: 1.3;
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+
+    .site-nav-item:hover > .site-dropdown,
+    .site-nav-item:focus-within > .site-dropdown,
+    .site-nav-item.is-open > .site-dropdown {
+        transform: translateY(0);
+    }
+}
