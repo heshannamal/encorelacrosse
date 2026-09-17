@@ -167,7 +167,7 @@ class TeamwearController extends Controller
 
     public function womensShooters()
     {
-        $title = 'Women\'s Shooters';
+        $title = 'Women\'s Shooter Shirts';
         return view('teamwear.womensShooters', compact('title'));
     }
 
@@ -185,7 +185,7 @@ class TeamwearController extends Controller
 
     public function joggersSweats()
     {
-        $title = 'Joggers & Sweats';
+        $title = 'Joggers & Sweatpants';
         return view('teamwear.joggersSweats', compact('title'));
     }
 
