@@ -8,12 +8,10 @@
         <source src="{{ asset('videos/d83554ea37f446cca0e05e66a5f48189.mp4') }}" type="video/mp4">
     </video>
 
-    <!-- Content overlaying the video -->
-    <div class="container position-relative z-index-2">
-        <!-- <div class="row justify-content-center align-items-end" style="min-height: 100vh; width: 50vh;"> -->
-        <div class="row justify-content-center align-items-end" style="min-height: 100vh;">
-            <div class="p-3 mb-2 col-12 text-center bg-secondary text-white">
-                <h5>Men's Tops</h5>
+    <div class="position-relative d-flex align-items-end justify-content-center" style="min-height: 100vh;">
+        <div class="text-center px-5">
+            <div class="px-4 py-3 mb-2 text-center bg-secondary text-white">
+                <h5 class="mb-0">Women's Tops</h5>
             </div>
         </div>
     </div>
@@ -30,7 +28,6 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $product['name'] }}</h5>
                         <p class="card-text">${{ number_format($product['price'], 2) }}</p>
-                        <!-- <a href="#" class="btn btn-primary">View Details</a> -->
                     </div>
                 </div>
             </div>
