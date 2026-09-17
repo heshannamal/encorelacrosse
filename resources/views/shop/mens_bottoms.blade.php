@@ -9,11 +9,10 @@
     </video>
 
     <!-- Content overlaying the video -->
-    <div class="container position-relative z-index-2">
-        <!-- <div class="row justify-content-center align-items-end" style="min-height: 100vh; width: 50vh;"> -->
-        <div class="row justify-content-center align-items-end" style="min-height: 100vh;">
-            <div class="p-3 mb-2 col-12 text-center bg-secondary text-white">
-                <h5>Men's Bottoms</h5>
+    <div class="position-relative d-flex align-items-end justify-content-center" style="min-height: 100vh;">
+        <div class="text-center px-5">
+            <div class="p-3 mb-2 text-center bg-secondary text-white">
+                <h5 class="mb-0">Men's Bottoms</h5>
             </div>
         </div>
     </div>
