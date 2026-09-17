@@ -11,7 +11,7 @@ class TeamwearController extends Controller
         $title = 'Teamwear';
 
         $hero = [
-            'image' => 'https://ucarecdn.com/553b1d9c-f350-476d-8047-674ca3ff7b67/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-02.JPG',
+            'image' => 'images/teamwear/landing/teamwear-02.webp',
             'title' => 'ENCORE Custom team apparel',
             'subtitle' => 'HOW YOU LOOK. HOW YOU FEEL. HOW YOU PERFORM.',
         ];
@@ -19,98 +19,98 @@ class TeamwearController extends Controller
         $mens = [
             [
                 'label' => 'Game Jerseys',
-                'image' => 'https://ucarecdn.com/534daafc-c3a3-4295-a5d5-05efa9c80cb9/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-03.JPG',
+                'image' => 'images/teamwear/landing/teamwear-03.webp',
                 'url' => route('teamwear.mensGameJerseys'),
             ],
             [
                 'label' => 'Shorts',
-                'image' => 'https://ucarecdn.com/71d35f85-9bb0-4a7c-a465-4e0178d9bc1b/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-04.JPG',
+                'image' => 'images/teamwear/landing/teamwear-04.webp',
                 'url' => route('teamwear.mensShorts'),
             ],
             [
                 'label' => 'Shooters',
-                'image' => 'https://ucarecdn.com/c201e2f9-f1cb-4224-98cf-783f2c7f75f5/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-05.JPG',
+                'image' => 'images/teamwear/landing/teamwear-05.webp',
                 'url' => route('teamwear.mensShooters'),
             ],
             [
                 'label' => 'Reversibles',
-                'image' => 'https://ucarecdn.com/4a74e6ee-7e04-4159-9e99-151a919ed033/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-06.JPG',
+                'image' => 'images/teamwear/landing/teamwear-06.webp',
                 'url' => route('teamwear.mensReversibles'),
             ],
         ];
 
-        $womensHero = 'https://ucarecdn.com/43195a3f-d2b7-45e8-be91-855693a4d1e5/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-07.JPG';
+        $womensHero = 'images/teamwear/landing/teamwear-07.webp';
 
         $womens = [
             [
                 'label' => 'Game Jerseys',
-                'image' => 'https://ucarecdn.com/ee5469a5-292b-44c0-9f7b-660fadc54f62/-/format/auto/-/preview/3000x3000/-/quality/lighter/2.jpg',
+                'image' => 'images/teamwear/landing/women-game-jerseys.webp',
                 'url' => route('teamwear.womensRacerbacks'),
             ],
             [
                 'label' => 'Kilt & Short',
-                'image' => 'https://ucarecdn.com/dab3aa56-c157-4adf-b803-754b604fabdc/-/format/auto/-/preview/3000x3000/-/quality/lighter/1.jpg',
+                'image' => 'images/teamwear/landing/women-kilt-short.webp',
                 'url' => route('teamwear.womensShortsKilts'),
             ],
             [
                 'label' => 'Shooters',
-                'image' => 'https://ucarecdn.com/0c3ad21e-4a3a-4f49-8b78-58d793b1d8cb/-/format/auto/-/preview/3000x3000/-/quality/lighter/4.jpg',
+                'image' => 'images/teamwear/landing/women-shooters.webp',
                 'url' => route('teamwear.womensShooters'),
             ],
             [
                 'label' => 'Racerbacks',
-                'image' => 'https://ucarecdn.com/c346acaf-af41-4cbd-bb26-b4d3f0c46691/-/format/auto/-/preview/3000x3000/-/quality/lighter/3.jpg',
+                'image' => 'images/teamwear/landing/women-racerbacks.webp',
                 'url' => route('teamwear.womensRacerbacks'),
             ],
         ];
 
-        $offFieldHero = 'https://ucarecdn.com/c9f439ba-e0dd-4846-9494-45bc1730d19c/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-09.JPG';
+        $offFieldHero = 'images/teamwear/landing/teamwear-09.webp';
 
         $offField = [
             [
                 'label' => 'Joggers & Sweats',
-                'image' => 'https://ucarecdn.com/f8af6778-be75-4eab-8905-0f6ab985b42d/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-10.JPG',
+                'image' => 'images/teamwear/landing/teamwear-10.webp',
                 'url' => route('teamwear.joggersSweats'),
             ],
             [
                 'label' => 'Outerwear',
-                'image' => 'https://ucarecdn.com/6e660286-b316-4b06-8821-31ce76a48370/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-11.JPG',
+                'image' => 'images/teamwear/landing/teamwear-11.webp',
                 'url' => route('teamwear.outerwear'),
             ],
             [
                 'label' => 'Hoodies & Fleece',
-                'image' => 'https://ucarecdn.com/1aceaf18-165d-471c-bbb7-d8f68122cdf8/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-12.JPG',
+                'image' => 'images/teamwear/landing/teamwear-12.webp',
                 'url' => route('teamwear.hoodies'),
             ],
         ];
 
-        $accessoriesHero = 'https://ucarecdn.com/8f10c7ce-b1c7-4dfe-8687-5751c8032690/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-13.JPG';
+        $accessoriesHero = 'images/teamwear/landing/teamwear-13.webp';
 
         $accessories = [
             'featured' => [
                 'label' => 'LPP',
-                'image' => 'https://ucarecdn.com/53a30f39-4e33-4100-b1bd-a04966e81108/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-14.JPG',
+                'image' => 'images/teamwear/landing/teamwear-14.webp',
                 'url' => route('teamwear.lpp'),
             ],
             'grid' => [
                 [
                     'label' => 'Hats',
-                    'image' => 'https://ucarecdn.com/2ce5aab7-100b-4d40-8a27-080f50898069/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-15.JPG',
+                    'image' => 'images/teamwear/landing/teamwear-15.webp',
                     'url' => route('shop.hats'),
                 ],
                 [
                     'label' => 'Head Bands',
-                    'image' => 'https://ucarecdn.com/7ee40ba6-9cbc-453b-b0b3-414db1e423e3/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-16.JPG',
+                    'image' => 'images/teamwear/landing/teamwear-16.webp',
                     'url' => '#',
                 ],
                 [
                     'label' => 'Socks',
-                    'image' => 'https://ucarecdn.com/d0702132-82bc-4767-bf6a-f697f464c82e/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-17.JPG',
+                    'image' => 'images/teamwear/landing/teamwear-17.webp',
                     'url' => '#',
                 ],
                 [
                     'label' => 'Bags',
-                    'image' => 'https://ucarecdn.com/3cddd4b3-c821-4359-b5c7-029e8187b7fe/-/format/auto/-/preview/3000x3000/-/quality/lighter/Teamwear-18.JPG',
+                    'image' => 'images/teamwear/landing/teamwear-18.webp',
                     'url' => route('shop.bags'),
                 ],
             ],
