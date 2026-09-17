@@ -1,0 +1,68 @@
+name: Download Teamwear Assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/download-teamwear-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  download-teamwear-assets:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Teamwear landing assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/images/teamwear/landing
+
+          download() {
+            local url="$1"
+            local output="$2"
+            echo "Downloading ${output}"
+            curl -L --fail --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 180 \
+              "$url" -o "public/images/teamwear/landing/$output"
+          }
+
+          download 'https://ucarecdn.com/553b1d9c-f350-476d-8047-674ca3ff7b67/-/format/webp/-/resize/2400x/-/quality/smart/Teamwear-02.JPG' 'teamwear-02.webp'
+          download 'https://ucarecdn.com/534daafc-c3a3-4295-a5d5-05efa9c80cb9/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-03.JPG' 'teamwear-03.webp'
+          download 'https://ucarecdn.com/71d35f85-9bb0-4a7c-a465-4e0178d9bc1b/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-04.JPG' 'teamwear-04.webp'
+          download 'https://ucarecdn.com/c201e2f9-f1cb-4224-98cf-783f2c7f75f5/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-05.JPG' 'teamwear-05.webp'
+          download 'https://ucarecdn.com/4a74e6ee-7e04-4159-9e99-151a919ed033/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-06.JPG' 'teamwear-06.webp'
+          download 'https://ucarecdn.com/43195a3f-d2b7-45e8-be91-855693a4d1e5/-/format/webp/-/resize/2400x/-/quality/smart/Teamwear-07.JPG' 'teamwear-07.webp'
+          download 'https://ucarecdn.com/ee5469a5-292b-44c0-9f7b-660fadc54f62/-/format/webp/-/resize/1400x/-/quality/smart/2.jpg' 'women-game-jerseys.webp'
+          download 'https://ucarecdn.com/dab3aa56-c157-4adf-b803-754b604fabdc/-/format/webp/-/resize/1400x/-/quality/smart/1.jpg' 'women-kilt-short.webp'
+          download 'https://ucarecdn.com/0c3ad21e-4a3a-4f49-8b78-58d793b1d8cb/-/format/webp/-/resize/1400x/-/quality/smart/4.jpg' 'women-shooters.webp'
+          download 'https://ucarecdn.com/c346acaf-af41-4cbd-bb26-b4d3f0c46691/-/format/webp/-/resize/1400x/-/quality/smart/3.jpg' 'women-racerbacks.webp'
+          download 'https://ucarecdn.com/c9f439ba-e0dd-4846-9494-45bc1730d19c/-/format/webp/-/resize/2400x/-/quality/smart/Teamwear-09.JPG' 'teamwear-09.webp'
+          download 'https://ucarecdn.com/f8af6778-be75-4eab-8905-0f6ab985b42d/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-10.JPG' 'teamwear-10.webp'
+          download 'https://ucarecdn.com/6e660286-b316-4b06-8821-31ce76a48370/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-11.JPG' 'teamwear-11.webp'
+          download 'https://ucarecdn.com/1aceaf18-165d-471c-bbb7-d8f68122cdf8/-/format/webp/-/resize/1400x/-/quality/smart/Teamwear-12.JPG' 'teamwear-12.webp'
+          download 'https://ucarecdn.com/8f10c7ce-b1c7-4dfe-8687-5751c8032690/-/format/webp/-/resize/2400x/-/quality/smart/Teamwear-13.JPG' 'teamwear-13.webp'
+          download 'https://ucarecdn.com/53a30f39-4e33-4100-b1bd-a04966e81108/-/format/webp/-/resize/1800x/-/quality/smart/Teamwear-14.JPG' 'teamwear-14.webp'
+          download 'https://ucarecdn.com/2ce5aab7-100b-4d40-8a27-080f50898069/-/format/webp/-/resize/1200x/-/quality/smart/Teamwear-15.JPG' 'teamwear-15.webp'
+          download 'https://ucarecdn.com/7ee40ba6-9cbc-453b-b0b3-414db1e423e3/-/format/webp/-/resize/1200x/-/quality/smart/Teamwear-16.JPG' 'teamwear-16.webp'
+          download 'https://ucarecdn.com/d0702132-82bc-4767-bf6a-f697f464c82e/-/format/webp/-/resize/1200x/-/quality/smart/Teamwear-17.JPG' 'teamwear-17.webp'
+          download 'https://ucarecdn.com/3cddd4b3-c821-4359-b5c7-029e8187b7fe/-/format/webp/-/resize/1200x/-/quality/smart/Teamwear-18.JPG' 'teamwear-18.webp'
+
+      - name: Commit downloaded images
+        shell: bash
+        run: |
+          if git status --porcelain public/images/teamwear/landing | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add public/images/teamwear/landing
+            git commit -m 'Add local Teamwear landing images'
+            git push origin HEAD:main
+          else
+            echo 'Teamwear images are already up to date.'
+          fi
