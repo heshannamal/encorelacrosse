@@ -199,11 +199,11 @@
     <div class="encore-footer__inner">
         <nav aria-label="Footer navigation">
             <ul class="encore-footer__nav">
-                <li><a href="{{ route('shop.mens-tops') }}">Shop</a></li>
-                <li><a href="{{ route('teamwear.allTeamwear') }}">Teamwear</a></li>
-                <li><a href="{{ route('custom.customGraphicDesign') }}">Custom</a></li>
-                <li><a href="{{ route('events.battleOfTheBay') }}">Events</a></li>
-                <li><a href="{{ route('international.sriLanka') }}">International</a></li>
+                <li><a href="{{ url('/collections/all-products') }}">Shop</a></li>
+                <li><a href="{{ url('/pages/teamwear') }}">Teamwear</a></li>
+                <li><a href="{{ url('/') }}">Custom</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="{{ url('/pages/international') }}">International</a></li>
                 <li><a href="{{ route('about') }}">About</a></li>
                 <li><a href="{{ route('privateTraining') }}">Private Training</a></li>
             </ul>
