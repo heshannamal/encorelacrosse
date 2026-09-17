@@ -1,0 +1,53 @@
+name: Retry Actual Teamwear Assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/retry-actual-teamwear-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download exact image mappings from source workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import re, pathlib, subprocess
+          source = pathlib.Path('.github/workflows/download-actual-teamwear-assets.yml').read_text()
+          mappings = re.findall(r"^\s*dl '([^']+)' '([^']+)'\s*$", source, re.M)
+          if len(mappings) < 40:
+              raise SystemExit(f'Expected many exact asset mappings, found {len(mappings)}')
+          for url, path in mappings:
+              target = pathlib.Path(path)
+              target.parent.mkdir(parents=True, exist_ok=True)
+              print(f'Downloading {path}')
+              subprocess.run([
+                  'curl','-L','--fail','--retry','3','--retry-delay','2',
+                  '-A','Mozilla/5.0',url,'-o',str(target)
+              ], check=True)
+          print(f'Downloaded {len(mappings)} exact live assets')
+          PY
+
+      - name: Commit exact assets safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/teamwear
+          if git diff --cached --quiet; then
+            echo 'No image changes detected.'
+            exit 0
+          fi
+          git commit -m 'Replace Teamwear images with exact live Encore assets'
+          git pull --rebase origin main
+          git push origin main
