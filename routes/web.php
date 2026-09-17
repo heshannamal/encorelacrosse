@@ -15,12 +15,9 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 | Live Encore URL structure
 |--------------------------------------------------------------------------
-| Keep the Laravel route names used throughout the Blade files, while making
-| the public URLs match encorelacrosse.com exactly.
 */
 
-// Shop
-Route::get('/collections/all-products', [ShopController::class, 'mensTops'])->name('shop.allProducts');
+// Existing lifestyle collection pages.
 Route::get('/pages/mens-tops', [ShopController::class, 'mensTops'])->name('shop.mens-tops');
 Route::get('/pages/mens-bottoms', [ShopController::class, 'mensBottoms'])->name('shop.mens-bottoms');
 Route::get('/pages/womens-top', [ShopController::class, 'womensTops'])->name('shop.womens-tops');
@@ -78,13 +75,7 @@ Route::get('/pages/private-training', function () {
     return view('private-training');
 })->name('privateTraining');
 
-/*
-|--------------------------------------------------------------------------
-| Legacy local URL redirects
-|--------------------------------------------------------------------------
-| These keep old development links/bookmarks working while the canonical
-| routes above now use the same paths as the live site.
-*/
+// Legacy local URL redirects
 Route::redirect('/shop/mens-tops', '/pages/mens-tops', 301);
 Route::redirect('/shop/mens-bottoms', '/pages/mens-bottoms', 301);
 Route::redirect('/shop/womens-tops', '/pages/womens-top', 301);
@@ -126,6 +117,8 @@ Route::redirect('/international/japan', '/pages/japan', 301);
 Route::redirect('/international/berlin', '/pages/berlin', 301);
 Route::redirect('/international/colombia', '/pages/colombia', 301);
 Route::redirect('/international/trinidad-and-tobago', '/pages/trinidad-tobago-lacrosse', 301);
-
 Route::redirect('/about', '/pages/about', 301);
 Route::redirect('/private-training', '/pages/private-training', 301);
+
+// Dynamic storefront, cart, checkout and customer auth.
+require __DIR__ . '/ecommerce.php';
