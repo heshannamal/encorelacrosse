@@ -24,12 +24,13 @@
         $imageFirst = $index % 2 === 0;
         $sectionBackground = $index % 2 === 0 ? '#f7f7f7' : '#ffffff';
         $images = $product['images'] ?? [];
-        $mainImage = $images[0] ?? $heroImage;
+        $hasImages = count($images) > 0;
+        $mainImage = $hasImages ? $images[0] : null;
     @endphp
 
     <section class="container-fluid py-5 px-md-5" style="background-color: {{ $sectionBackground }};">
         <div class="row align-items-center g-5">
-            @if ($imageFirst)
+            @if ($hasImages && $imageFirst)
                 <div class="col-12 col-md-6 text-center">
                     <img src="{{ asset($mainImage) }}"
                         alt="{{ $product['title'] }}"
@@ -50,7 +51,7 @@
                 </div>
             @endif
 
-            <div class="col-12 col-md-6">
+            <div class="{{ $hasImages ? 'col-12 col-md-6' : 'col-12 col-lg-8 mx-auto' }}">
                 <div class="border rounded-pill text-center py-2 px-4 mb-4"
                     style="border: 2px solid #cfcfcf !important; display: inline-block; background-color: #fff;">
                     <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">{{ $product['title'] }}</h2>
@@ -75,7 +76,7 @@
                 @endif
             </div>
 
-            @if (!$imageFirst)
+            @if ($hasImages && !$imageFirst)
                 <div class="col-12 col-md-6 text-center">
                     <img src="{{ asset($mainImage) }}"
                         alt="{{ $product['title'] }}"
@@ -157,41 +158,29 @@
 
 @if (!empty($galleryImages))
 <section class="container-fluid px-0" aria-label="{{ $pageHeading }} gallery">
-    @php
-        $galleryChunks = array_chunk($galleryImages, 2);
-    @endphp
+    @if (count($galleryImages) >= 1)
+        <div class="row g-0">
+            @foreach (array_slice($galleryImages, 0, 2) as $galleryIndex => $image)
+                <div class="col-12 {{ count(array_slice($galleryImages, 0, 2)) === 1 ? '' : 'col-md-6' }} d-flex flex-column align-items-center">
+                    <img src="{{ asset($image) }}" class="img-fluid w-100"
+                        alt="{{ $pageHeading }} gallery {{ $galleryIndex + 1 }}"
+                        style="object-fit: cover; width: 100%; height: 100%; min-height: 420px;">
+                </div>
+            @endforeach
+        </div>
+    @endif
 
-    @foreach ($galleryChunks as $rowIndex => $rowImages)
-        @php
-            $isThreeColumnRow = count($rowImages) === 2 && $rowIndex === 1 && count($galleryImages) >= 5;
-        @endphp
-
-        @if ($isThreeColumnRow)
-            @php
-                $threeImages = array_slice($galleryImages, 2, 3);
-            @endphp
-            <div class="row g-0">
-                @foreach ($threeImages as $galleryIndex => $image)
-                    <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-                        <img src="{{ asset($image) }}" class="img-fluid w-100"
-                            alt="{{ $pageHeading }} gallery {{ $galleryIndex + 3 }}"
-                            style="object-fit: cover; width: 100%; height: 100%; min-height: 380px;">
-                    </div>
-                @endforeach
-            </div>
-            @break
-        @elseif ($rowIndex === 0)
-            <div class="row g-0">
-                @foreach ($rowImages as $galleryIndex => $image)
-                    <div class="col-12 col-md-6 d-flex flex-column align-items-center">
-                        <img src="{{ asset($image) }}" class="img-fluid w-100"
-                            alt="{{ $pageHeading }} gallery {{ $galleryIndex + 1 }}"
-                            style="object-fit: cover; width: 100%; height: 100%; min-height: 420px;">
-                    </div>
-                @endforeach
-            </div>
-        @endif
-    @endforeach
+    @if (count($galleryImages) >= 3)
+        <div class="row g-0">
+            @foreach (array_slice($galleryImages, 2, 3) as $galleryIndex => $image)
+                <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+                    <img src="{{ asset($image) }}" class="img-fluid w-100"
+                        alt="{{ $pageHeading }} gallery {{ $galleryIndex + 3 }}"
+                        style="object-fit: cover; width: 100%; height: 100%; min-height: 380px;">
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     @if (count($galleryImages) > 5)
         <div class="row g-0">
