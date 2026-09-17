@@ -21,6 +21,7 @@
 
     {{-- Source/screenshot verified measurements loaded last so they stay authoritative. --}}
     <link rel="stylesheet" href="{{ asset('css/reference.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/components/header-dropdown.css') }}">
 </head>
 <body>
     @include('layouts.navbar')
