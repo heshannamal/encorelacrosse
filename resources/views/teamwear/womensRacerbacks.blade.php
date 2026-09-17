@@ -1,321 +1,293 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/pages/womens-racerbacks.css') }}">
 
-<section id="custom-team-apparel" class="container-fluid px-0">
-    <div class="row g-0">
-        <!-- Image and Content Column -->
-        <div class="col-12 position-relative">
-            <img src="{{ asset('images/teamwear/mensGameJerseys/backgroundImage.jpg') }}" class="img-fluid w-100" alt="Custom Team Apparel" style="object-fit: cover; height: 100vh;">
-            <div class="position-absolute top-50 start-50 translate-middle text-center text-white px-3">
-                <h2 class="display-3 fw-bold" style="Font-Family: 'Bebas Neue', sans-serif;">ENCORE CUSTOM TEAM APPAREL</h2>
-                <p class="lead fs-4">HOW YOU LOOK. HOW YOU FEEL. HOW YOU PERFORM.</p>
-                <!-- <p class="btn btn-dark btn-lg mt-3 rounded-0" style="border-radius: 0 !important;">MEN'S GAME JERSEYS</a>
-                </p> -->
-                <h1 class="gf_gs-text-heading-2 mt-3">
-                    <span style="background-color: rgba(226, 226, 226, 0.8); padding: 0.5rem 1rem; color: #000;">
-                        <strong>&nbsp; &nbsp; &nbsp; &nbsp; Men's Game Jerseys&nbsp; &nbsp; &nbsp; &nbsp;</strong>
-                    </span>
-                </h1>
-            </div>
+@php
+    $products = [
+        [
+            'title' => 'COLLEGIATE RACERBACK',
+            'description' => 'The Collegiate racerback is a more conservative cut, designed to be sturdy on the shoulders. This piece is reversible allowing for a home and away color.',
+            'features' => [
+                'Raglan Sleeves',
+                'Fabric HydroTek | Deztek | Deztek Lite | LatTek',
+                'Modern style and fit. This racerback is built for the athletic girl and women.',
+            ],
+            'reverse' => false,
+            'images' => [
+                'images/teamwear/womensRacerbacks/collegiate-racerback-front.jpg',
+                'images/teamwear/womensRacerbacks/collegiate-racerback-back.jpg',
+                'images/teamwear/womensRacerbacks/collegiate-racerback-right.jpg',
+                'images/teamwear/womensRacerbacks/collegiate-racerback-left.jpg',
+            ],
+        ],
+        [
+            'title' => 'PRO RACERBACK',
+            'description' => 'The Pro racerback allows for freedom of movement so that the player can focus on being fierce and in control. Thinner straps and a narrow back yoke cut creates a more secure feel. This piece is reversible allowing for a home and away color.',
+            'features' => [
+                'Fabric HydroTek | Deztek | LatTek',
+                'Modern style and fit. This racerback is built for the athletic girl and women.',
+            ],
+            'reverse' => true,
+            'images' => [
+                'images/teamwear/womensRacerbacks/pro-racerback-front.jpg',
+                'images/teamwear/womensRacerbacks/pro-racerback-back.jpg',
+                'images/teamwear/womensRacerbacks/pro-racerback-right.jpg',
+                'images/teamwear/womensRacerbacks/pro-racerback-left.jpg',
+            ],
+        ],
+        [
+            'title' => "WOMEN'S PRO GAME JERSEY",
+            'description' => 'V neck with a t-shirt cut and belled sides. This shirt is a simple and classic game jersey that stays stylishly consistent in an era.',
+            'features' => [
+                'Modern style slim sit.',
+                'Fabric Deztek | Deztek Lite',
+                'Modern style and fit. This racerback is built for the athletic girl and women.',
+            ],
+            'reverse' => false,
+            'images' => [
+                'images/teamwear/womensRacerbacks/womens-pro-game-jersey-front.jpg',
+                'images/teamwear/womensRacerbacks/womens-pro-game-jersey-back.jpg',
+                'images/teamwear/womensRacerbacks/womens-pro-game-jersey-right.jpg',
+                'images/teamwear/womensRacerbacks/womens-pro-game-jersey-left.jpg',
+            ],
+        ],
+    ];
+
+    $customizeImages = [
+        'images/teamwear/womensRacerbacks/customize-01.jpg',
+        'images/teamwear/womensRacerbacks/customize-02.jpg',
+        'images/teamwear/womensRacerbacks/customize-03.jpg',
+        'images/teamwear/womensRacerbacks/customize-04.jpg',
+        'images/teamwear/womensRacerbacks/customize-05.jpg',
+    ];
+
+    $lookbookTop = [
+        'images/teamwear/womensRacerbacks/lookbook-01.jpg',
+        'images/teamwear/womensRacerbacks/lookbook-02.jpg',
+    ];
+
+    $lookbookBottom = [
+        'images/teamwear/womensRacerbacks/lookbook-03.jpg',
+        'images/teamwear/womensRacerbacks/lookbook-04.jpg',
+        'images/teamwear/womensRacerbacks/lookbook-05.jpg',
+    ];
+
+    $resourceCards = [
+        [
+            'label' => 'CUSTOM GRAPHIC DESIGN',
+            'image' => 'images/teamwear/womensRacerbacks/custom-graphic-design.jpg',
+            'url' => route('custom.customGraphicDesign'),
+        ],
+        [
+            'label' => 'SHOP LIFESTYLE APPAREL',
+            'image' => 'images/teamwear/womensRacerbacks/shop-lifestyle-apparel.jpg',
+            'url' => route('shop.mens-tops'),
+        ],
+        [
+            'label' => 'TEAMSTORE & DELIVERY',
+            'image' => 'images/teamwear/womensRacerbacks/teamstore-delivery.jpg',
+            'url' => route('custom.teamStores'),
+        ],
+        [
+            'label' => 'EMBELLISHMENT TYPES',
+            'image' => 'images/teamwear/womensRacerbacks/embellishment-types.jpg',
+            'url' => route('custom.embellishment'),
+        ],
+        [
+            'label' => 'SIZING GUIDELINES',
+            'image' => 'images/teamwear/womensRacerbacks/sizing-guidelines.jpg',
+            'url' => route('custom.sizingCharts'),
+        ],
+        [
+            'label' => 'FABRICS',
+            'image' => 'images/teamwear/womensRacerbacks/fabrics.jpg',
+            'url' => route('custom.fabric'),
+        ],
+    ];
+@endphp
+
+<div class="womens-racerbacks-page">
+    <section class="wr-hero" aria-label="Women's game jerseys">
+        <img
+            class="wr-hero__image"
+            src="{{ asset('images/teamwear/womensRacerbacks/hero.webp') }}"
+            alt="Encore women's custom team apparel"
+        >
+        <div class="wr-hero__content">
+            <h1 class="wr-hero__brand">ENCORE Custom team apparel</h1>
+            <p class="wr-hero__tagline">HOW YOU LOOK. HOW YOU FEEL. HOW YOU PERFORM.</p>
+            <div class="wr-hero__title">WOMEN'S GAME JERSEYS</div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- COLLEGIATE GAME JERSEY -->
-<section id="collegiate-jersey" class="container-fluid py-5 px-md-5" style="background-color: #f7f7f7;">>
-    <div class="row align-items-center g-5">
+    @foreach ($products as $index => $product)
+        <section class="wr-product {{ $index % 2 === 0 ? 'wr-product--soft' : '' }} {{ $product['reverse'] ? 'wr-product--reverse' : '' }}">
+            <div class="wr-product__inner" data-product-gallery>
+                <div class="wr-product__media">
+                    <div class="wr-product__main-wrap">
+                        <img
+                            class="wr-product__main"
+                            src="{{ asset($product['images'][0]) }}"
+                            alt="{{ $product['title'] }}"
+                            data-gallery-main
+                            loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                        >
+                    </div>
 
-        <!-- Left Column (Image + Thumbnails) -->
-        <div class="col-12 col-md-6 text-center">
-            <!-- Main Image -->
-            <img id="main-image"
-                src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYFront_2048x2048.webp') }}"
-                alt="Collegiate Jersey"
-                class="main-image img-fluid rounded shadow-sm mb-4"
-                style="max-height: 480px; object-fit: contain;">
-
-            <!-- Thumbnails -->
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYBack_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail"
-                    style="width: 80px; cursor: pointer;"
-                    onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYFront_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail"
-                    style="width: 80px; cursor: pointer;"
-                    onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYLeft_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail"
-                    style="width: 80px; cursor: pointer;"
-                    onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYRight_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail"
-                    style="width: 80px; cursor: pointer;"
-                    onclick="changeImage(this)">
-            </div>
-        </div>
-
-        <!-- Right Column (Text Content) -->
-        <div class="col-12 col-md-6">
-            <!-- Outlined Heading -->
-            <div class="border rounded-pill text-center py-2 px-3 mb-4"
-                style="border: 2px solid #d3d3d3; display: inline-block;">
-                <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">Collegiate Game Jersey</h2>
-            </div>
-
-            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8;">
-                The Collegiate Jersey is the most basic jersey in our offerings. It is designed to be lightweight and breathable,
-                with a minimal amount of additional paneling and stitching. Like the collegiate short, it is fully sublimatable
-                and offers unlimited design options.
-            </p>
-
-            <ul class="list-unstyled mt-4" style="font-size: 1rem;">
-                <li class="mb-2"><i class="bi bi-check-circle text-dark me-2"></i>Classic T-Cut Sleeves</li>
-                <li><i class="bi bi-check-circle text-dark me-2"></i>Available as a reversible game jersey</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<!-- PRO 2.0 GAME JERSEY -->
-<section id="pro2-jersey" class="container-fluid py-5 px-md-5">
-    <div class="row align-items-center g-5">
-
-        <!-- Left Column (Text Section) -->
-        <div class="col-12 col-md-6">
-            <!-- Outlined Heading -->
-            <div class="border rounded-pill text-center py-2 px-4 mb-4"
-                style="border: 2px solid #cfcfcf; display: inline-block; background-color: #fff;">
-                <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">Pro 2.0 Game Jersey</h2>
-            </div>
-
-            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8;">
-                The Pro 2.0 Game Jersey is an updated look on the Pro Jersey (which has become an instant classic). The sleeve cuff remains to keep the same look as the original, but full game sleeves finish off the look. Updated side paneling give a fresh look and the mesh inserts to allow air to pass through the garment to alleviate heat and moisture. This jersey can also be made reversible for both home and away.
-            </p>
-        </div>
-
-        <!-- Right Column (Image Section) -->
-        <div class="col-12 col-md-6 text-center">
-            <img id="main-image"
-                src="{{ asset('images/teamwear/mensGameJerseys/PRO20GAMEJERSEY/PRO20GAMEJERSEYFront_2048x2048.webp') }}"
-                alt="Pro 2.0 Jersey"
-                class="main-image img-fluid rounded shadow-sm mb-4"
-                style="max-height: 480px; object-fit: contain;">
-
-            <!-- Thumbnails -->
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PRO20GAMEJERSEY/PRO20GAMEJERSEYFront_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PRO20GAMEJERSEY/PRO20GAMEJERSEYBack_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PRO20GAMEJERSEY/PRO20GAMEJERSEYLeft_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PRO20GAMEJERSEY/PRO20GAMEJERSEYRight_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PRO GAME JERSEY -->
-<section id="pro-jersey" class="container-fluid py-5 px-md-5" style="background-color: #f7f7f7;">
-    <div class="row align-items-center g-5">
-
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 text-center">
-            <img id="main-image"
-                src="{{ asset('images/teamwear/mensGameJerseys/PROGAMEJERSEY/PROGAMEJERSEYBack_2048x2048.webp') }}"
-                alt="Pro Jersey"
-                class="main-image img-fluid rounded shadow-sm mb-4"
-                style="max-height: 480px; object-fit: contain;">
-
-            <!-- Thumbnails -->
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PROGAMEJERSEY/PROGAMEJERSEYFront_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PROGAMEJERSEY/PROGAMEJERSEYBack_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PROGAMEJERSEY/PROGAMEJERSEYLeft_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensGameJerseys/PROGAMEJERSEY/PROGAMEJERSEYRight_2048x2048.webp') }}"
-                    class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-            </div>
-        </div>
-
-        <!-- Right Column (Text Section) -->
-        <div class="col-12 col-md-6">
-            <!-- Outlined Heading -->
-            <div class="border rounded-pill text-center py-2 px-4 mb-4"
-                style="border: 2px solid #cfcfcf; display: inline-block; background-color: #fff;">
-                <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">Pro Game Jersey</h2>
-            </div>
-
-            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8;">
-                The Pro Jersey has been popularized by some of the nation’s top collegiate programs. Featuring abbreviated sleeves,
-                the Pro Jersey is designed to allow greater range of motion and comfort. The back panel is mesh to allow air to pass
-                through the garment to alleviate heat and moisture. This jersey can also be made reversible for both home and away.
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- FRONTIER GAME JERSEY -->
-<section id="pro2-jersey" class="container-fluid py-5 px-md-5">
-    <div class="row align-items-center g-5">
-
-        <!-- Left Column (Text Section) -->
-        <div class="col-12 col-md-6">
-            <!-- Outlined Heading -->
-            <div class="border rounded-pill text-center py-2 px-4 mb-4"
-                style="border: 2px solid #cfcfcf; display: inline-block; background-color: #fff;">
-                <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">FRONTIER GAME JERSEY</h2>
-            </div>
-            <h5>DESIGNER'S NOTES</h5>
-            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8;">
-                The Frontier Jersey is our most technical and traditional game jersey. The back panel is VentTek from the top shoulder to the bottom of the garment, designed to keep the athlete cool on the field. Contrast piping and paneling along the collar also add unique color pops, while maintaining legality for NCAA and NFHS regulations.
-            </p>
-        </div>
-
-        <!-- Right Column (Image Section) -->
-        <div class="col-12 col-md-6 text-center">
-            <img id="main-image"
-                src="{{ asset('images/teamwear/mensGameJerseys/FRONTIERGAMEJERSEY.jpg') }}"
-                alt="Pro 2.0 Jersey"
-                class="main-image img-fluid rounded shadow-sm mb-4"
-                style="max-height: 480px; object-fit: contain;">
-        </div>
-    </div>
-</section>
-
-<!-- BOX SWEATER -->
-<section id="pro-jersey" class="container-fluid py-5 px-md-5" style="background-color: #f7f7f7;">
-    <div class="row align-items-center g-5">
-
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 text-center">
-            <img id="main-image"
-                src="{{ asset('images/teamwear/mensGameJerseys/BOXSWEATER.jpg') }}"
-                alt="Pro Jersey"
-                class="main-image img-fluid rounded shadow-sm mb-4"
-                style="max-height: 480px; object-fit: contain;">
-        </div>
-
-        <!-- Right Column (Text Section) -->
-        <div class="col-12 col-md-6">
-            <!-- Outlined Heading -->
-            <div class="border rounded-pill text-center py-2 px-4 mb-4"
-                style="border: 2px solid #cfcfcf; display: inline-block; background-color: #fff;">
-                <h2 class="fw-normal text-uppercase m-0" style="letter-spacing: 1px;">BOX SWEATER</h2>
-            </div>
-
-            <p class="text-secondary" style="font-size: 1rem; line-height: 1.8;">
-                The Box Sweater was created specifically for the demands of the indoor game.
-                Its fit allows for all the necessary protective equipment, but is snug enough to prohibit defenders from grabbing your jersey to slow you down.
-                Two ply shoulders help brace the impact of cross checks and five minute majors.
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- CUSTOMIZE YOUR LOOK -->
-<section id="custom-team-apparel" class="container-fluid px-0">
-    <div class="row g-0">
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column align-items-center">
-            <h2 class="display-4">CUSTOMIZE YOUR LOOK</h2>
-            <!-- Main Image -->
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYRight_2048x2048.webp') }}" class="img-fluid w-100 mb-3" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
-
-        <!-- Right Column (Text Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-            <h2 class="display-4">Get in touch</h2>
-
-            <!-- Contact Form for Customization -->
-            <form action="/submit-form" method="POST">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" required>
+                    <div class="wr-product__thumbs" aria-label="{{ $product['title'] }} image gallery">
+                        @foreach ($product['images'] as $imageIndex => $image)
+                            <button
+                                type="button"
+                                class="wr-product__thumb {{ $imageIndex === 0 ? 'is-active' : '' }}"
+                                data-gallery-thumb
+                                aria-label="View {{ $product['title'] }} image {{ $imageIndex + 1 }}"
+                            >
+                                <img src="{{ asset($image) }}" alt="" loading="lazy">
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="phone">Phone:</label>
-                    <input type="text" class="form-control" id="phone" placeholder="Enter your phone number" name="phone">
+
+                <div class="wr-product__copy">
+                    <h2 class="wr-product__title">{{ $product['title'] }}</h2>
+                    <p class="wr-product__description">{{ $product['description'] }}</p>
+
+                    <ul class="wr-product__features">
+                        @foreach ($product['features'] as $feature)
+                            <li>{{ $feature }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email address" name="email" required>
+            </div>
+        </section>
+    @endforeach
+
+    <section class="wr-customize">
+        <div class="wr-customize__visual">
+            <h2 class="wr-section-title">CUSTOMIZE YOUR LOOK</h2>
+
+            <div class="wr-custom-slider" data-custom-slider>
+                <div class="wr-custom-slider__viewport">
+                    @foreach ($customizeImages as $imageIndex => $image)
+                        <img
+                            class="wr-custom-slider__slide {{ $imageIndex === 0 ? 'is-active' : '' }}"
+                            src="{{ asset($image) }}"
+                            alt="Women's custom lacrosse apparel design {{ $imageIndex + 1 }}"
+                            loading="lazy"
+                        >
+                    @endforeach
                 </div>
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea class="form-control" id="message" placeholder="I’m interested in shooter shirts..." name="message" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn btn-danger">Submit</button>
+
+                <button type="button" class="wr-custom-slider__nav wr-custom-slider__nav--prev" data-custom-prev aria-label="Previous design">‹</button>
+                <button type="button" class="wr-custom-slider__nav wr-custom-slider__nav--next" data-custom-next aria-label="Next design">›</button>
+            </div>
+        </div>
+
+        <div class="wr-customize__form-wrap">
+            <h2 class="wr-section-title">Get in touch</h2>
+
+            <form class="wr-contact-form" onsubmit="event.preventDefault();">
+                <label for="wr-name">Name:</label>
+                <input type="text" id="wr-name" name="name" placeholder="Enter your name" required>
+
+                <label for="wr-phone">Phone:</label>
+                <input type="text" id="wr-phone" name="phone" placeholder="Enter your phone number" required>
+
+                <label for="wr-email">Email:</label>
+                <input type="email" id="wr-email" name="email" placeholder="Enter your email address" required>
+
+                <label for="wr-message">Message:</label>
+                <textarea id="wr-message" name="message" placeholder="I'M INTERESTED IN SHOOTER SHIRTS......"></textarea>
+
+                <button type="submit">Submit</button>
             </form>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Bottom GALERY -->
-<section id="custom-team-apparel" class="container-fluid px-0">
-    <div class="row g-0">
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column align-items-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage1.avif') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
-
-        <!-- Right Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage2.avif') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
-    </div>
-    <div class="row g-0">
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-4 d-flex flex-column align-items-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage3.avif') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
+    <section class="wr-lookbook" aria-label="Women's apparel design gallery">
+        <div class="wr-lookbook__row wr-lookbook__row--two">
+            @foreach ($lookbookTop as $imageIndex => $image)
+                <div class="wr-lookbook__item">
+                    <img src="{{ asset($image) }}" alt="Women's lacrosse apparel inspiration {{ $imageIndex + 1 }}" loading="lazy">
+                </div>
+            @endforeach
         </div>
 
-        <!-- Middle Column (Image Section) -->
-        <div class="col-12 col-md-4 d-flex flex-column justify-content-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage4.avif') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
+        <div class="wr-lookbook__row wr-lookbook__row--three">
+            @foreach ($lookbookBottom as $imageIndex => $image)
+                <div class="wr-lookbook__item">
+                    <img src="{{ asset($image) }}" alt="Women's lacrosse apparel inspiration {{ $imageIndex + 3 }}" loading="lazy">
+                </div>
+            @endforeach
         </div>
-        <!-- Right Column (Image Section) -->
-        <div class="col-12 col-md-4 d-flex flex-column justify-content-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage5.avif') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
-    </div>
-    <div class="row g-0">
-        <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column align-items-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage6.jpg') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
+    </section>
 
-        <!-- Right Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
-            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/bottomBackgrounedImage7.jpg') }}" class="img-fluid w-100" alt="Main Product Image"
-                style="object-fit: cover; width: 100%; height: 100%;">
-        </div>
-    </div>
-</section>
+    <section class="wr-resource-grid" aria-label="Encore apparel resources">
+        @foreach ($resourceCards as $card)
+            <a class="wr-resource-card" href="{{ $card['url'] }}">
+                <img src="{{ asset($card['image']) }}" alt="{{ $card['label'] }}" loading="lazy">
+                <span class="wr-resource-card__label">{{ $card['label'] }}</span>
+            </a>
+        @endforeach
+    </section>
+</div>
 
 <script>
-    function changeImage(thumbnail) {
-        // Get the image source of the clicked thumbnail
-        var imagePath = thumbnail.src;
-        // Find the main image in the same section by using the parent section's class or ID
-        var section = thumbnail.closest('section'); // Find the closest parent section
-        var mainImage = section.querySelector('.main-image'); // Find the main image inside this section
+(function () {
+    document.querySelectorAll('[data-product-gallery]').forEach(function (gallery) {
+        var main = gallery.querySelector('[data-gallery-main]');
+        var thumbs = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
 
-        // Update the main image source
-        mainImage.src = imagePath;
-    }
+        thumbs.forEach(function (thumb) {
+            thumb.addEventListener('click', function () {
+                var image = thumb.querySelector('img');
+                if (!image || !main) return;
+
+                main.src = image.src;
+                thumbs.forEach(function (item) {
+                    item.classList.remove('is-active');
+                });
+                thumb.classList.add('is-active');
+            });
+        });
+    });
+
+    document.querySelectorAll('[data-custom-slider]').forEach(function (slider) {
+        var slides = Array.from(slider.querySelectorAll('.wr-custom-slider__slide'));
+        var previous = slider.querySelector('[data-custom-prev]');
+        var next = slider.querySelector('[data-custom-next]');
+        var current = 0;
+        var timer;
+
+        if (slides.length < 2) return;
+
+        function show(index) {
+            current = (index + slides.length) % slides.length;
+            slides.forEach(function (slide, slideIndex) {
+                slide.classList.toggle('is-active', slideIndex === current);
+            });
+        }
+
+        function restart() {
+            window.clearInterval(timer);
+            timer = window.setInterval(function () {
+                show(current + 1);
+            }, 5000);
+        }
+
+        previous.addEventListener('click', function () {
+            show(current - 1);
+            restart();
+        });
+
+        next.addEventListener('click', function () {
+            show(current + 1);
+            restart();
+        });
+
+        restart();
+    });
+})();
 </script>
-
 @endsection
