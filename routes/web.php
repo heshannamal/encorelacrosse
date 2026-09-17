@@ -9,61 +9,123 @@ use App\Http\Controllers\InternationalController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-// Route::get('/shop/mens-tops', function () { return view('shop.mens_tops'); })->name('shop.mens-tops');
+/*
+|--------------------------------------------------------------------------
+| Live Encore URL structure
+|--------------------------------------------------------------------------
+| Keep the Laravel route names used throughout the Blade files, while making
+| the public URLs match encorelacrosse.com exactly.
+*/
 
-Route::prefix('shop')->name('shop.')->group(function () {
-    Route::get('/mens-tops', [ShopController::class, 'mensTops'])->name('mens-tops');
-    Route::get('/mens-bottoms', [ShopController::class, 'mensBottoms'])->name('mens-bottoms');
-    Route::get('/womens-tops', [ShopController::class, 'womensTops'])->name('womens-tops');
-    Route::get('/womens-bottoms', [ShopController::class, 'womensBottoms'])->name('womens-bottoms');
-    Route::get('/hats', [ShopController::class, 'hats'])->name('hats');
-    Route::get('/bags', [ShopController::class, 'bags'])->name('bags');
-});
+// Shop
+Route::get('/collections/all-products', [ShopController::class, 'mensTops'])->name('shop.allProducts');
+Route::get('/pages/mens-tops', [ShopController::class, 'mensTops'])->name('shop.mens-tops');
+Route::get('/pages/mens-bottoms', [ShopController::class, 'mensBottoms'])->name('shop.mens-bottoms');
+Route::get('/pages/womens-top', [ShopController::class, 'womensTops'])->name('shop.womens-tops');
+Route::get('/pages/womens-bottoms', [ShopController::class, 'womensBottoms'])->name('shop.womens-bottoms');
+Route::get('/pages/hats', [ShopController::class, 'hats'])->name('shop.hats');
+Route::get('/pages/bags-encore', [ShopController::class, 'bags'])->name('shop.bags');
 
-Route::prefix('teamwear')->name('teamwear.')->group(function () {
-    Route::get('/', [TeamwearController::class, 'allTeamwear'])->name('allTeamwear');
-    Route::get('/mensGameJerseys', [TeamwearController::class, 'mensGameJerseys'])->name('mensGameJerseys');
-    Route::get('/mensShorts', [TeamwearController::class, 'mensShorts'])->name('mensShorts');
-    Route::get('/mensShooters', [TeamwearController::class, 'mensShooters'])->name('mensShooters');
-    Route::get('/mensReversibles', [TeamwearController::class, 'mensReversibles'])->name('mensReversibles');
-    Route::get('/womensRacerbacks', [TeamwearController::class, 'womensRacerbacks'])->name('womensRacerbacks');
-    Route::get('/womensShortsKilts', [TeamwearController::class, 'womensShortsKilts'])->name('womensShortsKilts');
-    Route::get('/womensShooters', [TeamwearController::class, 'womensShooters'])->name('womensShooters');
-    Route::get('/outerwear', [TeamwearController::class, 'outerwear'])->name('outerwear');
-    Route::get('/hoodies', [TeamwearController::class, 'hoodies'])->name('hoodies');
-    Route::get('/joggersSweats', [TeamwearController::class, 'joggersSweats'])->name('joggersSweats');
-    Route::get('/lpp', [TeamwearController::class, 'lpp'])->name('lpp');
-});
+// Teamwear
+Route::get('/pages/teamwear', [TeamwearController::class, 'allTeamwear'])->name('teamwear.index');
+Route::get('/pages/team-wear', [TeamwearController::class, 'allTeamwear'])->name('teamwear.allTeamwear');
+Route::get('/pages/mens-game-jerseys', [TeamwearController::class, 'mensGameJerseys'])->name('teamwear.mensGameJerseys');
+Route::get('/pages/mens-shorts', [TeamwearController::class, 'mensShorts'])->name('teamwear.mensShorts');
+Route::get('/pages/mens-shooter-shirts', [TeamwearController::class, 'mensShooters'])->name('teamwear.mensShooters');
+Route::get('/pages/mens-reversibles', [TeamwearController::class, 'mensReversibles'])->name('teamwear.mensReversibles');
+Route::get('/pages/womens-game-jerseys', [TeamwearController::class, 'womensRacerbacks'])->name('teamwear.womensRacerbacks');
+Route::get('/pages/womens-shorts-and-kilts', [TeamwearController::class, 'womensShortsKilts'])->name('teamwear.womensShortsKilts');
+Route::get('/pages/womens-shooter-shirts', [TeamwearController::class, 'womensShooters'])->name('teamwear.womensShooters');
+Route::get('/pages/outerwear', [TeamwearController::class, 'outerwear'])->name('teamwear.outerwear');
+Route::get('/pages/hoodies', [TeamwearController::class, 'hoodies'])->name('teamwear.hoodies');
+Route::get('/pages/joggers-and-sweatpants', [TeamwearController::class, 'joggersSweats'])->name('teamwear.joggersSweats');
+Route::get('/pages/lpp', [TeamwearController::class, 'lpp'])->name('teamwear.lpp');
 
-Route::prefix('custom')->name('custom.')->group(function() {
-    Route::get('/team-stores', [CustomController::class, 'teamStores'])->name('teamStores');
-    Route::get('/custom-graphic-design', [CustomController::class, 'customGraphicDesign'])->name('customGraphicDesign');
-    Route::get('/sizing-charts', [CustomController::class, 'sizingCharts'])->name('sizingCharts');
-    Route::get('/fabric', [CustomController::class, 'fabric'])->name('fabric');
-    Route::get('/embellishment', [CustomController::class, 'embellishment'])->name('embellishment');
-});
+// Custom
+Route::get('/pages/team-store', [CustomController::class, 'teamStores'])->name('custom.teamStores');
+Route::get('/pages/custom-graphic-design', [CustomController::class, 'customGraphicDesign'])->name('custom.customGraphicDesign');
+Route::get('/pages/sizing', [CustomController::class, 'sizingCharts'])->name('custom.sizingCharts');
+Route::get('/pages/fabric', [CustomController::class, 'fabric'])->name('custom.fabric');
+Route::get('/pages/embellishment', [CustomController::class, 'embellishment'])->name('custom.embellishment');
 
-Route::prefix('events')->name('events.')->group(function () {
-    Route::get('/battle-of-the-bay', [EventController::class, 'battleOfTheBay'])->name('battleOfTheBay');
-    Route::get('/impact10-showcase', [EventController::class, 'impact10Showcase'])->name('impact10Showcase');
-    Route::get('/hawaii-youth-lacrosse-classic', [EventController::class, 'hawaiiYouthLacrosseClassic'])->name('hawaiiYouthLacrosseClassic');
-    Route::get('/las-vegas-lacrosse-showcase', [EventController::class, 'lasVegasLacrosseShowcase'])->name('lasVegasLacrosseShowcase');
-    Route::get('/kings-showcase', [EventController::class, 'kingsShowcase'])->name('kingsShowcase');
-    Route::get('/buffalo-wings-box-lacrosse', [EventController::class, 'buffaloWingsBoxLacrosse'])->name('buffaloWingsBoxLacrosse');
-});
+// Events
+Route::get('/pages/battle-of-the-bay', [EventController::class, 'battleOfTheBay'])->name('events.battleOfTheBay');
+Route::get('/pages/impact10-showcase', [EventController::class, 'impact10Showcase'])->name('events.impact10Showcase');
+Route::get('/pages/hawaii-youth-lacrosse-classic', [EventController::class, 'hawaiiYouthLacrosseClassic'])->name('events.hawaiiYouthLacrosseClassic');
+Route::get('/pages/las-vegas-ls', [EventController::class, 'lasVegasLacrosseShowcase'])->name('events.lasVegasLacrosseShowcase');
+Route::get('/pages/kings-showcase', [EventController::class, 'kingsShowcase'])->name('events.kingsShowcase');
+Route::get('/pages/box-lacrosse', [EventController::class, 'buffaloWingsBoxLacrosse'])->name('events.buffaloWingsBoxLacrosse');
 
-Route::prefix('international')->name('international.')->group(function () {
-    Route::get('/sri-lanka', [InternationalController::class, 'sriLanka'])->name('sriLanka');
-    Route::get('/philippines', [InternationalController::class, 'philippines'])->name('philippines');
-    Route::get('/ecuador', [InternationalController::class, 'ecuador'])->name('ecuador');
-    Route::get('/uganda', [InternationalController::class, 'uganda'])->name('uganda');
-    Route::get('/japan', [InternationalController::class, 'japan'])->name('japan');
-    Route::get('/berlin', [InternationalController::class, 'berlin'])->name('berlin');
-    Route::get('/colombia', [InternationalController::class, 'colombia'])->name('colombia');
-    Route::get('/trinidad-and-tobago', [InternationalController::class, 'trinidadAndTobago'])->name('trinidadAndTobago');
-});
+// International
+Route::get('/pages/international', [InternationalController::class, 'sriLanka'])->name('international.index');
+Route::get('/pages/sri-lanka', [InternationalController::class, 'sriLanka'])->name('international.sriLanka');
+Route::get('/pages/philippines', [InternationalController::class, 'philippines'])->name('international.philippines');
+Route::get('/pages/ecuador', [InternationalController::class, 'ecuador'])->name('international.ecuador');
+Route::get('/pages/uganda', [InternationalController::class, 'uganda'])->name('international.uganda');
+Route::get('/pages/japan', [InternationalController::class, 'japan'])->name('international.japan');
+Route::get('/pages/berlin', [InternationalController::class, 'berlin'])->name('international.berlin');
+Route::get('/pages/colombia', [InternationalController::class, 'colombia'])->name('international.colombia');
+Route::get('/pages/trinidad-tobago-lacrosse', [InternationalController::class, 'trinidadAndTobago'])->name('international.trinidadAndTobago');
 
-Route::get('/about', function() { return view('about'); })->name('about');
-Route::get('/private-training', function() { return view('private-training'); })->name('privateTraining');
+// Standalone pages
+Route::get('/pages/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/pages/private-training', function () {
+    return view('private-training');
+})->name('privateTraining');
+
+/*
+|--------------------------------------------------------------------------
+| Legacy local URL redirects
+|--------------------------------------------------------------------------
+| These keep old development links/bookmarks working while the canonical
+| routes above now use the same paths as the live site.
+*/
+Route::redirect('/shop/mens-tops', '/pages/mens-tops', 301);
+Route::redirect('/shop/mens-bottoms', '/pages/mens-bottoms', 301);
+Route::redirect('/shop/womens-tops', '/pages/womens-top', 301);
+Route::redirect('/shop/womens-bottoms', '/pages/womens-bottoms', 301);
+Route::redirect('/shop/hats', '/pages/hats', 301);
+Route::redirect('/shop/bags', '/pages/bags-encore', 301);
+
+Route::redirect('/teamwear', '/pages/team-wear', 301);
+Route::redirect('/teamwear/mensGameJerseys', '/pages/mens-game-jerseys', 301);
+Route::redirect('/teamwear/mensShorts', '/pages/mens-shorts', 301);
+Route::redirect('/teamwear/mensShooters', '/pages/mens-shooter-shirts', 301);
+Route::redirect('/teamwear/mensReversibles', '/pages/mens-reversibles', 301);
+Route::redirect('/teamwear/womensRacerbacks', '/pages/womens-game-jerseys', 301);
+Route::redirect('/teamwear/womensShortsKilts', '/pages/womens-shorts-and-kilts', 301);
+Route::redirect('/teamwear/womensShooters', '/pages/womens-shooter-shirts', 301);
+Route::redirect('/teamwear/outerwear', '/pages/outerwear', 301);
+Route::redirect('/teamwear/hoodies', '/pages/hoodies', 301);
+Route::redirect('/teamwear/joggersSweats', '/pages/joggers-and-sweatpants', 301);
+Route::redirect('/teamwear/lpp', '/pages/lpp', 301);
+
+Route::redirect('/custom/team-stores', '/pages/team-store', 301);
+Route::redirect('/custom/custom-graphic-design', '/pages/custom-graphic-design', 301);
+Route::redirect('/custom/sizing-charts', '/pages/sizing', 301);
+Route::redirect('/custom/fabric', '/pages/fabric', 301);
+Route::redirect('/custom/embellishment', '/pages/embellishment', 301);
+
+Route::redirect('/events/battle-of-the-bay', '/pages/battle-of-the-bay', 301);
+Route::redirect('/events/impact10-showcase', '/pages/impact10-showcase', 301);
+Route::redirect('/events/hawaii-youth-lacrosse-classic', '/pages/hawaii-youth-lacrosse-classic', 301);
+Route::redirect('/events/las-vegas-lacrosse-showcase', '/pages/las-vegas-ls', 301);
+Route::redirect('/events/kings-showcase', '/pages/kings-showcase', 301);
+Route::redirect('/events/buffalo-wings-box-lacrosse', '/pages/box-lacrosse', 301);
+
+Route::redirect('/international/sri-lanka', '/pages/sri-lanka', 301);
+Route::redirect('/international/philippines', '/pages/philippines', 301);
+Route::redirect('/international/ecuador', '/pages/ecuador', 301);
+Route::redirect('/international/uganda', '/pages/uganda', 301);
+Route::redirect('/international/japan', '/pages/japan', 301);
+Route::redirect('/international/berlin', '/pages/berlin', 301);
+Route::redirect('/international/colombia', '/pages/colombia', 301);
+Route::redirect('/international/trinidad-and-tobago', '/pages/trinidad-tobago-lacrosse', 301);
+
+Route::redirect('/about', '/pages/about', 301);
+Route::redirect('/private-training', '/pages/private-training', 301);
