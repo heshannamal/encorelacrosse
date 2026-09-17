@@ -30,12 +30,7 @@
                 'Fabric LatTek | ActionTek | HydroTek',
                 'Gathered style waistband',
             ],
-            'images' => [
-                'images/teamwear/womensShortsKilts/pro-kilt-front.webp',
-                'images/teamwear/womensShortsKilts/pro-kilt-back.webp',
-                'images/teamwear/womensShortsKilts/pro-kilt-right.webp',
-                'images/teamwear/womensShortsKilts/pro-kilt-left.webp',
-            ],
+            'images' => [],
         ],
         [
             'title' => "WOMEN'S PRO KILT",
