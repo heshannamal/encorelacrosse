@@ -4,7 +4,7 @@
 @php
     $pageHeading = "Women's Shooter Shirts";
     $formId = 'womens-shooters';
-    $heroImage = 'images/teamwear/landing/teamwear-07.webp';
+    $heroImage = 'images/teamwear/womensShooters/hero.jpg';
     $messagePlaceholder = "I'm interested in women's shooter shirts...";
 
     $products = [

@@ -4,7 +4,7 @@
 @php
     $pageHeading = 'Hoodies';
     $formId = 'hoodies';
-    $heroImage = 'images/teamwear/landing/teamwear-09.webp';
+    $heroImage = 'images/teamwear/hoodies/hero.jpg';
     $messagePlaceholder = "I'm interested in custom hoodies...";
 
     $products = [

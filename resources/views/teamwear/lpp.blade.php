@@ -4,7 +4,7 @@
 @php
     $pageHeading = 'LPP';
     $formId = 'lpp';
-    $heroImage = 'images/teamwear/landing/teamwear-13.webp';
+    $heroImage = 'images/teamwear/lpp/hero.jpg';
     $messagePlaceholder = "I'm interested in LPP gear...";
 
     $products = [

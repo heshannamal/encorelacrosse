@@ -4,7 +4,7 @@
 @php
     $pageHeading = "Women's Shorts & Kilts";
     $formId = 'womens-shorts-kilts';
-    $heroImage = 'images/teamwear/landing/teamwear-07.webp';
+    $heroImage = 'images/teamwear/womensShortsKilts/hero.jpg';
     $messagePlaceholder = "I'm interested in women's shorts and kilts...";
 
     $products = [

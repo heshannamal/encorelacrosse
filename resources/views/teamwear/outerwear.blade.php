@@ -4,7 +4,7 @@
 @php
     $pageHeading = 'Outerwear';
     $formId = 'outerwear';
-    $heroImage = 'images/teamwear/landing/teamwear-09.webp';
+    $heroImage = 'images/teamwear/outerwear/hero.jpg';
     $messagePlaceholder = "I'm interested in custom outerwear...";
 
     $products = [
