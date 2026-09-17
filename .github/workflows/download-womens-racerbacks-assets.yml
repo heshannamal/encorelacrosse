@@ -83,5 +83,5 @@ jobs:
             git rebase origin/main
             git push origin HEAD:main
           else
-            echo 'Women's Racerbacks images are already up to date.'
+            echo "Women's Racerbacks images are already up to date."
           fi
