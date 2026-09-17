@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
 
     @stack('styles')
+
+    {{-- Source/screenshot verified measurements loaded last so they stay authoritative. --}}
+    <link rel="stylesheet" href="{{ asset('css/reference.css') }}">
 </head>
 <body>
     @include('layouts.navbar')
