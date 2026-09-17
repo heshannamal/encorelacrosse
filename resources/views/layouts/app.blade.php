@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>{{ config('app.name', 'Encore Lacrosse Apparel') }}</title> -->
 
     <title>
         @if (isset($title) && !empty($title))
@@ -13,7 +12,6 @@
 
         {{ config('app.name', 'Encore') }} Lacrosse Apparel
     </title>
-
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +25,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Steelfish Regular:wght@500&display=swap" rel="stylesheet">
     <style>
-        /* Critical CSS for immediate rendering */
         body {
             font-family: 'Open Sans', sans-serif;
             color: #303030;
@@ -73,37 +70,11 @@
             text-align: center;
         }
 
-        /* .navbar-brand img {
-            height: 40px;
-        } */
-
-        footer {
-            background: #111;
-            color: #bbb;
-            padding: 2rem 0;
-        }
-
-        footer a {
-            color: #bbb;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: white;
-        }
-
         .carousel-item img {
             object-fit: cover;
             height: 100vh;
         }
 
-        /* .carousel-caption {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-        } */
-
-        /* Remove all spacing */
         .event-section {
             margin: 0;
             padding: 0;
@@ -122,7 +93,6 @@
             padding: 0;
         }
 
-        /* Card styling */
         .event-card {
             position: relative;
             overflow: hidden;
@@ -142,23 +112,19 @@
             filter: brightness(0.50);
         }
 
-        /* Centered button */
         .event-button {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            /* transform: translate(-50%, 0); */
             opacity: 0;
             transition: all 0.4s ease;
         }
 
         .event-card:hover .event-button {
             opacity: 1;
-            /* transform: translate(-50%, -5px); */
         }
 
-        /* Button style */
         .btn-danger {
             width: 100%;
             border-radius: 0;
@@ -185,60 +151,15 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center text-muted text-bold text-lg-start border-top mt-5" style="background-color:#d3d3d3;">
-        <div class="container py-4">
-            <!-- Top navigation links -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-auto">
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Shop</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Teamwear</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Custom</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Events</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">International</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">About</a>
-                    <a href="#" class="text-decoration-none text-dark text-uppercase mx-2 small">Private Training</a>
-                </div>
-            </div>
-
-            <!-- Social media icons -->
-            <div class="row justify-content-center mb-3">
-                <div class="col-auto">
-                    <a href="#" class="text-dark mx-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-dark mx-2"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="text-dark mx-2"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-dark mx-2"><i class="bi bi-youtube"></i></a>
-                </div>
-            </div>
-
-            <!-- Copyright -->
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <p class="small mb-1">© 2025 Encore Lacrosse Apparel | Powered by Encore Custom</p>
-                </div>
-            </div>
-
-            <!-- Payment icons -->
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <img src="visa.png" alt="Visa" class="mx-1" style="height:24px;">
-                    <img src="mastercard.png" alt="Mastercard" class="mx-1" style="height:24px;">
-                    <img src="paypal.png" alt="PayPal" class="mx-1" style="height:24px;">
-                    <img src="applepay.png" alt="Apple Pay" class="mx-1" style="height:24px;">
-                </div>
-            </div>
-        </div>
-    </footer>
+    @include('components.footer')
 
     <!-- Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- <link href="css/bootstrap-icons.css" rel="stylesheet"> -->
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="js/bootstrap.bundle.min.js"></script> -->
 
 </body>
 
