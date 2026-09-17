@@ -1,0 +1,87 @@
+name: Download Women's Racerbacks Assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/download-womens-racerbacks-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  download-assets:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Women's Racerbacks images
+        shell: bash
+        run: |
+          set -euo pipefail
+          target='public/images/teamwear/womensRacerbacks'
+          mkdir -p "$target"
+
+          download() {
+            local url="$1"
+            local output="$2"
+            echo "Downloading ${output}"
+            curl -L --fail --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 240 \
+              -A 'Mozilla/5.0' "$url" -o "$target/$output"
+          }
+
+          download 'https://ucarecdn.com/0824aa54-e7e7-4626-aaf2-d5f56f1ac0c4/-/format/auto/-/preview/3000x3000/-/quality/lighter/download%20_22_.webp' 'hero.webp'
+
+          download 'https://encorelacrosse.com/cdn/shop/files/CollegiateRacerbackFront_2048x2048.jpg?v=1688397732' 'collegiate-racerback-front.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/CollegiateRacerbackBack_2048x2048.jpg?v=1688397732' 'collegiate-racerback-back.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/CollegiateRacerbackRight_2048x2048.jpg?v=1688397732' 'collegiate-racerback-right.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/CollegiateRacerbackLeft_2048x2048.jpg?v=1688397732' 'collegiate-racerback-left.jpg'
+
+          download 'https://encorelacrosse.com/cdn/shop/files/ProRacerbackFront_2048x2048.jpg?v=1688397763' 'pro-racerback-front.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/ProRacerbackBackjpg_2048x2048.jpg?v=1688397763' 'pro-racerback-back.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/ProRacerbackRight_2048x2048.jpg?v=1688397763' 'pro-racerback-right.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/ProRacerbackLeft_2048x2048.jpg?v=1688397762' 'pro-racerback-left.jpg'
+
+          download 'https://encorelacrosse.com/cdn/shop/files/Women_sProGameJerseyFront_2048x2048.jpg?v=1688465524' 'womens-pro-game-jersey-front.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/Women_sProGameJerseyBack_2048x2048.jpg?v=1688465524' 'womens-pro-game-jersey-back.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/Women_sProGameJerseyright_2048x2048.jpg?v=1688465524' 'womens-pro-game-jersey-right.jpg'
+          download 'https://encorelacrosse.com/cdn/shop/files/Women_sProGameJerseyLeft_2048x2048.jpg?v=1688465523' 'womens-pro-game-jersey-left.jpg'
+
+          download 'https://ucarecdn.com/1827a219-97d1-401a-822e-bfa5406fff1c/-/format/auto/-/preview/3000x3000/-/quality/lighter/' 'customize-01.jpg'
+          download 'https://ucarecdn.com/1692bb9a-0261-434e-bf5d-b1d1dd13b037/-/format/auto/-/preview/3000x3000/-/quality/lighter/' 'customize-02.jpg'
+          download 'https://ucarecdn.com/f5a41143-0269-43c7-a463-f92ba6ec7d72/-/format/auto/-/preview/3000x3000/-/quality/lighter/' 'customize-03.jpg'
+          download 'https://ucarecdn.com/0ce163fa-7654-4ae4-90be-349516fc23c9/-/format/auto/-/preview/3000x3000/-/quality/lighter/' 'customize-04.jpg'
+          download 'https://ucarecdn.com/e6e7c1fd-4da9-4e66-8f91-2df38c30bf43/-/format/auto/-/preview/3000x3000/-/quality/lighter/download%20-%202021-08-06T010157.997.jpg' 'customize-05.jpg'
+
+          download 'https://ucarecdn.com/76dafb12-dd67-4e3e-b092-bea6106bad30/-/format/auto/-/preview/2560x2560/-/quality/lighter/' 'lookbook-01.jpg'
+          download 'https://ucarecdn.com/bedd3005-5303-4a06-864a-19ab21b05bb3/-/format/auto/-/preview/2560x2560/-/quality/lighter/' 'lookbook-02.jpg'
+          download 'https://ucarecdn.com/f63d1ec5-7ae8-4099-ac34-06a8e2b23f58/-/format/auto/-/preview/2560x2560/-/quality/lighter/' 'lookbook-03.jpg'
+          download 'https://ucarecdn.com/6c14bdb4-61b1-4fad-abc7-b366356d2e98/-/format/auto/-/preview/2560x2560/-/quality/lighter/' 'lookbook-04.jpg'
+          download 'https://ucarecdn.com/83d018aa-b3af-4464-8f0f-1d86469f119d/-/format/auto/-/preview/2560x2560/-/quality/lighter/' 'lookbook-05.jpg'
+
+          download 'https://ucarecdn.com/2f7356f7-c7c9-4cc1-8f32-086f0abae371/-/format/auto/-/preview/3000x3000/-/quality/lighter/Design%20copy.jpg' 'custom-graphic-design.jpg'
+          download 'https://ucarecdn.com/c056f0f4-44a5-40cc-baed-1d6a21112240/-/format/auto/-/preview/3000x3000/-/quality/lighter/Shop%20copy.jpg' 'shop-lifestyle-apparel.jpg'
+          download 'https://ucarecdn.com/4697da7c-58b1-43f8-a6c6-57fd05969643/-/format/auto/-/preview/3000x3000/-/quality/lighter/TeamSore%20copy.jpg' 'teamstore-delivery.jpg'
+          download 'https://ucarecdn.com/77f7b45b-f59f-4630-b76c-015b5b870df6/-/format/auto/-/preview/3000x3000/-/quality/lighter/Embellishment2.jpg' 'embellishment-types.jpg'
+          download 'https://ucarecdn.com/28983e22-f786-4144-8727-5038bb424dc3/-/format/auto/-/preview/3000x3000/-/quality/lighter/Sizing%20copy.jpg' 'sizing-guidelines.jpg'
+          download 'https://ucarecdn.com/f452a03f-1922-4ce0-a4a3-5353d40976be/-/format/auto/-/preview/3000x3000/-/quality/lighter/Fabric%20copy.jpg' 'fabrics.jpg'
+
+      - name: Commit downloaded images
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git status --porcelain public/images/teamwear/womensRacerbacks | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add public/images/teamwear/womensRacerbacks
+            git commit -m "Add local Women's Racerbacks page images"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          else
+            echo 'Women's Racerbacks images are already up to date.'
+          fi
