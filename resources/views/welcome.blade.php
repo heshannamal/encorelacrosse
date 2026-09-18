@@ -59,7 +59,7 @@
 </section>
 
 <!-- Event Card Section -->
-<section class="event-section">
+{{-- <section class="event-section">
     <div class="container-fluid p-0">
         <div class="row g-0">
             <!-- Card 1 -->
@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 <!-- Image Background -->
 <section class="video-bg position-relative" style="height: 100vh;">
