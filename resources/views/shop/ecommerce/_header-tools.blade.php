@@ -39,7 +39,7 @@
                 <h2 class="encore-shop-search-title">Search Products</h2>
                 <button type="button" class="encore-shop-search-close" id="encoreShopSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
             </div>
-            <form action="{{ request()->routeIs('shop.*') ? url()->current() : route('shop.mens-tops') }}" method="GET" class="encore-shop-search-form">
+            <form action="{{ route('search.results') }}" method="GET" class="encore-shop-search-form" role="search">
                 <input type="search" name="search" id="encoreShopSearchInput" value="{{ request('search') }}" placeholder="What are you looking for?" autocomplete="off">
                 <button type="submit" aria-label="Search"><i class="bi bi-search"></i></button>
             </form>
@@ -71,7 +71,7 @@
         var accountPopover=document.getElementById('encoreAccountPopover');
         var loggedIn=@json($encoreLoggedIn);
 
-        document.querySelectorAll('.encore-tool[aria-label="Search"], .encore-mobile-actions a[aria-label="Search"]').forEach(function(trigger){
+        document.querySelectorAll('.encore-tool[aria-label="Search"], .encore-tool[aria-label="Search products"], .encore-mobile-actions a[aria-label="Search"], .encore-mobile-actions a[aria-label="Search products"]').forEach(function(trigger){
             trigger.setAttribute('href','#');
             trigger.addEventListener('click',function(e){
                 e.preventDefault();
