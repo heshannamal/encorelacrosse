@@ -236,21 +236,21 @@
     <!-- Product 1 -->
     <div class="col-12 col-md-6 position-relative">
       <img src="images/featured 02.jpg" alt="Holster Armpads" class="img-fluid w-100" />
-      <div class="d-flex justify-content-between align-items-center bg-white bg-opacity-75 py-2 px-3 position-absolute bottom-0 w-100">
+      {{-- <div class="d-flex justify-content-between align-items-center bg-white bg-opacity-75 py-2 px-3 position-absolute bottom-0 w-100">
         <a href="#" class="btn btn-dark btn-sm text-uppercase fw-semibold">Shop Now</a>
         <span class="flex-grow-1 text-center fw-semibold">HOLSTER ARMPADS</span>
         <span class="fw-semibold">$80.00</span>
-      </div>
+      </div> --}}
     </div>
 
     <!-- Product 2 -->
     <div class="col-12 col-md-6 position-relative">
       <img src="images/featured 01.jpg" alt="Long Sleeve Shooter" class="img-fluid w-100" />
-      <div class="d-flex justify-content-between align-items-center bg-white bg-opacity-75 py-2 px-3 position-absolute bottom-0 w-100">
+      {{-- <div class="d-flex justify-content-between align-items-center bg-white bg-opacity-75 py-2 px-3 position-absolute bottom-0 w-100">
         <a href="#" class="btn btn-dark btn-sm text-uppercase fw-semibold">Shop Now</a>
         <span class="flex-grow-1 text-center fw-semibold">LONG SLEEVE SHOOTER</span>
         <span class="fw-semibold">$34.00</span>
-      </div>
+      </div> --}}
     </div>
   </div>
 </section>
