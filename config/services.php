@@ -45,4 +45,12 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'instagram' => [
+        'user_id' => env('INSTAGRAM_USER_ID'),
+        'access_token' => env('INSTAGRAM_ACCESS_TOKEN'),
+        'username' => env('INSTAGRAM_USERNAME', 'encorelacrosse'),
+        'version' => env('INSTAGRAM_API_VERSION', 'v25.0'),
+        'feed_limit' => env('INSTAGRAM_FEED_LIMIT', 8),
+    ],
+
 ];
