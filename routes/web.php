@@ -7,10 +7,15 @@ use App\Http\Controllers\CustomController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InternationalController;
+use App\Http\Controllers\InstagramFeedController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/api/instagram-feed', [InstagramFeedController::class, 'index'])
+    ->middleware('throttle:60,1')
+    ->name('instagram.feed');
 
 /*
 |--------------------------------------------------------------------------
