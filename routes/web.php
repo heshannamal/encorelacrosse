@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TeamwearController;
 use App\Http\Controllers\CustomController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InternationalController;
 
@@ -74,6 +75,17 @@ Route::get('/pages/about', function () {
 Route::get('/pages/private-training', function () {
     return view('private-training');
 })->name('privateTraining');
+
+// Public website inquiry/contact forms.
+Route::post('/contact', [ContactFormController::class, 'submit'])
+    ->middleware('throttle:6,1')
+    ->name('contact.submit');
+
+// Keep the old Teamwear form action working while all current forms use
+// route('contact.submit').
+Route::post('/submit-form', [ContactFormController::class, 'submit'])
+    ->middleware('throttle:6,1')
+    ->name('contact.submit.legacy');
 
 // Legacy local URL redirects
 Route::redirect('/shop/mens-tops', '/pages/mens-tops', 301);
