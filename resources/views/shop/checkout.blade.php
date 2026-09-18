@@ -23,10 +23,11 @@
 .ec-payment-card{margin-top:18px}
 .ec-payment-card-types{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:7px}
 .ec-card-type-input{position:absolute;opacity:0;pointer-events:none}
-.ec-card-type-label{min-height:28px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer;transition:opacity .18s ease,transform .18s ease}
-.ec-card-type-label:hover{opacity:.72;transform:translateY(-1px)}
-.ec-card-type-input:checked+.ec-card-type-label{border:0;box-shadow:none;background:transparent;opacity:1}
-.ec-card-type-input:not(:checked)+.ec-card-type-label{opacity:.7}
+.ec-card-type-label{min-width:74px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border:1px solid transparent;border-radius:7px;background:transparent;cursor:pointer;transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,opacity .18s ease,transform .18s ease}
+.ec-card-type-label:hover{border-color:#d7d7d7;background:#fafafa;opacity:1;transform:translateY(-1px)}
+.ec-card-type-input:checked+.ec-card-type-label{border-color:#222;background:#fff;box-shadow:0 0 0 2px rgba(34,34,34,.08);opacity:1}
+.ec-card-type-input:checked+.ec-card-type-label::after{content:'✓';margin-left:8px;color:#18885f;font-size:12px;font-weight:800;line-height:1}
+.ec-card-type-input:not(:checked)+.ec-card-type-label{opacity:.58}
 .ec-card-type-logo{width:auto;height:22px;display:block;object-fit:contain;pointer-events:none}
 .ec-card-number-wrap{position:relative}
 .ec-card-number-wrap .ec-input{padding-right:82px}
@@ -90,7 +91,7 @@
                             <label class="ec-label">Accepted Cards</label>
                             <div class="ec-payment-card-types">
                                 <div>
-                                    <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required>
+                                    <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required checked>
                                     <label for="ecCardVisa" class="ec-card-type-label" title="Visa">
                                         <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa" class="ec-card-type-logo">
                                     </label>
