@@ -162,16 +162,334 @@
 
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-    const form=document.getElementById('ecBillingForm'),same=document.getElementById('ecSameAddress'),shipping=document.getElementById('ecShippingSection'),button=document.getElementById('ecBillingButton'),error=document.getElementById('ecBillingError'),badge=document.getElementById('ecBillingSavedBadge'),billingCountry=document.getElementById('ecBillingCountry'),shippingCountry=document.getElementById('ecShippingCountry');
-    function toggleShipping(){const show=!same.checked;shipping.hidden=!show;shipping.querySelectorAll('.ec-ship-required').forEach(input=>input.required=show)}
-    function syncCountries(){const b=billingCountry.options[billingCountry.selectedIndex];document.getElementById('ecBillingCountryName').value=b?.dataset?.countryName||'';const s=shippingCountry.options[shippingCountry.selectedIndex];document.getElementById('ecShippingCountryName').value=s?.dataset?.countryName||''}
-    function updateSummary(data){const p=data.payment||{},s=data.sub_payment||{};document.getElementById('sumQty').textContent=p.total_item_qty??0;document.getElementById('sumSubtotal').textContent='$'+(p.sub_total??'0.00');document.getElementById('sumTax').textContent='$'+(s.sales_tax??'0.00');document.getElementById('sumShipping').textContent='$'+(s.shipping_fee??'0.00');document.getElementById('sumProcessing').textContent='$'+(p.processing_fee??'0.00');document.getElementById('sumTotal').textContent='$'+(p.amount_to_pay??'0.00')}
-    same.addEventListener('change',toggleShipping);billingCountry.addEventListener('change',syncCountries);shippingCountry.addEventListener('change',syncCountries);syncCountries();toggleShipping();
-    form.addEventListener('submit',async function(event){event.preventDefault();error.style.display='none';syncCountries();if(!form.reportValidity())return;EncoreShopUI.buttonLoading(button,true,'Saving');EncoreShopUI.showLoader('Updating checkout');try{const response=await fetch(@json(route('checkout.billing')),{method:'POST',credentials:'same-origin',headers:{'Accept':'application/json','X-CSRF-TOKEN':form.querySelector('[name="_token"]').value},body:new FormData(form)});const data=await EncoreShopUI.json(response);if(data.requires_login){window.location.href=data.login_url;return}if(!data.success)throw new Error(data.message||'Unable to save details.');updateSummary(data.payment||{});badge.style.display='inline';EncoreShopUI.toast(data.message||'Details saved.','success')}catch(e){error.textContent=e.message;error.style.display='block';EncoreShopUI.toast(e.message,'error')}finally{EncoreShopUI.buttonLoading(button,false);EncoreShopUI.hideLoader()}});
+    const billingForm=document.getElementById('ecBillingForm');
+    const cardForm=document.getElementById('ecCardForm');
+    const sameAddress=document.getElementById('ecSameAddress');
+    const shippingSection=document.getElementById('ecShippingSection');
+    const billingButton=document.getElementById('ecBillingButton');
+    const payButton=document.getElementById('ecPayButton');
+    const billingError=document.getElementById('ecBillingError');
+    const paymentError=document.getElementById('ecPaymentError');
+    const savedBadge=document.getElementById('ecBillingSavedBadge');
+    const cardNumber=document.getElementById('ecCardNumber');
+    const cardCode=document.getElementById('ecCardCode');
+    const cardBrand=document.getElementById('ecCardBrand');
+    const billingCountry=document.getElementById('ecBillingCountry');
+    const billingCountryName=document.getElementById('ecBillingCountryName');
+    const shippingCountry=document.getElementById('ecShippingCountry');
+    const shippingCountryName=document.getElementById('ecShippingCountryName');
 
-    // A payment provider integration can dispatch this event after tokenization.
-    window.addEventListener('encore:payment-token',function(event){const detail=event.detail||{};if(!detail.token)return;document.getElementById('ecPaymentToken').value=detail.token;document.getElementById('ecPaymentMethod').value=detail.method||'';document.getElementById('ecPaymentTokenForm').style.display='block'});
-    document.getElementById('ecPaymentTokenForm').addEventListener('submit',async function(event){event.preventDefault();const payButton=document.getElementById('ecPayButton');EncoreShopUI.buttonLoading(payButton,true,'Processing');EncoreShopUI.showLoader('Processing payment');try{const data=await EncoreShopUI.json(await fetch(@json(route('checkout.place')),{method:'POST',credentials:'same-origin',headers:{'Accept':'application/json','X-CSRF-TOKEN':event.currentTarget.querySelector('[name="_token"]').value},body:new FormData(event.currentTarget)}));if(!data.success)throw new Error(data.message||'Payment could not be completed.');EncoreShopUI.toast(data.message||'Order placed.','success');setTimeout(()=>window.location.href=data.redirect||@json(route('allProduct')),300)}catch(e){EncoreShopUI.toast(e.message,'error')}finally{EncoreShopUI.buttonLoading(payButton,false);EncoreShopUI.hideLoader()}});
+    const csrf=@json(csrf_token());
+    const billingUrl=@json(route('checkout.billing'));
+    const placeOrderUrl=@json(route('checkout.place'));
+    const loginUrl=@json(route('login'));
+    const successUrl=@json(route('shop.mens-tops'));
+
+    const cardBrandImages={
+        1:@json(asset('images/payment/visa.svg')),
+        2:@json(asset('images/payment/mastercard.svg')),
+        3:@json(asset('images/payment/amex.svg'))
+    };
+
+    let billingSaved=@json($billingSaved);
+    let billingDirty=!billingSaved;
+    let paymentBusy=false;
+
+    function clearError(element){
+        if(!element)return;
+        element.style.display='none';
+        element.textContent='';
+    }
+
+    function showError(element,message){
+        if(!element)return;
+        element.textContent=message;
+        element.style.display='block';
+    }
+
+    function setBillingSaved(saved){
+        billingSaved=saved;
+        if(savedBadge)savedBadge.style.display=saved?'inline':'none';
+    }
+
+    function markBillingDirty(){
+        billingDirty=true;
+        setBillingSaved(false);
+    }
+
+    function syncCountryNames(){
+        if(billingCountry&&billingCountryName){
+            const option=billingCountry.options[billingCountry.selectedIndex];
+            billingCountryName.value=(option&&option.dataset)?(option.dataset.countryName||''):'';
+        }
+
+        if(shippingCountry&&shippingCountryName){
+            const option=shippingCountry.options[shippingCountry.selectedIndex];
+            shippingCountryName.value=(option&&option.dataset)?(option.dataset.countryName||''):'';
+        }
+    }
+
+    function toggleShipping(){
+        const show=!sameAddress.checked;
+        shippingSection.hidden=!show;
+        shippingSection.querySelectorAll('.ec-ship-required').forEach(function(input){
+            input.required=show;
+        });
+    }
+
+    function updateSummary(payload){
+        const currentPayment=(payload&&payload.payment)?payload.payment:{};
+        const currentSubPayment=(payload&&payload.sub_payment)?payload.sub_payment:{};
+
+        document.getElementById('sumQty').textContent=currentPayment.total_item_qty??0;
+        document.getElementById('sumSubtotal').textContent='$'+(currentPayment.sub_total??'0.00');
+        document.getElementById('sumTax').textContent='$'+(currentSubPayment.sales_tax??'0.00');
+        document.getElementById('sumShipping').textContent='$'+(currentSubPayment.shipping_fee??'0.00');
+        document.getElementById('sumProcessing').textContent='$'+(currentPayment.processing_fee??'0.00');
+        document.getElementById('sumTotal').textContent='$'+(currentPayment.amount_to_pay??'0.00');
+    }
+
+    function applySavedBilling(savedBilling){
+        if(!savedBilling||typeof savedBilling!=='object')return;
+
+        Object.entries(savedBilling).forEach(function(entry){
+            const name=entry[0];
+            const value=entry[1];
+            const input=billingForm.elements.namedItem(name);
+
+            if(!input||input.type==='checkbox')return;
+
+            if(value!==null&&value!==undefined){
+                input.value=value;
+            }
+        });
+
+        sameAddress.checked=Number(savedBilling.is_shipping_address_available??0)===0;
+        syncCountryNames();
+        toggleShipping();
+    }
+
+    async function saveBilling(options){
+        options=options||{};
+        const showToast=options.showToast!==false;
+        const showLoader=options.showLoader===true;
+
+        clearError(billingError);
+        syncCountryNames();
+
+        if(!billingForm.reportValidity()){
+            throw new Error('Please complete the required billing and shipping fields.');
+        }
+
+        if(showLoader){
+            EncoreShopUI.showLoader('Updating checkout');
+        }
+
+        EncoreShopUI.buttonLoading(billingButton,true,'Saving');
+
+        try{
+            const response=await fetch(billingUrl,{
+                method:'POST',
+                credentials:'same-origin',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRF-TOKEN':csrf
+                },
+                body:new FormData(billingForm)
+            });
+
+            const data=await EncoreShopUI.json(response);
+
+            if(data.requires_login){
+                window.location.href=data.login_url||loginUrl;
+                throw new Error('Your session has expired.');
+            }
+
+            if(!response.ok||!data.success){
+                throw new Error(data.message||'Unable to save your details.');
+            }
+
+            applySavedBilling(data.billing||{});
+            updateSummary(data.payment||{});
+
+            billingDirty=false;
+            setBillingSaved(true);
+
+            if(showToast){
+                EncoreShopUI.toast(data.message||'Details saved successfully.','success');
+            }
+
+            return data;
+        }finally{
+            EncoreShopUI.buttonLoading(billingButton,false);
+
+            if(showLoader){
+                EncoreShopUI.hideLoader();
+            }
+        }
+    }
+
+    sameAddress.addEventListener('change',function(){
+        toggleShipping();
+        markBillingDirty();
+    });
+
+    billingForm.addEventListener('input',markBillingDirty);
+
+    billingForm.addEventListener('change',function(event){
+        if(event.target!==sameAddress){
+            markBillingDirty();
+        }
+    });
+
+    if(billingCountry){
+        billingCountry.addEventListener('change',function(){
+            syncCountryNames();
+            markBillingDirty();
+        });
+    }
+
+    if(shippingCountry){
+        shippingCountry.addEventListener('change',function(){
+            syncCountryNames();
+            markBillingDirty();
+        });
+    }
+
+    syncCountryNames();
+    toggleShipping();
+
+    billingForm.addEventListener('submit',async function(event){
+        event.preventDefault();
+
+        try{
+            await saveBilling({
+                showToast:true,
+                showLoader:true
+            });
+        }catch(error){
+            showError(billingError,error.message);
+            EncoreShopUI.toast(error.message,'error');
+        }
+    });
+
+    function cleanCardNumber(){
+        return(cardNumber.value||'').replace(/[^0-9]/g,'');
+    }
+
+    function detectCardType(number){
+        if(/^4/.test(number)){
+            return{id:1,label:'Visa',image:cardBrandImages[1]};
+        }
+
+        if(/^(5[1-5]|2[2-7])/.test(number)){
+            return{id:2,label:'Mastercard',image:cardBrandImages[2]};
+        }
+
+        if(/^3[47]/.test(number)){
+            return{id:3,label:'American Express',image:cardBrandImages[3]};
+        }
+
+        return{id:0,label:'',image:''};
+    }
+
+    cardNumber.addEventListener('input',function(){
+        const digits=cleanCardNumber().slice(0,19);
+        cardNumber.value=digits.replace(/([0-9]{4})(?=[0-9])/g,'$1 ');
+
+        const detected=detectCardType(digits);
+
+        if(detected.image){
+            cardBrand.src=detected.image;
+            cardBrand.alt=detected.label;
+            cardBrand.hidden=false;
+        }else{
+            cardBrand.src='';
+            cardBrand.alt='';
+            cardBrand.hidden=true;
+        }
+
+        if(detected.id){
+            const radio=cardForm.querySelector('[name="card_type"][value="'+detected.id+'"]');
+            if(radio)radio.checked=true;
+        }
+    });
+
+    cardCode.addEventListener('input',function(){
+        cardCode.value=cardCode.value.replace(/[^0-9]/g,'').slice(0,4);
+    });
+
+    cardForm.addEventListener('submit',async function(event){
+        event.preventDefault();
+
+        if(paymentBusy)return;
+
+        clearError(paymentError);
+        clearError(billingError);
+
+        if(!billingForm.reportValidity()){
+            showError(paymentError,'Please complete the required billing and shipping fields.');
+            return;
+        }
+
+        if(!cardForm.reportValidity()){
+            showError(paymentError,'Please complete all card fields.');
+            return;
+        }
+
+        paymentBusy=true;
+        EncoreShopUI.buttonLoading(payButton,true,'Processing');
+        EncoreShopUI.showLoader('Processing payment');
+
+        try{
+            if(!billingSaved||billingDirty){
+                await saveBilling({
+                    showToast:false,
+                    showLoader:false
+                });
+            }
+
+            const response=await fetch(placeOrderUrl,{
+                method:'POST',
+                credentials:'same-origin',
+                headers:{
+                    'Accept':'application/json',
+                    'X-CSRF-TOKEN':csrf
+                },
+                body:new FormData(cardForm)
+            });
+
+            const data=await EncoreShopUI.json(response);
+
+            cardNumber.value='';
+            cardCode.value='';
+            cardBrand.src='';
+            cardBrand.alt='';
+            cardBrand.hidden=true;
+
+            if(data.requires_login){
+                window.location.href=data.login_url||loginUrl;
+                return;
+            }
+
+            if(!response.ok||!data.success){
+                throw new Error(data.message||'Payment could not be completed.');
+            }
+
+            EncoreShopUI.toast(data.message||'Order placed successfully!','success');
+
+            window.setTimeout(function(){
+                window.location.href=data.redirect||successUrl;
+            },350);
+        }catch(error){
+            showError(paymentError,error.message);
+            EncoreShopUI.toast(error.message,'error');
+        }finally{
+            paymentBusy=false;
+            EncoreShopUI.buttonLoading(payButton,false);
+            EncoreShopUI.hideLoader();
+        }
+    });
 });
 </script>
 @include('shop.ecommerce._cart-sync')
