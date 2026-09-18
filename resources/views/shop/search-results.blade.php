@@ -136,7 +136,7 @@
             @if($search !== '' && !$apiError)
                 <div class="encore-search-summary">
                     <strong>{{ $products->count() }}</strong>
-                    {{ IlluminateSupportStr::plural('product', $products->count()) }}
+                    {{ $products->count() === 1 ? 'product' : 'products' }}
                     found
                 </div>
             @endif
