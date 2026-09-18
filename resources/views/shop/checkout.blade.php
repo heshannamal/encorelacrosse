@@ -20,7 +20,7 @@
 
 <div class="ec-shop"><div class="ec-shop-shell">
     @include('shop.ecommerce._flash')
-    <header class="ec-page-heading"><div><div class="ec-shop-kicker">Checkout</div><h1 class="ec-shop-title">Checkout</h1><p class="ec-shop-subtitle">Save billing and shipping details and review your order totals.</p></div><a href="{{ route('cart') }}" class="ec-btn ec-btn-light"><i class="bi bi-arrow-left"></i> Back to Cart</a></header>
+    <header class="ec-page-heading"><div><div class="ec-shop-kicker">Secure Checkout</div><h1 class="ec-shop-title">Checkout</h1><p class="ec-shop-subtitle">Save billing and shipping details, then complete payment securely.</p></div><a href="{{ route('cart') }}" class="ec-btn ec-btn-light"><i class="bi bi-arrow-left"></i> Back to Cart</a></header>
 
     <div class="ec-two-col">
         <div>
@@ -56,6 +56,10 @@
                 </form>
             </div></section>
 
+            <section class="ec-card" style="margin-top:18px"><div class="ec-card-head"><h2 class="ec-card-title">Payment</h2><i class="bi bi-shield-lock"></i></div><div class="ec-card-body">
+                <div class="ec-payment-pending"><strong>Secure payment field connection required.</strong><br>The cart, customer login, billing, shipping and order totals are connected. To finish the final charge, connect your payment provider's hosted/tokenized card field and submit its token as <code>payment_token</code>.</div>
+                <form id="ecPaymentTokenForm" style="margin-top:15px;display:none">@csrf<input type="hidden" name="payment_token" id="ecPaymentToken"><input type="hidden" name="payment_method" id="ecPaymentMethod"><button type="submit" id="ecPayButton" class="ec-btn ec-btn-red ec-btn-full">Confirm & Pay</button></form>
+            </div></section>
         </div>
 
         <aside class="ec-summary"><h2>Payment Summary</h2><div class="ec-summary-line"><span>Items</span><strong id="sumQty">{{ data_get($payment,'total_item_qty',0) }}</strong></div><div class="ec-summary-line"><span>Subtotal</span><strong id="sumSubtotal">${{ data_get($payment,'sub_total','0.00') }}</strong></div><div class="ec-summary-line"><span>Sales Tax</span><strong id="sumTax">${{ data_get($subPayment,'sales_tax','0.00') }}</strong></div><div class="ec-summary-line"><span>Shipping</span><strong id="sumShipping">${{ data_get($subPayment,'shipping_fee','0.00') }}</strong></div><div class="ec-summary-line"><span>Processing Fee</span><strong id="sumProcessing">${{ data_get($payment,'processing_fee','0.00') }}</strong></div><div class="ec-summary-line ec-summary-total"><span>Total</span><strong id="sumTotal">${{ data_get($payment,'amount_to_pay','0.00') }}</strong></div></aside>
@@ -71,6 +75,9 @@ document.addEventListener('DOMContentLoaded',function(){
     same.addEventListener('change',toggleShipping);billingCountry.addEventListener('change',syncCountries);shippingCountry.addEventListener('change',syncCountries);syncCountries();toggleShipping();
     form.addEventListener('submit',async function(event){event.preventDefault();error.style.display='none';syncCountries();if(!form.reportValidity())return;EncoreShopUI.buttonLoading(button,true,'Saving');EncoreShopUI.showLoader('Updating checkout');try{const response=await fetch(@json(route('checkout.billing')),{method:'POST',credentials:'same-origin',headers:{'Accept':'application/json','X-CSRF-TOKEN':form.querySelector('[name="_token"]').value},body:new FormData(form)});const data=await EncoreShopUI.json(response);if(data.requires_login){window.location.href=data.login_url;return}if(!data.success)throw new Error(data.message||'Unable to save details.');updateSummary(data.payment||{});badge.style.display='inline';EncoreShopUI.toast(data.message||'Details saved.','success')}catch(e){error.textContent=e.message;error.style.display='block';EncoreShopUI.toast(e.message,'error')}finally{EncoreShopUI.buttonLoading(button,false);EncoreShopUI.hideLoader()}});
 
+    // A payment provider integration can dispatch this event after tokenization.
+    window.addEventListener('encore:payment-token',function(event){const detail=event.detail||{};if(!detail.token)return;document.getElementById('ecPaymentToken').value=detail.token;document.getElementById('ecPaymentMethod').value=detail.method||'';document.getElementById('ecPaymentTokenForm').style.display='block'});
+    document.getElementById('ecPaymentTokenForm').addEventListener('submit',async function(event){event.preventDefault();const payButton=document.getElementById('ecPayButton');EncoreShopUI.buttonLoading(payButton,true,'Processing');EncoreShopUI.showLoader('Processing payment');try{const data=await EncoreShopUI.json(await fetch(@json(route('checkout.place')),{method:'POST',credentials:'same-origin',headers:{'Accept':'application/json','X-CSRF-TOKEN':event.currentTarget.querySelector('[name="_token"]').value},body:new FormData(event.currentTarget)}));if(!data.success)throw new Error(data.message||'Payment could not be completed.');EncoreShopUI.toast(data.message||'Order placed.','success');setTimeout(()=>window.location.href=data.redirect||@json(route('allProduct')),300)}catch(e){EncoreShopUI.toast(e.message,'error')}finally{EncoreShopUI.buttonLoading(payButton,false);EncoreShopUI.hideLoader()}});
 });
 </script>
 @include('shop.ecommerce._cart-sync')
