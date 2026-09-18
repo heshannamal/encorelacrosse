@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerModuleSwitchController;
 use App\Http\Controllers\EncoreAuthController;
+use App\Http\Controllers\EncoreProfileController;
 use App\Http\Controllers\StorefrontController;
 use App\Http\Middleware\EnsureShopCustomerContext;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,8 @@ Route::prefix('collections')->group(function () {
 });
 
 Route::prefix('pages')->group(function () {
+    Route::get('/profile', [EncoreProfileController::class, 'show'])->name('profile');
+
     Route::middleware(EnsureShopCustomerContext::class)->group(function () {
         Route::get('/login', [EncoreAuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [EncoreAuthController::class, 'login'])->name('login.post');
