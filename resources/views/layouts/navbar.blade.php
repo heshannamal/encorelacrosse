@@ -9,7 +9,7 @@
         <nav class="encore-header-center" aria-label="Primary navigation">
             <ul class="encore-main-nav">
                 <li class="encore-nav-item has-dropdown">
-                    <a href="{{ url('/collections/all-products') }}" class="encore-nav-link">Shop <span class="encore-chevron"></span></a>
+                    <a href="{{ route('shop.mens-tops') }}" class="encore-nav-link">Shop <span class="encore-chevron"></span></a>
                     <ul class="encore-dropdown encore-dropdown-shop">
                         <li><a href="{{ route('shop.mens-tops') }}">Men's Tops</a></li>
                         <li><a href="{{ route('shop.mens-bottoms') }}">Men's Bottoms</a></li>
@@ -84,7 +84,7 @@
         </nav>
 
         <div class="encore-header-tools" aria-label="Header tools">
-            <a href="{{ route('allProduct') }}" class="encore-tool" aria-label="Search products"><i class="bi bi-search"></i></a>
+            <a href="{{ route('shop.mens-tops') }}" class="encore-tool" aria-label="Search products"><i class="bi bi-search"></i></a>
             <a href="{{ route('login') }}" class="encore-tool" aria-label="Account"><i class="bi bi-person"></i></a>
             <a href="{{ route('cart') }}" class="encore-tool encore-cart" aria-label="Cart">
                 <i class="bi bi-bag"></i>
@@ -99,7 +99,7 @@
         </a>
 
         <div class="encore-mobile-actions">
-            <a href="{{ route('allProduct') }}" aria-label="Search products"><i class="bi bi-search"></i></a>
+            <a href="{{ route('shop.mens-tops') }}" aria-label="Search products"><i class="bi bi-search"></i></a>
             <a href="{{ route('cart') }}" class="encore-mobile-cart" aria-label="Cart"><i class="bi bi-bag"></i><span data-encore-cart-count>0</span></a>
             <button class="encore-mobile-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#encoreMobileMenu" aria-controls="encoreMobileMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span></span><span></span><span></span>
@@ -107,7 +107,7 @@
         </div>
 
         <div class="collapse encore-mobile-menu" id="encoreMobileMenu">
-            <a href="{{ url('/collections/all-products') }}">Shop</a>
+            <a href="{{ route('shop.mens-tops') }}">Shop</a>
             <a href="{{ url('/pages/teamwear') }}">Teamwear</a>
             <a href="{{ url('/') }}">Custom</a>
             <a href="#">Events</a>
