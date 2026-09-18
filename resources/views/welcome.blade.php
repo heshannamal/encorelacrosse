@@ -257,13 +257,7 @@
 
 @include('components.servicesCarousel')
 
-<!-- Instagram Section -->
-<section class="text-center py-5">
-    <div class="container">
-        <h3 class="fw-bold mb-3">Follow Us on Instagram</h3>
-        <p class="mb-4">@encorelacrosse</p>
-        <a href="#" class="btn btn-outline-dark">VIEW INSTAGRAM FEED</a>
-    </div>
-</section>
+<!-- Instagram -->
+@include('components.instagram')
 
 @endsection
