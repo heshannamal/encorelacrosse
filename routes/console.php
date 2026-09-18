@@ -20,5 +20,4 @@ Artisan::command('inspire', function () {
 |
 */
 Schedule::command('instagram:refresh-token')
-    ->dailyAt('03:15')
-    ->withoutOverlapping();
+    ->dailyAt('03:15');
