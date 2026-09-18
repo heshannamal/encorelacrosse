@@ -21,3 +21,4 @@ jobs:
       - run: php -l routes/console.php
       - run: php artisan list | grep instagram:refresh-token
       - run: php artisan schedule:list
+      - run: php artisan schedule:list | grep instagram:refresh-token
