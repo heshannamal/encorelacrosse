@@ -15,24 +15,111 @@
 @include('shop.ecommerce._styles')
 @include('shop.ecommerce._loader')
 
+<style>
+    .ec-shop-catalog-intro{
+        padding:24px 32px 18px;
+        border-bottom:1px solid #ececec;
+        background:#fff;
+    }
+
+    .ec-shop-catalog-intro-inner{
+        width:min(1220px,100%);
+        margin:0 auto;
+        display:flex;
+        align-items:flex-end;
+        justify-content:space-between;
+        gap:24px;
+    }
+
+    .ec-shop-catalog-kicker{
+        margin-bottom:5px;
+        color:var(--ec-red);
+        font-family:'Oswald',sans-serif;
+        font-size:10px;
+        font-weight:400;
+        letter-spacing:.11em;
+        text-transform:uppercase;
+    }
+
+    .ec-shop-catalog-title{
+        margin:0;
+        color:#242424;
+        font-family:'Oswald',sans-serif;
+        font-size:clamp(28px,3vw,36px);
+        font-weight:400;
+        line-height:1.05;
+        letter-spacing:.01em;
+        text-transform:uppercase;
+    }
+
+    .ec-shop-catalog-subtitle{
+        margin:7px 0 0;
+        color:#7b7b7b;
+        font-size:12px;
+        line-height:1.6;
+    }
+
+    .ec-shop-catalog-count{
+        flex:0 0 auto;
+        padding:7px 11px;
+        border:1px solid #e2e2e2;
+        background:#fafafa;
+        color:#777;
+        font-size:11px;
+        white-space:nowrap;
+    }
+
+    .ec-shop-catalog-count strong{
+        color:#222;
+        font-weight:700;
+    }
+
+    .ec-shop .ec-shop-toolbar{
+        border-top:0;
+        box-shadow:0 2px 10px rgba(0,0,0,.025);
+    }
+
+    .ec-shop .ec-shop-toolbar-inner{
+        padding-top:11px;
+        padding-bottom:11px;
+    }
+
+    .ec-shop .ec-active-filters{
+        padding-top:12px;
+        padding-bottom:4px;
+    }
+
+    .ec-shop .encore-legacy-product-grid{
+        padding-top:22px;
+    }
+
+    @media(max-width:767.98px){
+        .ec-shop-catalog-intro{
+            padding:20px 14px 16px;
+        }
+
+        .ec-shop-catalog-intro-inner{
+            align-items:flex-start;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        .ec-shop-catalog-title{
+            font-size:28px;
+        }
+
+        .ec-shop-catalog-count{
+            padding:6px 9px;
+        }
+    }
+</style>
+
 <div class="ec-shop">
     @include('shop.ecommerce._flash')
 
     @if(!empty($apiError))
         <div class="ec-shop-message ec-shop-message-error">{{ $apiError }}</div>
     @endif
-
-    <div class="ec-shop-shell" style="padding-bottom:22px">
-        <div class="ec-shop-kicker">Encore Lacrosse Apparel</div>
-        <h1 class="ec-shop-title">{{ $searchTerm !== '' ? 'Search Results' : 'Shop All Products' }}</h1>
-        <p class="ec-shop-subtitle">
-            @if($searchTerm !== '')
-                Showing products matching &ldquo;{{ $searchTerm }}&rdquo;.
-            @else
-                Browse apparel, teamwear and training gear from the Encore inventory.
-            @endif
-        </p>
-    </div>
 
     <form method="GET" action="{{ route('allProduct') }}" class="ec-shop-toolbar" id="ecFilterForm">
         <div class="ec-shop-toolbar-inner">
@@ -107,13 +194,29 @@
         </div>
     @endif
 
-    <div style="padding:18px 32px 0;color:#777;font-size:12px;">
-        <strong style="color:#333;">{{ $products->count() }}</strong>
-        {{ $products->count() === 1 ? 'product' : 'products' }}
-        @if($searchTerm !== '')
-            found
-        @endif
-    </div>
+    <section class="ec-shop-catalog-intro">
+        <div class="ec-shop-catalog-intro-inner">
+            <div>
+                <div class="ec-shop-catalog-kicker">Encore Lacrosse Apparel</div>
+                <h1 class="ec-shop-catalog-title">{{ $searchTerm !== '' ? 'Search Results' : 'Shop All Products' }}</h1>
+                <p class="ec-shop-catalog-subtitle">
+                    @if($searchTerm !== '')
+                        Showing products matching &ldquo;{{ $searchTerm }}&rdquo;.
+                    @else
+                        Browse apparel, teamwear and training gear from the Encore inventory.
+                    @endif
+                </p>
+            </div>
+
+            <div class="ec-shop-catalog-count">
+                <strong>{{ $products->count() }}</strong>
+                {{ $products->count() === 1 ? 'product' : 'products' }}
+                @if($searchTerm !== '')
+                    found
+                @endif
+            </div>
+        </div>
+    </section>
 
     @include('shop.ecommerce._legacy-product-grid', ['apiError' => null])
 </div>
