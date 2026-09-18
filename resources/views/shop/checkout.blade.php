@@ -75,10 +75,85 @@
                 </form>
             </div></section>
 
-            <section class="ec-card" style="margin-top:18px"><div class="ec-card-head"><h2 class="ec-card-title">Payment</h2><i class="bi bi-shield-lock"></i></div><div class="ec-card-body">
-                <div class="ec-payment-pending"><strong>Secure payment field connection required.</strong><br>The cart, customer login, billing, shipping and order totals are connected. To finish the final charge, connect your payment provider's hosted/tokenized card field and submit its token as <code>payment_token</code>.</div>
-                <form id="ecPaymentTokenForm" style="margin-top:15px;display:none">@csrf<input type="hidden" name="payment_token" id="ecPaymentToken"><input type="hidden" name="payment_method" id="ecPaymentMethod"><button type="submit" id="ecPayButton" class="ec-btn ec-btn-red ec-btn-full">Confirm & Pay</button></form>
-            </div></section>
+            <section class="ec-card ec-payment-card">
+                <div class="ec-card-head">
+                    <div>
+                        <h2 class="ec-card-title">Card Payment</h2>
+                        <div style="margin-top:3px;color:#888;font-size:11px;">Enter your card details to complete the order.</div>
+                    </div>
+                    <i class="bi bi-lock-fill ec-payment-lock" aria-hidden="true"></i>
+                </div>
+                <div class="ec-card-body">
+                    <form id="ecCardForm">@csrf
+                        <div>
+                            <label class="ec-label">Card Type</label>
+                            <div class="ec-payment-card-types">
+                                <div>
+                                    <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required>
+                                    <label for="ecCardVisa" class="ec-card-type-label" title="Visa">
+                                        <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa" class="ec-card-type-logo">
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="ec-card-type-input" type="radio" id="ecCardMaster" name="card_type" value="2" required>
+                                    <label for="ecCardMaster" class="ec-card-type-label" title="Mastercard">
+                                        <img src="{{ asset('images/payment/mastercard.svg') }}" alt="Mastercard" class="ec-card-type-logo">
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="ec-card-type-input" type="radio" id="ecCardAmex" name="card_type" value="3" required>
+                                    <label for="ecCardAmex" class="ec-card-type-label" title="American Express">
+                                        <img src="{{ asset('images/payment/amex.svg') }}" alt="American Express" class="ec-card-type-logo">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:15px">
+                            <label class="ec-label" for="ecCardHolder">Name on Card</label>
+                            <input class="ec-input" id="ecCardHolder" name="card_holder_name" placeholder="Name shown on card" autocomplete="cc-name" required>
+                        </div>
+
+                        <div style="margin-top:15px">
+                            <label class="ec-label" for="ecCardNumber">Card Number</label>
+                            <div class="ec-card-number-wrap">
+                                <input class="ec-input" id="ecCardNumber" name="card_number" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23" required>
+                                <img class="ec-card-brand" id="ecCardBrand" src="" alt="" hidden>
+                            </div>
+                        </div>
+
+                        <div class="ec-payment-grid" style="margin-top:15px">
+                            <div>
+                                <label class="ec-label">Expiration</label>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                                    <select class="ec-select" id="ecCardMonth" name="card_expiry_month" autocomplete="cc-exp-month" required>
+                                        <option value="">MM</option>
+                                        @foreach($months as $key => $month)
+                                            <option value="{{ $key }}">{{ $month }}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="ec-select" id="ecCardYear" name="card_expiry_year" autocomplete="cc-exp-year" required>
+                                        <option value="">YYYY</option>
+                                        @for($year = date('Y'); $year <= date('Y') + 15; $year++)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="ec-label" for="ecCardCode">CVV</label>
+                                <input class="ec-input" type="password" id="ecCardCode" name="card_csv" inputmode="numeric" autocomplete="cc-csc" placeholder="CVV" maxlength="4" required>
+                            </div>
+                        </div>
+
+                        <div class="ec-payment-help">Your payment is processed when you confirm the order.</div>
+                        <div id="ecPaymentError" class="ec-shop-message ec-shop-message-error ec-payment-error" style="display:none"></div>
+                        <button type="submit" class="ec-btn ec-btn-red ec-btn-full" id="ecPayButton" style="margin-top:18px">
+                            <i class="bi bi-lock-fill"></i> Confirm & Pay
+                        </button>
+                    </form>
+                </div>
+            </section>
         </div>
 
         <aside class="ec-summary"><h2>Payment Summary</h2><div class="ec-summary-line"><span>Items</span><strong id="sumQty">{{ data_get($payment,'total_item_qty',0) }}</strong></div><div class="ec-summary-line"><span>Subtotal</span><strong id="sumSubtotal">${{ data_get($payment,'sub_total','0.00') }}</strong></div><div class="ec-summary-line"><span>Sales Tax</span><strong id="sumTax">${{ data_get($subPayment,'sales_tax','0.00') }}</strong></div><div class="ec-summary-line"><span>Shipping</span><strong id="sumShipping">${{ data_get($subPayment,'shipping_fee','0.00') }}</strong></div><div class="ec-summary-line"><span>Processing Fee</span><strong id="sumProcessing">${{ data_get($payment,'processing_fee','0.00') }}</strong></div><div class="ec-summary-line ec-summary-total"><span>Total</span><strong id="sumTotal">${{ data_get($payment,'amount_to_pay','0.00') }}</strong></div></aside>
