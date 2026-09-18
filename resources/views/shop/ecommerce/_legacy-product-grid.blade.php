@@ -1,6 +1,7 @@
 @php
     $products = isset($products) ? collect($products) : collect();
     $apiError = $apiError ?? null;
+    $productEmptyMessage = $productEmptyMessage ?? 'No products are currently available in this collection.';
 @endphp
 
 <style>
@@ -116,7 +117,7 @@
                 @endforeach
             </div>
         @elseif(!$apiError)
-            <div class="product-empty">No products are currently available in this collection.</div>
+            <div class="product-empty">{{ $productEmptyMessage }}</div>
         @endif
     </div>
 </section>
