@@ -115,71 +115,62 @@
         @endif
     </div>
 
-    <div class="ec-shop-full">
-        @if($products->isNotEmpty())
-            <div class="ec-product-grid">
-                @foreach($products as $product)
-                    @php
-                        $images = collect($product['images'] ?? [])->filter()->unique()->values();
-                        $carouselId = 'ecProductCarousel' . $product['id'];
-                        $productUrl = route('product', $product['id']);
-                    @endphp
-                    <article class="ec-product-card js-ec-product-card" data-url="{{ $productUrl }}" tabindex="0" role="link">
-                        <div class="ec-product-image-wrap">
-                            @if($images->count() > 1)
-                                <div id="{{ $carouselId }}" class="carousel slide js-ec-swipe-carousel" data-bs-ride="false" data-bs-interval="false" data-bs-touch="true">
-                                    <div class="carousel-inner">
-                                        @foreach($images as $index => $image)
-                                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                <a href="{{ $productUrl }}" class="ec-product-image-link"><img src="{{ $image }}" alt="{{ $product['name'] }}" class="ec-product-image" loading="lazy" draggable="false"></a>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @else
-                                <a href="{{ $productUrl }}" class="ec-product-image-link"><img src="{{ $images->first() ?? asset('images/product-placeholder.svg') }}" alt="{{ $product['name'] }}" class="ec-product-image" loading="lazy" draggable="false"></a>
-                            @endif
-                        </div>
-                        <div class="ec-product-info">
-                            <h3 class="ec-product-name"><a href="{{ $productUrl }}">{{ $product['name'] }}</a></h3>
-                            <div class="ec-product-price">{{ $product['currency_symbol'] }}{{ number_format($product['price'], 2) }}</div>
-                            <a href="{{ $productUrl }}" class="ec-view-more">View More</a>
-                        </div>
-                    </article>
-                @endforeach
-            </div>
-        @else
-            <div class="ec-empty">
-                <i class="bi bi-bag"></i>
-                <h3>No products found</h3>
-                <p>Try changing your filters or searching for another product.</p>
-                <a href="{{ route('allProduct') }}" class="ec-btn ec-btn-dark">View All Products</a>
-            </div>
-        @endif
-    </div>
+    @include('shop.ecommerce._legacy-product-grid', ['apiError' => null])
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-    const form=document.getElementById('ecFilterForm');
-    document.querySelectorAll('.js-ec-auto-filter').forEach(select=>select.addEventListener('change',()=>{EncoreShopUI.showLoader('Loading products');requestAnimationFrame(()=>form.submit())}));
-    form?.addEventListener('submit',()=>EncoreShopUI.showLoader('Loading products'));
-    document.querySelectorAll('.ec-active-filters a').forEach(link=>link.addEventListener('click',()=>EncoreShopUI.showLoader('Loading products')));
+    const form = document.getElementById('ecFilterForm');
 
-    document.querySelectorAll('.js-ec-swipe-carousel').forEach(element=>{
-        const carousel=bootstrap.Carousel.getOrCreateInstance(element,{interval:false,ride:false,touch:true,wrap:true});
-        let startX=0,currentX=0,dragging=false,moved=false;
-        element.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;startX=currentX=e.clientX;dragging=true;moved=false});
-        element.addEventListener('pointermove',e=>{if(!dragging)return;currentX=e.clientX;if(Math.abs(currentX-startX)>8)moved=true});
-        element.addEventListener('pointerup',()=>{if(!dragging)return;dragging=false;const diff=currentX-startX;if(diff<-45)carousel.next();if(diff>45)carousel.prev()});
-        element.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}}));
+    document.querySelectorAll('.js-ec-auto-filter').forEach(function(select){
+        select.addEventListener('change', function(){
+            if (window.EncoreShopUI) {
+                EncoreShopUI.showLoader('Loading products');
+            }
+
+            window.requestAnimationFrame(function(){
+                form.submit();
+            });
+        });
     });
 
-    document.querySelectorAll('.js-ec-product-card').forEach(card=>{
-        card.addEventListener('click',e=>{if(e.target.closest('a,button,select,input'))return;window.location.href=card.dataset.url});
-        card.addEventListener('keydown',e=>{if(e.key==='Enter')window.location.href=card.dataset.url});
+    form?.addEventListener('submit', function(){
+        if (window.EncoreShopUI) {
+            EncoreShopUI.showLoader('Loading products');
+        }
     });
-    window.addEventListener('pageshow',()=>EncoreShopUI.hideLoader(true));
+
+    document.querySelectorAll('.ec-active-filters a').forEach(function(link){
+        link.addEventListener('click', function(){
+            if (window.EncoreShopUI) {
+                EncoreShopUI.showLoader('Loading products');
+            }
+        });
+    });
+
+    document.querySelectorAll('.encore-legacy-product-grid a[href]').forEach(function(link){
+        link.addEventListener('click', function(event){
+            if (
+                event.ctrlKey ||
+                event.metaKey ||
+                event.shiftKey ||
+                event.altKey ||
+                event.button === 1
+            ) {
+                return;
+            }
+
+            if (window.EncoreShopUI) {
+                EncoreShopUI.showLoader('Loading product');
+            }
+        });
+    });
+
+    window.addEventListener('pageshow', function(){
+        if (window.EncoreShopUI) {
+            EncoreShopUI.hideLoader(true);
+        }
+    });
 });
 </script>
 @include('shop.ecommerce._cart-sync')
