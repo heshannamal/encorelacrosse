@@ -80,6 +80,7 @@
     }
 
     .ec-shop .ec-shop-toolbar-inner{
+        grid-template-columns:repeat(5,minmax(0,1fr));
         padding-top:11px;
         padding-bottom:11px;
     }
@@ -93,7 +94,17 @@
         padding-top:22px;
     }
 
+    @media(max-width:1199.98px){
+        .ec-shop .ec-shop-toolbar-inner{
+            grid-template-columns:repeat(3,minmax(0,1fr));
+        }
+    }
+
     @media(max-width:767.98px){
+        .ec-shop .ec-shop-toolbar-inner{
+            grid-template-columns:repeat(2,minmax(0,1fr));
+        }
+
         .ec-shop-catalog-intro{
             padding:20px 14px 16px;
         }
@@ -112,6 +123,12 @@
             padding:6px 9px;
         }
     }
+
+    @media(max-width:480px){
+        .ec-shop .ec-shop-toolbar-inner{
+            grid-template-columns:1fr;
+        }
+    }
 </style>
 
 <div class="ec-shop">
@@ -122,6 +139,10 @@
     @endif
 
     <form method="GET" action="{{ route('allProduct') }}" class="ec-shop-toolbar" id="ecFilterForm">
+        @if($searchTerm !== '')
+            <input type="hidden" name="search" value="{{ $searchTerm }}">
+        @endif
+
         <div class="ec-shop-toolbar-inner">
             <div class="ec-filter">
                 <label>Category</label>
@@ -175,11 +196,6 @@
                 </select>
             </div>
 
-            <div class="ec-filter ec-filter-search">
-                <label>Search</label>
-                <input type="search" name="search" value="{{ request('search') }}" placeholder="Search products...">
-                <button type="submit" aria-label="Search"><i class="bi bi-search"></i></button>
-            </div>
         </div>
     </form>
 
