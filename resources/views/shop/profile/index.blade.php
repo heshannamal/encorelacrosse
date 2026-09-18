@@ -70,7 +70,7 @@
                         <span>My Cart</span>
                     </a>
 
-                    <a href="{{ route('shop.mens-tops') }}">
+                    <a href="{{ route('allProduct') }}">
                         <i class="fa-solid fa-store"></i>
                         <span>Continue Shopping</span>
                     </a>
@@ -98,7 +98,7 @@
                         <p>Your Encore Lacrosse account details and order summary.</p>
                     </div>
 
-                    <a href="{{ route('shop.mens-tops') }}" class="encore-profile-btn">
+                    <a href="{{ route('allProduct') }}" class="encore-profile-btn">
                         <i class="fa-solid fa-bag-shopping"></i>
                         Shop Now
                     </a>
