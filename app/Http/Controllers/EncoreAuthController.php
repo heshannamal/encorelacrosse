@@ -25,7 +25,7 @@ class EncoreAuthController extends Controller
         if (session('encore_user_token')) {
             try {
                 if ($this->guard->valid()) {
-                    return redirect()->route('allProduct');
+                    return redirect()->route('shop.mens-tops');
                 }
             } catch (Throwable $e) {
                 return view('shop.auth.login')->with('apiError', $e->getMessage());
@@ -72,7 +72,7 @@ class EncoreAuthController extends Controller
                 'success' => true,
                 'message' => 'Welcome back!',
                 'warning' => !empty($merge['warnings']) ? implode(' ', $merge['warnings']) : null,
-                'redirect' => session()->pull('url.intended', route('allProduct')),
+                'redirect' => session()->pull('url.intended', route('shop.mens-tops')),
             ]);
         } catch (Throwable $e) {
             Log::error('Encore shop login failed.', ['message' => $e->getMessage()]);
@@ -88,7 +88,7 @@ class EncoreAuthController extends Controller
         if (session('encore_user_token')) {
             try {
                 if ($this->guard->valid()) {
-                    return redirect()->route('allProduct');
+                    return redirect()->route('shop.mens-tops');
                 }
             } catch (Throwable $e) {
                 // Continue to registration page.
@@ -143,7 +143,7 @@ class EncoreAuthController extends Controller
                 'success' => true,
                 'message' => 'Your account has been created.',
                 'warning' => !empty($merge['warnings']) ? implode(' ', $merge['warnings']) : null,
-                'redirect' => session()->pull('url.intended', route('allProduct')),
+                'redirect' => session()->pull('url.intended', route('shop.mens-tops')),
             ]);
         } catch (Throwable $e) {
             Log::error('Encore shop registration failed.', ['message' => $e->getMessage()]);
@@ -159,7 +159,7 @@ class EncoreAuthController extends Controller
         if (session('encore_user_token')) {
             try {
                 if ($this->guard->valid()) {
-                    return redirect()->route('allProduct');
+                    return redirect()->route('shop.mens-tops');
                 }
             } catch (Throwable $e) {
                 // Continue to Google.
@@ -219,7 +219,7 @@ class EncoreAuthController extends Controller
             }
 
             return redirect()
-                ->to(session()->pull('url.intended', route('allProduct')))
+                ->to(session()->pull('url.intended', route('shop.mens-tops')))
                 ->with('success', 'Signed in successfully.');
         } catch (Throwable $e) {
             Log::error('Google OAuth callback failed.', ['message' => $e->getMessage()]);
