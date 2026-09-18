@@ -48,6 +48,7 @@
     @include('shop.ecommerce._header-tools')
 
     <main class="pt-5">
+        @include('components.contact-flash')
         @yield('content')
     </main>
 
