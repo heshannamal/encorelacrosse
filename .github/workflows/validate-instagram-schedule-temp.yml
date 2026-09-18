@@ -11,6 +11,7 @@ jobs:
       APP_ENV: testing
       APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       ENCORE_API_TOKEN: test-token
+      CACHE_STORE: array
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
