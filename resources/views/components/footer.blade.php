@@ -100,8 +100,7 @@
         border: 0;
         border-radius: 0;
         background: transparent;
-        filter: grayscale(1);
-        opacity: .9;
+        opacity: 1;
     }
 
     .encore-footer__payment-logo--amex {
