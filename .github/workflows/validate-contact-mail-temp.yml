@@ -1,0 +1,34 @@
+name: Validate Contact Mail Temp
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/validate-contact-mail-temp.yml'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
+      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      ENCORE_API_TOKEN: test-token
+      CUSTOM_SMTP_HOST: mail.example.com
+      CUSTOM_SMTP_PORT: 465
+      CUSTOM_SMTP_ENCRYPTION: ssl
+      CUSTOM_SMTP_USERNAME: sender@example.com
+      CUSTOM_SMTP_PASSWORD: test-password
+      CUSTOM_MAIL_FROM_NAME: Encore Lacrosse Apparel
+      DEFAULT_RECEIVER: receiver@example.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+      - run: composer update laravel/socialite --with-all-dependencies --no-interaction --no-progress
+      - run: php -l app/Http/Controllers/ContactFormController.php
+      - run: php -l app/Mail/ContactSubmissionMail.php
+      - run: php -l config/mail.php
+      - run: php -l routes/web.php
+      - run: php artisan route:list
+      - run: php artisan view:clear
+      - run: php artisan view:cache
