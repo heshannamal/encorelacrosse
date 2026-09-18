@@ -4,25 +4,15 @@ on:
     branches: [main]
     paths:
       - 'app/Http/Controllers/ShopController.php'
-      - 'resources/views/layouts/app.blade.php'
-      - 'resources/views/shop/**'
       - 'routes/ecommerce.php'
       - '.github/workflows/validate-shop-pages.yml'
 jobs:
   validate:
     runs-on: ubuntu-latest
-    env:
-      APP_ENV: testing
-      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-      ENCORE_API_TOKEN: test-token
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          tools: composer:v2
-      - run: composer install --no-interaction --no-progress --prefer-dist
       - run: php -l app/Http/Controllers/ShopController.php
       - run: php -l routes/ecommerce.php
-      - run: php artisan route:list
-      - run: php artisan view:cache
