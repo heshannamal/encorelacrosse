@@ -8,8 +8,11 @@
 
         <nav class="encore-header-center" aria-label="Primary navigation">
             <ul class="encore-main-nav">
-                <li class="encore-nav-item has-dropdown">
-                    <a href="{{ route('shop.mens-tops') }}" class="encore-nav-link">Shop <span class="encore-chevron"></span></a>
+                <li class="encore-nav-item">
+                    <a href="{{ route('allProduct') }}" class="encore-nav-link">Shop</a>
+
+                    {{--
+                    Shop category dropdown kept for possible future use.
                     <ul class="encore-dropdown encore-dropdown-shop">
                         <li><a href="{{ route('shop.mens-tops') }}">Men's Tops</a></li>
                         <li><a href="{{ route('shop.mens-bottoms') }}">Men's Bottoms</a></li>
@@ -18,6 +21,7 @@
                         <li><a href="{{ route('shop.hats') }}">Hats</a></li>
                         <li><a href="{{ route('shop.bags') }}">Bags</a></li>
                     </ul>
+                    --}}
                 </li>
 
                 <li class="encore-nav-item has-dropdown">
@@ -107,7 +111,7 @@
         </div>
 
         <div class="collapse encore-mobile-menu" id="encoreMobileMenu">
-            <a href="{{ route('shop.mens-tops') }}">Shop</a>
+            <a href="{{ route('allProduct') }}">Shop</a>
             <a href="{{ url('/pages/teamwear') }}">Teamwear</a>
             <a href="{{ url('/') }}">Custom</a>
             <a href="#">Events</a>
