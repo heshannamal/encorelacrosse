@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('instagram_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('instagram_user_id')->unique();
-            $table->string('username')->nullable();
+            $table->string('instagram_user_id', 64)->unique();
+            $table->string('username', 64)->nullable();
             $table->text('access_token');
             $table->timestamp('token_expires_at')->nullable();
             $table->timestamp('last_refreshed_at')->nullable();
