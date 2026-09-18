@@ -12,11 +12,30 @@
     $subPayment = is_array($subPayment ?? null) ? $subPayment : [];
     $countries = isset($countries) ? collect($countries) : collect();
     $billingSaved = (bool) ($billingSaved ?? false);
+    $months = is_array($months ?? null) ? $months : [1=>'01',2=>'02',3=>'03',4=>'04',5=>'05',6=>'06',7=>'07',8=>'08',9=>'09',10=>'10',11=>'11',12=>'12'];
     $checkoutValue = fn(string $field, $fallback = '') => old($field, array_key_exists($field, $billing) ? $billing[$field] : $fallback);
     $sameAsBilling = array_key_exists('is_shipping_address_available', $billing) ? (int)data_get($billing, 'is_shipping_address_available') === 0 : true;
     $selectedBillingCountryId = (string)$checkoutValue('country_id', data_get($customer, 'country_id', ''));
     $selectedShippingCountryId = (string)$checkoutValue('shipping_country_id', '');
 @endphp
+
+<style>
+.ec-payment-card{margin-top:18px}
+.ec-payment-card-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ec-card-type-input{position:absolute;opacity:0;pointer-events:none}
+.ec-card-type-label{min-height:64px;display:flex;align-items:center;justify-content:center;padding:8px 14px;border:1px solid #d8d8d8;border-radius:8px;background:#fff;cursor:pointer;transition:.2s ease}
+.ec-card-type-label:hover{border-color:#aaa;transform:translateY(-1px)}
+.ec-card-type-input:checked+.ec-card-type-label{border-color:#222;box-shadow:0 0 0 2px #222 inset;background:#f8f8f8}
+.ec-card-type-logo{width:100%;max-width:96px;height:38px;display:block;object-fit:contain;pointer-events:none}
+.ec-card-number-wrap{position:relative}
+.ec-card-number-wrap .ec-input{padding-right:82px}
+.ec-card-brand{position:absolute;right:12px;top:50%;width:58px;height:26px;transform:translateY(-50%);object-fit:contain;pointer-events:none}
+.ec-payment-grid{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:12px}
+.ec-payment-help{margin-top:8px;color:#888;font-size:11px;line-height:1.55}
+.ec-payment-error{width:100%;margin:14px 0 0}
+.ec-payment-lock{color:#1f9d62;font-size:18px}
+@media(max-width:767.98px){.ec-payment-card-types{grid-template-columns:1fr}.ec-payment-grid{grid-template-columns:1fr}}
+</style>
 
 <div class="ec-shop"><div class="ec-shop-shell">
     @include('shop.ecommerce._flash')
