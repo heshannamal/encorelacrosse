@@ -91,19 +91,19 @@
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required>
                                     <label for="ecCardVisa" class="ec-card-type-label" title="Visa">
-                                        <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/visa.webp') }}" alt="Visa" class="ec-card-type-logo">
                                     </label>
                                 </div>
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardMaster" name="card_type" value="2" required>
                                     <label for="ecCardMaster" class="ec-card-type-label" title="Mastercard">
-                                        <img src="{{ asset('images/payment/mastercard.svg') }}" alt="Mastercard" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/mastercard.webp') }}" alt="Mastercard" class="ec-card-type-logo">
                                     </label>
                                 </div>
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardAmex" name="card_type" value="3" required>
                                     <label for="ecCardAmex" class="ec-card-type-label" title="American Express">
-                                        <img src="{{ asset('images/payment/amex.svg') }}" alt="American Express" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/amex.webp') }}" alt="American Express" class="ec-card-type-logo">
                                     </label>
                                 </div>
                             </div>
@@ -186,9 +186,9 @@ document.addEventListener('DOMContentLoaded',function(){
     const successUrl=@json(route('shop.mens-tops'));
 
     const cardBrandImages={
-        1:@json(asset('images/payment/visa.svg')),
-        2:@json(asset('images/payment/mastercard.svg')),
-        3:@json(asset('images/payment/amex.svg'))
+        1:@json(asset('images/payment/visa.webp')),
+        2:@json(asset('images/payment/mastercard.webp')),
+        3:@json(asset('images/payment/amex.webp'))
     };
 
     let billingSaved=@json($billingSaved);
