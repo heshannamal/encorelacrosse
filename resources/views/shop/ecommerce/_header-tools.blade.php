@@ -55,6 +55,7 @@
         @if($encoreUserEmail !== '')<span>{{ $encoreUserEmail }}</span>@endif
     </div>
     <div class="encore-account-links">
+        <a href="{{ route('profile') }}">My Profile</a>
         <a href="{{ route('shop.mens-tops') }}">Shop</a>
         <a href="{{ route('cart') }}">My Cart</a>
         <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit">Sign Out</button></form>
