@@ -128,25 +128,29 @@
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center p-4 p-lg-5">
             <h2 class="display-4">Get in touch</h2>
 
-            <form action="#" method="POST" onsubmit="return false;">
+            <form action="{{ route('contact.submit') }}" method="POST">
+                @csrf
+                <input type="hidden" name="source" value="Teamwear - {{ $pageHeading }}">
+                <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
+
                 <div class="form-group mb-3">
                     <label for="{{ $formId }}-name">Name:</label>
-                    <input type="text" class="form-control" id="{{ $formId }}-name" placeholder="Enter your name" name="name" required>
+                    <input type="text" class="form-control" id="{{ $formId }}-name" placeholder="Enter your name" name="name" value="{{ old('name') }}" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="{{ $formId }}-phone">Phone:</label>
-                    <input type="text" class="form-control" id="{{ $formId }}-phone" placeholder="Enter your phone number" name="phone">
+                    <input type="text" class="form-control" id="{{ $formId }}-phone" placeholder="Enter your phone number" name="phone" value="{{ old('phone') }}">
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="{{ $formId }}-email">Email:</label>
-                    <input type="email" class="form-control" id="{{ $formId }}-email" placeholder="Enter your email address" name="email" required>
+                    <input type="email" class="form-control" id="{{ $formId }}-email" placeholder="Enter your email address" name="email" value="{{ old('email') }}" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="{{ $formId }}-message">Message:</label>
-                    <textarea class="form-control" id="{{ $formId }}-message" placeholder="{{ $messagePlaceholder ?? 'I am interested in custom teamwear...' }}" name="message" rows="4"></textarea>
+                    <textarea class="form-control" id="{{ $formId }}-message" placeholder="{{ $messagePlaceholder ?? 'I am interested in custom teamwear...' }}" name="message" rows="4">{{ old('message') }}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-danger">Submit</button>
