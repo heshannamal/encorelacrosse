@@ -27,7 +27,7 @@
 .ec-card-type-label:hover{opacity:.72;transform:translateY(-1px)}
 .ec-card-type-input:checked+.ec-card-type-label{border:0;box-shadow:none;background:transparent;opacity:1}
 .ec-card-type-input:not(:checked)+.ec-card-type-label{opacity:.7}
-.ec-card-type-logo{width:auto;height:22px;display:block;object-fit:contain;filter:grayscale(1);pointer-events:none}
+.ec-card-type-logo{width:auto;height:22px;display:block;object-fit:contain;pointer-events:none}
 .ec-card-number-wrap{position:relative}
 .ec-card-number-wrap .ec-input{padding-right:82px}
 .ec-card-brand{position:absolute;right:12px;top:50%;width:58px;height:26px;transform:translateY(-50%);object-fit:contain;pointer-events:none}
