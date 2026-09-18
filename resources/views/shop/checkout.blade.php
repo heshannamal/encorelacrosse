@@ -21,12 +21,13 @@
 
 <style>
 .ec-payment-card{margin-top:18px}
-.ec-payment-card-types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ec-payment-card-types{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:7px}
 .ec-card-type-input{position:absolute;opacity:0;pointer-events:none}
-.ec-card-type-label{min-height:64px;display:flex;align-items:center;justify-content:center;padding:8px 14px;border:1px solid #d8d8d8;border-radius:8px;background:#fff;cursor:pointer;transition:.2s ease}
-.ec-card-type-label:hover{border-color:#aaa;transform:translateY(-1px)}
-.ec-card-type-input:checked+.ec-card-type-label{border-color:#222;box-shadow:0 0 0 2px #222 inset;background:#f8f8f8}
-.ec-card-type-logo{width:100%;max-width:82px;height:34px;display:block;object-fit:contain;pointer-events:none}
+.ec-card-type-label{min-height:28px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer;transition:opacity .18s ease,transform .18s ease}
+.ec-card-type-label:hover{opacity:.72;transform:translateY(-1px)}
+.ec-card-type-input:checked+.ec-card-type-label{border:0;box-shadow:none;background:transparent;opacity:1}
+.ec-card-type-input:not(:checked)+.ec-card-type-label{opacity:.7}
+.ec-card-type-logo{width:auto;height:22px;display:block;object-fit:contain;filter:grayscale(1);pointer-events:none}
 .ec-card-number-wrap{position:relative}
 .ec-card-number-wrap .ec-input{padding-right:82px}
 .ec-card-brand{position:absolute;right:12px;top:50%;width:58px;height:26px;transform:translateY(-50%);object-fit:contain;pointer-events:none}
@@ -34,7 +35,7 @@
 .ec-payment-help{margin-top:8px;color:#888;font-size:11px;line-height:1.55}
 .ec-payment-error{width:100%;margin:14px 0 0}
 .ec-payment-lock{color:#1f9d62;font-size:18px}
-@media(max-width:767.98px){.ec-payment-card-types{grid-template-columns:1fr}.ec-payment-grid{grid-template-columns:1fr}}
+@media(max-width:767.98px){.ec-payment-card-types{gap:12px}.ec-payment-grid{grid-template-columns:1fr}}
 </style>
 
 <div class="ec-shop"><div class="ec-shop-shell">
@@ -91,19 +92,19 @@
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required>
                                     <label for="ecCardVisa" class="ec-card-type-label" title="Visa">
-                                        <img src="{{ asset('images/payment/visa.webp') }}" alt="Visa" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa" class="ec-card-type-logo">
                                     </label>
                                 </div>
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardMaster" name="card_type" value="2" required>
                                     <label for="ecCardMaster" class="ec-card-type-label" title="Mastercard">
-                                        <img src="{{ asset('images/payment/mastercard.webp') }}" alt="Mastercard" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/mastercard.svg') }}" alt="Mastercard" class="ec-card-type-logo">
                                     </label>
                                 </div>
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardAmex" name="card_type" value="3" required>
                                     <label for="ecCardAmex" class="ec-card-type-label" title="American Express">
-                                        <img src="{{ asset('images/payment/amex.webp') }}" alt="American Express" class="ec-card-type-logo">
+                                        <img src="{{ asset('images/payment/amex.svg') }}" alt="American Express" class="ec-card-type-logo">
                                     </label>
                                 </div>
                             </div>
@@ -186,9 +187,9 @@ document.addEventListener('DOMContentLoaded',function(){
     const successUrl=@json(route('shop.mens-tops'));
 
     const cardBrandImages={
-        1:@json(asset('images/payment/visa.webp')),
-        2:@json(asset('images/payment/mastercard.webp')),
-        3:@json(asset('images/payment/amex.webp'))
+        1:@json(asset('images/payment/visa.svg')),
+        2:@json(asset('images/payment/mastercard.svg')),
+        3:@json(asset('images/payment/amex.svg'))
     };
 
     let billingSaved=@json($billingSaved);
