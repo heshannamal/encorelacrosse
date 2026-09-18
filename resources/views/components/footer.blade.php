@@ -46,7 +46,7 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
-        margin-bottom: 13px;
+        margin-bottom: 14px;
     }
 
     .encore-footer__socials a {
@@ -74,7 +74,7 @@
         align-items: center;
         justify-content: center;
         gap: 6px 26px;
-        margin-bottom: 24px;
+        margin-bottom: 0;
         color: #4d4d4d;
         font-family: 'Open Sans', Arial, sans-serif;
         font-size: 13px;
@@ -86,73 +86,20 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        min-height: 29px;
+        gap: 10px;
+        min-height: 34px;
+        margin-bottom: 18px;
     }
 
-    .encore-payment {
-        height: 28px;
-        min-width: 37px;
-        padding: 0 6px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 2px;
-        color: #555;
-        font-family: Arial, sans-serif;
-        font-size: 8px;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: -.02em;
-    }
-
-    .encore-payment--amex {
-        width: 31px;
-        padding: 0;
-        background: #676767;
-        color: #e8e8e8;
-        font-size: 6px;
-        line-height: 1.05;
-    }
-
-    .encore-payment--apple {
-        min-width: 39px;
-        border: 1px solid #a7a7a7;
-        background: #dedede;
-        font-size: 8px;
-    }
-
-    .encore-payment--diners {
-        min-width: 32px;
-        padding: 0;
-        font-size: 19px;
-        font-weight: 400;
-    }
-
-    .encore-payment--discover {
-        min-width: 42px;
-        padding: 0;
-        font-size: 6px;
-    }
-
-    .encore-payment--mastercard {
-        min-width: 34px;
-        padding: 0;
-        font-size: 7px;
-    }
-
-    .encore-payment--paypal {
-        min-width: 38px;
-        padding: 0;
-        font-size: 8px;
-        font-style: italic;
-    }
-
-    .encore-payment--visa {
-        min-width: 31px;
-        padding: 0;
-        font-size: 11px;
-        font-style: italic;
+    .encore-footer__payment-logo {
+        width: 50px;
+        height: 32px;
+        padding: 4px 6px;
+        display: block;
+        object-fit: contain;
+        border: 1px solid rgba(0, 0, 0, .12);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, .7);
     }
 
     @media (max-width: 767.98px) {
@@ -210,25 +157,26 @@
         </nav>
 
         <div class="encore-footer__socials" aria-label="Social media">
-            <a href="#" aria-label="Facebook"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-            <a href="#" aria-label="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-            <a href="#" aria-label="YouTube"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+            <a
+                href="https://www.instagram.com/encorelacrosse/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Encore Lacrosse on Instagram"
+                title="Instagram"
+            >
+                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="encore-footer__payments" aria-label="Accepted payment methods">
+            <img src="{{ asset('images/payment/visa.webp') }}" alt="Visa" class="encore-footer__payment-logo">
+            <img src="{{ asset('images/payment/mastercard.webp') }}" alt="Mastercard" class="encore-footer__payment-logo">
+            <img src="{{ asset('images/payment/amex.webp') }}" alt="American Express" class="encore-footer__payment-logo">
         </div>
 
         <div class="encore-footer__meta">
             <span>&copy; {{ date('Y') }}, Encore Lacrosse Apparel</span>
             <span>Powered by Encore Custom</span>
-        </div>
-
-        <div class="encore-footer__payments" aria-label="Accepted payment methods">
-            <span class="encore-payment encore-payment--amex">AMERICAN<br>EXPRESS</span>
-            <span class="encore-payment encore-payment--apple"><i class="fa fa-apple" aria-hidden="true"></i>&nbsp;Pay</span>
-            <span class="encore-payment encore-payment--diners">◐</span>
-            <span class="encore-payment encore-payment--discover">DISCOVER</span>
-            <span class="encore-payment encore-payment--mastercard">MasterCard</span>
-            <span class="encore-payment encore-payment--paypal">PayPal</span>
-            <span class="encore-payment encore-payment--visa">VISA</span>
         </div>
     </div>
 </footer>
