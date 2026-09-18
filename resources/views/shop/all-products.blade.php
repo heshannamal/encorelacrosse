@@ -9,7 +9,8 @@
     $sports = $sports ?? [];
     $productCategories = $productCategories ?? [];
     $apiError = $apiError ?? null;
-    $hasFilters = request()->filled('selectedSport') || request()->filled('selectedStyle') || request()->filled('selectedGender') || request()->filled('search') || request()->filled('sort') || (request()->filled('selectedCategory') && (string)request('selectedCategory') !== '5');
+    $searchTerm = trim((string) request('search', ''));
+    $hasFilters = request()->filled('selectedSport') || request()->filled('selectedStyle') || request()->filled('selectedGender') || request()->filled('search') || request()->filled('sort') || (request()->filled('selectedCategory') && (string) request('selectedCategory') !== '5');
 @endphp
 @include('shop.ecommerce._styles')
 @include('shop.ecommerce._loader')
@@ -23,8 +24,14 @@
 
     <div class="ec-shop-shell" style="padding-bottom:22px">
         <div class="ec-shop-kicker">Encore Lacrosse Apparel</div>
-        <h1 class="ec-shop-title">Shop All Products</h1>
-        <p class="ec-shop-subtitle">Browse apparel, teamwear and training gear from the Encore inventory.</p>
+        <h1 class="ec-shop-title">{{ $searchTerm !== '' ? 'Search Results' : 'Shop All Products' }}</h1>
+        <p class="ec-shop-subtitle">
+            @if($searchTerm !== '')
+                Showing products matching &ldquo;{{ $searchTerm }}&rdquo;.
+            @else
+                Browse apparel, teamwear and training gear from the Encore inventory.
+            @endif
+        </p>
     </div>
 
     <form method="GET" action="{{ route('allProduct') }}" class="ec-shop-toolbar" id="ecFilterForm">
@@ -33,8 +40,10 @@
                 <label>Category</label>
                 <select name="selectedCategory" class="js-ec-auto-filter">
                     @foreach($mainCategories as $category)
-                        @php($categoryId = (string)data_get($category, 'id'))
-                        <option value="{{ $categoryId }}" {{ (string)request('selectedCategory', '5') === $categoryId ? 'selected' : '' }}>{{ data_get($category, 'category_name') }}</option>
+                        @php
+                            $categoryId = (string) data_get($category, 'id');
+                        @endphp
+                        <option value="{{ $categoryId }}" {{ (string) request('selectedCategory', '5') === $categoryId ? 'selected' : '' }}>{{ data_get($category, 'category_name') }}</option>
                     @endforeach
                 </select>
             </div>
@@ -97,6 +106,14 @@
             <a class="ec-chip ec-chip-clear" href="{{ route('allProduct') }}">Clear All</a>
         </div>
     @endif
+
+    <div style="padding:18px 32px 0;color:#777;font-size:12px;">
+        <strong style="color:#333;">{{ $products->count() }}</strong>
+        {{ $products->count() === 1 ? 'product' : 'products' }}
+        @if($searchTerm !== '')
+            found
+        @endif
+    </div>
 
     <div class="ec-shop-full">
         @if($products->isNotEmpty())
