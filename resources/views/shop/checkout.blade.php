@@ -26,7 +26,7 @@
 .ec-card-type-label{min-height:64px;display:flex;align-items:center;justify-content:center;padding:8px 14px;border:1px solid #d8d8d8;border-radius:8px;background:#fff;cursor:pointer;transition:.2s ease}
 .ec-card-type-label:hover{border-color:#aaa;transform:translateY(-1px)}
 .ec-card-type-input:checked+.ec-card-type-label{border-color:#222;box-shadow:0 0 0 2px #222 inset;background:#f8f8f8}
-.ec-card-type-logo{width:100%;max-width:96px;height:38px;display:block;object-fit:contain;pointer-events:none}
+.ec-card-type-logo{width:100%;max-width:82px;height:34px;display:block;object-fit:contain;pointer-events:none}
 .ec-card-number-wrap{position:relative}
 .ec-card-number-wrap .ec-input{padding-right:82px}
 .ec-card-brand{position:absolute;right:12px;top:50%;width:58px;height:26px;transform:translateY(-50%);object-fit:contain;pointer-events:none}
@@ -86,7 +86,7 @@
                 <div class="ec-card-body">
                     <form id="ecCardForm">@csrf
                         <div>
-                            <label class="ec-label">Card Type</label>
+                            <label class="ec-label">Accepted Cards</label>
                             <div class="ec-payment-card-types">
                                 <div>
                                     <input class="ec-card-type-input" type="radio" id="ecCardVisa" name="card_type" value="1" required>
