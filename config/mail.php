@@ -49,6 +49,29 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        /*
+         * Website inquiry mailer.
+         *
+         * Keep these credentials separate from the application's default
+         * mailer. Port 465 + CUSTOM_SMTP_ENCRYPTION=ssl uses implicit TLS
+         * through Symfony Mailer's "smtps" scheme.
+         */
+        'custom_smtp' => [
+            'transport' => 'smtp',
+            'scheme' => strtolower((string) env('CUSTOM_SMTP_ENCRYPTION', 'ssl')) === 'ssl'
+                ? 'smtps'
+                : null,
+            'host' => env('CUSTOM_SMTP_HOST'),
+            'port' => (int) env('CUSTOM_SMTP_PORT', 465),
+            'username' => env('CUSTOM_SMTP_USERNAME'),
+            'password' => env('CUSTOM_SMTP_PASSWORD'),
+            'timeout' => 30,
+            'local_domain' => env(
+                'MAIL_EHLO_DOMAIN',
+                parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)
+            ),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -113,6 +136,18 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    /*
+     * Public website inquiry settings. The receiver intentionally comes only
+     * from the environment so production/local destinations can be changed
+     * without editing source code.
+     */
+    'contact_receiver' => env('DEFAULT_RECEIVER'),
+
+    'contact_from' => [
+        'address' => env('CUSTOM_MAIL_FROM_ADDRESS', env('CUSTOM_SMTP_USERNAME')),
+        'name' => env('CUSTOM_MAIL_FROM_NAME', env('APP_NAME', 'Encore Lacrosse')),
     ],
 
 ];
