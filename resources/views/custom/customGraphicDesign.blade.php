@@ -231,23 +231,25 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
                 <p class="content-text">
                     We provide custom designs and visual mock ups based on customer needs and vision, as part of our standard uniform ordering process. Utilize our design concept gallery, or send over other inspiration for our designers to create your custom look.
                 </p>
-                <form action="/contact" method="post" class="mt-4">
+                <form action="{{ route('contact.submit') }}" method="POST" class="mt-4">
                     @csrf
+                    <input type="hidden" name="source" value="Custom Graphic Design - Custom Uniform Design">
+                    <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Name:</div>
-                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" required></div>
+                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{ old('name') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Email:</div>
-                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" required></div>
+                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" value="{{ old('email') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Phone:</div>
-                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number"></div>
+                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number" value="{{ old('phone') }}"></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-3 fw-bold fst-italic">Message:</div>
-                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text..."></textarea></div>
+                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text...">{{ old('message') }}</textarea></div>
                     </div>
                     <div class="row">
                         <div class="col-9 offset-3">
@@ -266,23 +268,25 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
                 <p class="content-text">
                     Color matching is more art than science. Different fabrics, embellishment styles, embellishment equipment, and lighting sources can cause similar colors to look very different. Our design team has the ability to support your club by assigning the proper color code, and can create custom swatches and prints for approval prior to final production.
                 </p>
-                <form action="/contact" method="post" class="mt-4">
+                <form action="{{ route('contact.submit') }}" method="POST" class="mt-4">
                     @csrf
+                    <input type="hidden" name="source" value="Custom Graphic Design - Color Matching">
+                    <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Name:</div>
-                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" required></div>
+                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{ old('name') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Email:</div>
-                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" required></div>
+                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" value="{{ old('email') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Phone:</div>
-                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number"></div>
+                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number" value="{{ old('phone') }}"></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-3 fw-bold fst-italic">Message:</div>
-                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text..."></textarea></div>
+                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text...">{{ old('message') }}</textarea></div>
                     </div>
                     <div class="row">
                         <div class="col-9 offset-3">
@@ -307,23 +311,25 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
                 <p class="content-text">
                     If your club has a low resolution logo that is not suitable for printing, or perhaps an old favorite apparel design that you would like to replicate- our design team can redraft your image in a high resolution, vector file so it can be used for all design, marketing and apparel needs.
                 </p>
-                <form action="/contact" method="post" class="mt-4">
+                <form action="{{ route('contact.submit') }}" method="POST" class="mt-4">
                     @csrf
+                    <input type="hidden" name="source" value="Custom Graphic Design - Image Replication">
+                    <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Name:</div>
-                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" required></div>
+                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{ old('name') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Email:</div>
-                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" required></div>
+                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" value="{{ old('email') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Phone:</div>
-                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number"></div>
+                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number" value="{{ old('phone') }}"></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-3 fw-bold fst-italic">Message:</div>
-                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text..."></textarea></div>
+                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text...">{{ old('message') }}</textarea></div>
                     </div>
                     <div class="row">
                         <div class="col-9 offset-3">
@@ -342,23 +348,25 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
                 <p class="content-text">
                     Your Team, Company or Organization Logo | Web Site | Social Media content design can be fully developed by the ENCORE Design Studio
                 </p>
-                <form action="/contact" method="post" class="mt-4">
+                <form action="{{ route('contact.submit') }}" method="POST" class="mt-4">
                     @csrf
+                    <input type="hidden" name="source" value="Custom Graphic Design - Total Branding">
+                    <input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Name:</div>
-                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" required></div>
+                        <div class="col-9"><input type="text" name="name" class="form-control" placeholder="Enter your name" value="{{ old('name') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Email:</div>
-                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" required></div>
+                        <div class="col-9"><input type="email" name="email" class="form-control" placeholder="Enter your email address" value="{{ old('email') }}" required></div>
                     </div>
                     <div class="row mb-2 align-items-center">
                         <div class="col-3 fw-bold fst-italic">Phone:</div>
-                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number"></div>
+                        <div class="col-9"><input type="text" name="phone" class="form-control" placeholder="Enter your phone number" value="{{ old('phone') }}"></div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-3 fw-bold fst-italic">Message:</div>
-                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text..."></textarea></div>
+                        <div class="col-9"><textarea name="message" class="form-control" rows="3" placeholder="Enter your text...">{{ old('message') }}</textarea></div>
                     </div>
                     <div class="row">
                         <div class="col-9 offset-3">
