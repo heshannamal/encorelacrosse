@@ -39,7 +39,7 @@
                 <h2 class="encore-shop-search-title">Search Products</h2>
                 <button type="button" class="encore-shop-search-close" id="encoreShopSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
             </div>
-            <form action="{{ route('allProduct') }}" method="GET" class="encore-shop-search-form">
+            <form action="{{ request()->routeIs('shop.*') ? url()->current() : route('shop.mens-tops') }}" method="GET" class="encore-shop-search-form">
                 <input type="search" name="search" id="encoreShopSearchInput" value="{{ request('search') }}" placeholder="What are you looking for?" autocomplete="off">
                 <button type="submit" aria-label="Search"><i class="bi bi-search"></i></button>
             </form>
@@ -55,7 +55,7 @@
         @if($encoreUserEmail !== '')<span>{{ $encoreUserEmail }}</span>@endif
     </div>
     <div class="encore-account-links">
-        <a href="{{ route('allProduct') }}">Shop</a>
+        <a href="{{ route('shop.mens-tops') }}">Shop</a>
         <a href="{{ route('cart') }}">My Cart</a>
         <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit">Sign Out</button></form>
     </div>
