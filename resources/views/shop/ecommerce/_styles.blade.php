@@ -42,9 +42,10 @@
 .ec-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .ec-product-card{position:relative;display:flex;flex-direction:column;min-width:0;background:#fff;cursor:pointer;transition:box-shadow .2s ease,transform .2s ease}
 .ec-product-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.09);transform:translateY(-1px)}
-.ec-product-image-wrap{position:relative;width:100%;overflow:hidden;background:#f4f4f4;touch-action:pan-y;user-select:none}
-.ec-product-image-link{display:block;line-height:0}
-.ec-product-image{display:block;width:100%;height:auto;aspect-ratio:1/1.12;object-fit:cover;user-select:none;pointer-events:none}
+.ec-product-image-wrap{position:relative;width:100%;aspect-ratio:1/1.12;overflow:hidden;background:#f4f4f4;touch-action:pan-y;user-select:none}
+.ec-product-image-wrap .carousel,.ec-product-image-wrap .carousel-inner,.ec-product-image-wrap .carousel-item{width:100%;height:100%}
+.ec-product-image-link{display:block;width:100%;height:100%;line-height:0}
+.ec-product-image{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#f4f4f4;user-select:none;pointer-events:none}
 .ec-product-info{padding:14px 10px 16px;display:flex;flex:1;flex-direction:column;align-items:center;text-align:center}
 .ec-product-name{min-height:42px;margin:0 0 5px;font-family:'Open Sans',sans-serif;font-size:14px;font-weight:500;line-height:1.4;text-transform:none}.ec-product-name a{color:#333;text-decoration:none}
 .ec-product-price{color:#777;font-size:20px;font-weight:300}
