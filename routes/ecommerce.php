@@ -8,6 +8,12 @@ use App\Http\Controllers\StorefrontController;
 use App\Http\Middleware\EnsureShopCustomerContext;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/searched-products', [StorefrontController::class, 'search'])->name('search.results');
+
+Route::get('/searched_products', function () {
+    return redirect()->route('search.results', request()->query());
+})->name('search.results.legacy');
+
 Route::prefix('collections')->group(function () {
     // Compatibility URL only. The storefront now lives on the existing Shop pages.
     Route::get('/all-products', function () {
