@@ -199,7 +199,7 @@
     <div class="encore-footer__inner">
         <nav aria-label="Footer navigation">
             <ul class="encore-footer__nav">
-                <li><a href="{{ route('shop.mens-tops') }}">Shop</a></li>
+                <li><a href="{{ route('allProduct') }}">Shop</a></li>
                 <li><a href="{{ url('/pages/teamwear') }}">Teamwear</a></li>
                 <li><a href="{{ url('/') }}">Custom</a></li>
                 <li><a href="#">Events</a></li>
