@@ -72,6 +72,62 @@ class StorefrontController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $search = trim((string) $request->query('search', ''));
+        $search = Str::limit($search, 100, '');
+
+        if ($search === '') {
+            return view('shop.search-results', [
+                'products' => collect(),
+                'search' => '',
+                'apiError' => null,
+            ]);
+        }
+
+        try {
+            /*
+             * Search the same "All Apparel" inventory used by the storefront,
+             * then match locally after normalizeProduct(). This keeps custom
+             * display names searchable even when Encore's raw product name is
+             * different.
+             */
+            $response = $this->products->products([
+                'selectedCategory' => 5,
+                'selectedGender' => null,
+                'selectedSport' => null,
+                'selectedStyle' => null,
+                'search' => null,
+            ]);
+
+            if (!($response['success'] ?? false)) {
+                throw new RuntimeException(
+                    $response['message'] ?? 'Unable to search products.'
+                );
+            }
+
+            $products = collect($response['data'] ?? [])
+                ->map(fn ($item) => $this->products->normalizeProduct($item))
+                ->filter(fn ($product) => !empty($product['id']))
+                ->unique('id')
+                ->filter(fn ($product) => $this->matchesStorefrontSearch($product, $search))
+                ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+                ->values();
+
+            return view('shop.search-results', [
+                'products' => $products,
+                'search' => $search,
+                'apiError' => null,
+            ]);
+        } catch (Throwable $e) {
+            return view('shop.search-results', [
+                'products' => collect(),
+                'search' => $search,
+                'apiError' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function show($id)
     {
         try {
