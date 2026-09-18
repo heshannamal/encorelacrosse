@@ -167,7 +167,7 @@
 
     <div class="ec-category-filter-summary">
         <strong>{{ $products->count() }}</strong>
-        {{ Str::plural('product', $products->count()) }}
+        {{ \Illuminate\Support\Str::plural('product', $products->count()) }}
     </div>
 
     <div class="ec-shop-full">
