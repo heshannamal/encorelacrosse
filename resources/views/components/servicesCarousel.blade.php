@@ -5,7 +5,7 @@
             {{-- Custom Graphic Design --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/2f7356f7-c7c9-4cc1-8f32-086f0abae371/-/format/auto/-/preview/3000x3000/-/quality/lighter/Design%20copy.jpg"
+                    <img src="{{ asset('images/services-carousel/custom-graphic-design.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="Custom Graphic Design"
                         style="height: 265px;">
@@ -20,7 +20,7 @@
             {{-- Shop Lifestyle Apparel --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/c056f0f4-44a5-40cc-baed-1d6a21112240/-/format/auto/-/preview/3000x3000/-/quality/lighter/Shop%20copy.jpg"
+                    <img src="{{ asset('images/services-carousel/shop-lifestyle-apparel.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="Shop Lifestyle Apparel"
                         style="height: 265px;">
@@ -35,7 +35,7 @@
             {{-- TeamStore & Delivery --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/4697da7c-58b1-43f8-a6c6-57fd05969643/-/format/auto/-/preview/3000x3000/-/quality/lighter/TeamSore%20copy.jpg"
+                    <img src="{{ asset('images/services-carousel/team-store-delivery.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="TeamStore & Delivery"
                         style="height: 265px;">
@@ -50,7 +50,7 @@
             {{-- Embellishment Types --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/77f7b45b-f59f-4630-b76c-015b5b870df6/-/format/auto/-/preview/3000x3000/-/quality/lighter/Embellishment2.jpg"
+                    <img src="{{ asset('images/services-carousel/embellishment-types.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="Embellishment Types"
                         style="height: 265px;">
@@ -65,7 +65,7 @@
             {{-- Sizing Guidelines --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/28983e22-f786-4144-8727-5038bb424dc3/-/format/auto/-/preview/3000x3000/-/quality/lighter/Sizing%20copy.jpg"
+                    <img src="{{ asset('images/services-carousel/sizing-guidelines.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="Sizing Guidelines"
                         style="height: 265px;">
@@ -80,7 +80,7 @@
             {{-- Fabrics --}}
             <div class="col-6 col-md-4 col-lg-2">
                 <div class="card border-0 overflow-hidden position-relative service-card">
-                    <img src="https://ucarecdn.com/f452a03f-1922-4ce0-a4a3-5353d40976be/-/format/auto/-/preview/3000x3000/-/quality/lighter/Fabric%20copy.jpg"
+                    <img src="{{ asset('images/services-carousel/fabrics.jpg') }}"
                         class="card-img object-fit-cover"
                         alt="Fabrics"
                         style="height: 265px;">
