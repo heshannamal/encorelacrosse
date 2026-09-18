@@ -114,6 +114,11 @@
             <a href="{{ url('/pages/international') }}">International</a>
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('privateTraining') }}">Private Training</a>
+            @if(!empty(session('encore_user_token')) || !empty(session('auth_api_token')))
+                <a href="{{ route('profile') }}">My Account</a>
+            @else
+                <a href="{{ route('login') }}">Account</a>
+            @endif
         </div>
     </div>
 </header>
