@@ -55,7 +55,7 @@
 
                 <li class="encore-nav-item has-dropdown">
                     <a href="#" class="encore-nav-link">Events <span class="encore-chevron"></span></a>
-                    <ul class="encore-dropdown encore-dropdown-wide">
+                    <ul class="encore-dropdown encore-dropdown-wide encore-dropdown-events">
                         <li><a href="{{ route('events.battleOfTheBay') }}">Battle of the Bay</a></li>
                         <li><a href="{{ route('events.impact10Showcase') }}">Impact10 Showcase</a></li>
                         <li><a href="{{ route('events.hawaiiYouthLacrosseClassic') }}">Hawaii Youth Lacrosse Classic</a></li>
@@ -271,7 +271,13 @@
     }
 
     .encore-dropdown-wide {
-        width: 260px;
+        width: max-content;
+        min-width: 260px;
+        max-width: min(360px, calc(100vw - 32px));
+    }
+
+    .encore-dropdown-events {
+        min-width: 325px;
     }
 
     .encore-dropdown li {
@@ -294,6 +300,8 @@
         text-decoration: none;
         text-transform: uppercase;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         transition: color .15s ease, background .15s ease;
     }
 
@@ -378,6 +386,19 @@
 
         .encore-private-training {
             font-size: 17px;
+        }
+
+        .encore-dropdown-wide {
+            min-width: 250px;
+            max-width: min(330px, calc(100vw - 24px));
+        }
+
+        .encore-dropdown-events {
+            min-width: 305px;
+        }
+
+        .encore-dropdown a {
+            font-size: 19px;
         }
     }
 
