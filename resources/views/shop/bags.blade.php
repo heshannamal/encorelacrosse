@@ -18,5 +18,5 @@
     </div>
 </section>
 
-@include('shop.ecommerce._category-listing')
+@include('shop.ecommerce._legacy-product-grid')
 @endsection
