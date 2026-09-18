@@ -67,7 +67,9 @@
                 <label>Category</label>
                 <select name="selectedCategory" class="js-ec-category-filter">
                     @foreach($mainCategories as $category)
-                        @php($categoryId = (string) data_get($category, 'id'))
+                        @php
+                            $categoryId = (string) data_get($category, 'id');
+                        @endphp
                         <option value="{{ $categoryId }}" {{ $selectedCategory === $categoryId ? 'selected' : '' }}>
                             {{ data_get($category, 'category_name', data_get($category, 'name')) }}
                         </option>
@@ -80,7 +82,9 @@
                 <select name="selectedStyle" class="js-ec-category-filter">
                     <option value="" {{ $selectedStyle === '' ? 'selected' : '' }}>All Styles</option>
                     @foreach($productCategories as $style)
-                        @php($styleId = (string) data_get($style, 'id'))
+                        @php
+                            $styleId = (string) data_get($style, 'id');
+                        @endphp
                         <option value="{{ $styleId }}" {{ $selectedStyle === $styleId ? 'selected' : '' }}>
                             {{ data_get($style, 'product_category_name', data_get($style, 'category_name', data_get($style, 'name'))) }}
                         </option>
@@ -103,7 +107,9 @@
                 <select name="selectedSport" class="js-ec-category-filter">
                     <option value="" {{ $selectedSport === '' ? 'selected' : '' }}>All Sports</option>
                     @foreach($sports as $sport)
-                        @php($sportId = (string) data_get($sport, 'id'))
+                        @php
+                            $sportId = (string) data_get($sport, 'id');
+                        @endphp
                         <option value="{{ $sportId }}" {{ $selectedSport === $sportId ? 'selected' : '' }}>
                             {{ data_get($sport, 'sport_name', data_get($sport, 'name')) }}
                         </option>
@@ -171,56 +177,59 @@
     </div>
 
     <div class="ec-shop-full">
-        @if($products->isNotEmpty())
-            <div class="ec-product-grid">
-                @foreach($products as $product)
-                    @php
-                        $images = collect($product['images'] ?? [])->filter()->unique()->values();
-                        $carouselId = 'ecCategoryProductCarousel' . $product['id'];
-                        $productUrl = route('product', $product['id']);
-                    @endphp
+        @forelse($products as $product)
+            @php
+                $images = collect($product['images'] ?? [])->filter()->unique()->values();
 
-                    <article class="ec-product-card js-ec-category-product-card" data-url="{{ $productUrl }}" tabindex="0" role="link">
-                        <div class="ec-product-image-wrap">
-                            @if($images->count() > 1)
-                                <div id="{{ $carouselId }}" class="carousel slide js-ec-category-carousel" data-bs-ride="false" data-bs-interval="false" data-bs-touch="true">
-                                    <div class="carousel-inner">
-                                        @foreach($images as $index => $image)
-                                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                                <a href="{{ $productUrl }}" class="ec-product-image-link">
-                                                    <img src="{{ $image }}" alt="{{ $product['name'] }}" class="ec-product-image" loading="lazy" draggable="false">
-                                                </a>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                if ($images->isEmpty()) {
+                    $images = collect([asset('images/product-placeholder.svg')]);
+                }
+
+                $carouselId = 'ecCategoryProductCarousel' . $product['id'];
+                $productUrl = route('product', $product['id']);
+            @endphp
+
+            @if($loop->first)
+                <div class="ec-product-grid">
+            @endif
+
+            <article class="ec-product-card js-ec-category-product-card" data-url="{{ $productUrl }}" tabindex="0" role="link">
+                <div class="ec-product-image-wrap">
+                    <div id="{{ $carouselId }}" class="carousel slide js-ec-category-carousel" data-bs-ride="false" data-bs-interval="false" data-bs-touch="true">
+                        <div class="carousel-inner">
+                            @foreach($images as $index => $image)
+                                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                    <a href="{{ $productUrl }}" class="ec-product-image-link">
+                                        <img src="{{ $image }}" alt="{{ $product['name'] }}" class="ec-product-image" loading="lazy" draggable="false">
+                                    </a>
                                 </div>
-                            @else
-                                <a href="{{ $productUrl }}" class="ec-product-image-link">
-                                    <img src="{{ $images->first() ?? asset('images/product-placeholder.svg') }}" alt="{{ $product['name'] }}" class="ec-product-image" loading="lazy" draggable="false">
-                                </a>
-                            @endif
+                            @endforeach
                         </div>
+                    </div>
+                </div>
 
-                        <div class="ec-product-info">
-                            <h3 class="ec-product-name">
-                                <a href="{{ $productUrl }}">{{ $product['name'] }}</a>
-                            </h3>
-                            <div class="ec-product-price">
-                                {{ $product['price_formatted'] ?? (($product['currency_symbol'] ?? '$') . number_format((float)($product['price'] ?? 0), 2)) }}
-                            </div>
-                            <a href="{{ $productUrl }}" class="ec-view-more">View Product</a>
-                        </div>
-                    </article>
-                @endforeach
-            </div>
-        @else
+                <div class="ec-product-info">
+                    <h3 class="ec-product-name">
+                        <a href="{{ $productUrl }}">{{ $product['name'] }}</a>
+                    </h3>
+                    <div class="ec-product-price">
+                        {{ $product['price_formatted'] ?? (($product['currency_symbol'] ?? '$') . number_format((float) ($product['price'] ?? 0), 2)) }}
+                    </div>
+                    <a href="{{ $productUrl }}" class="ec-view-more">View Product</a>
+                </div>
+            </article>
+
+            @if($loop->last)
+                </div>
+            @endif
+        @empty
             <div class="ec-empty">
                 <i class="bi bi-bag"></i>
                 <h3>No products found</h3>
                 <p>Try changing the filters or search term.</p>
                 <a href="{{ route($filterRouteName) }}" class="ec-btn ec-btn-dark">Reset Filters</a>
             </div>
-        @endif
+        @endforelse
     </div>
 </section>
 
