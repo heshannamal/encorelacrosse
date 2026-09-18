@@ -86,20 +86,26 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        min-height: 34px;
+        gap: 12px;
+        min-height: 24px;
         margin-bottom: 18px;
     }
 
     .encore-footer__payment-logo {
-        width: 50px;
-        height: 32px;
-        padding: 4px 6px;
+        width: auto;
+        height: 20px;
+        padding: 0;
         display: block;
         object-fit: contain;
-        border: 1px solid rgba(0, 0, 0, .12);
-        border-radius: 4px;
-        background: rgba(255, 255, 255, .7);
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        filter: grayscale(1);
+        opacity: .9;
+    }
+
+    .encore-footer__payment-logo--amex {
+        height: 22px;
     }
 
     @media (max-width: 767.98px) {
@@ -169,9 +175,9 @@
         </div>
 
         <div class="encore-footer__payments" aria-label="Accepted payment methods">
-            <img src="{{ asset('images/payment/visa.webp') }}" alt="Visa" class="encore-footer__payment-logo">
-            <img src="{{ asset('images/payment/mastercard.webp') }}" alt="Mastercard" class="encore-footer__payment-logo">
-            <img src="{{ asset('images/payment/amex.webp') }}" alt="American Express" class="encore-footer__payment-logo">
+            <img src="{{ asset('images/payment/amex.svg') }}" alt="American Express" class="encore-footer__payment-logo encore-footer__payment-logo--amex">
+            <img src="{{ asset('images/payment/mastercard.svg') }}" alt="Mastercard" class="encore-footer__payment-logo">
+            <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa" class="encore-footer__payment-logo">
         </div>
 
         <div class="encore-footer__meta">
