@@ -141,7 +141,7 @@
         left: 0;
         right: 0;
         z-index: 1100;
-        height: 90px;
+        height: 76px;
         background: #fff;
         border-bottom: 1px solid #e6e6e6;
         box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
@@ -150,10 +150,11 @@
 
     .encore-header-desktop {
         width: 100%;
-        height: 90px;
-        padding: 0 55px;
+        height: 76px;
+        padding: 0 28px;
         display: grid;
-        grid-template-columns: 25% 50% 25%;
+        grid-template-columns: minmax(160px, 1fr) max-content minmax(120px, 1fr);
+        column-gap: 12px;
         align-items: center;
     }
 
@@ -181,8 +182,11 @@
         align-self: stretch;
         min-width: 0;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
+        gap: 6px;
+        white-space: nowrap;
     }
 
     .encore-main-nav {
@@ -190,6 +194,8 @@
         margin: 0;
         padding: 0;
         display: flex;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
         align-items: center;
         justify-content: center;
         list-style: none;
@@ -205,15 +211,16 @@
 
     .encore-nav-link {
         height: 48px;
-        padding: 0 12px;
+        padding: 0 8px;
         display: inline-flex;
         align-items: center;
         gap: 7px;
         color: #555;
         font-family: 'Oswald', sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 300;
         line-height: 1;
+        white-space: nowrap;
         text-decoration: none;
         text-transform: uppercase;
         transition: color .15s ease;
@@ -236,10 +243,15 @@
     }
 
     .encore-private-training {
-        margin-top: 4px;
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        height: 48px;
+        margin: 0 0 0 8px;
+        white-space: nowrap;
         color: #5d5d5d;
         font-family: 'Oswald', sans-serif;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 300;
         line-height: 1;
         text-decoration: none;
@@ -361,7 +373,7 @@
     }
 
     .encore-fixed-header-offset {
-        height: 42px;
+        height: 28px;
     }
 
     .encore-header-mobile {
@@ -370,22 +382,33 @@
 
     @media (max-width: 1199.98px) and (min-width: 992px) {
         .encore-header-desktop {
-            padding: 0 28px;
-            grid-template-columns: 23% 58% 19%;
+            padding: 0 18px;
+            grid-template-columns: minmax(135px, 1fr) max-content minmax(112px, 1fr);
+            column-gap: 7px;
         }
 
         .encore-header-logo {
-            width: 145px;
+            width: 135px;
+        }
+
+        .encore-header-center {
+            gap: 2px;
         }
 
         .encore-nav-link {
-            padding-left: 8px;
-            padding-right: 8px;
-            font-size: 17px;
+            padding-left: 5px;
+            padding-right: 5px;
+            gap: 5px;
+            font-size: 16px;
         }
 
         .encore-private-training {
-            font-size: 17px;
+            margin-left: 5px;
+            font-size: 16px;
+        }
+
+        .encore-tool {
+            width: 36px;
         }
 
         .encore-dropdown-wide {
