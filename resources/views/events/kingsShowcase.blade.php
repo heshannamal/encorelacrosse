@@ -228,21 +228,14 @@ $sponsor12 = 'https://ucarecdn.com/d2bf749d-d0fd-451d-b86b-0307f6280477/-/format
 
 <hr>
 
-<section class="container-fluid px-0 my-5 bg-light py-5">
-    <div class="container text-center">
-        <div class="col-6 col-md-3">
-            <img src="{{ $cirqueImg1 }}" class="img-fluid rounded shadow-sm">
-        </div>
-    </div>
-</section>
-
-<section class="container-fluid px-0 my-5 bg-light py-5">
-    <div class="container text-center">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <img src="{{ $cirqueImg1 }}" alt="2025 Vendor Logos" class="img-fluid my-4">
-            </div>
-        </div>
+<section class="container-fluid px-3 my-5 bg-light py-5">
+    <div class="container-fluid text-center">
+        <img
+            src="{{ $cirqueImg1 }}"
+            alt="2025 Vendor Logos"
+            class="d-block mx-auto"
+            style="display: block; width: 100%; max-width: 1100px; height: auto; object-fit: contain;"
+        >
     </div>
 </section>
 
