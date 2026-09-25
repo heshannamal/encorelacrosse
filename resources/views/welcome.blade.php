@@ -108,7 +108,7 @@
 <!-- Image Background -->
 <section class="video-bg position-relative" style="height: 100vh;">
     <div class="overlay position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 0, 0, 0.4);">
-        <img src="{{ asset('images/IMG_9372.JPG') }}" alt="Background Image" class="w-100 h-100 object-cover">
+        <img src="{{ asset('images/IMG_9372.jpg') }}" alt="Background Image" class="w-100 h-100 object-cover">
     </div>
     <div class="container h-100 d-flex flex-column justify-content-center align-items-center position-relative text-center">
         <a href="#" class="btn btn-danger btn-sm mb-2" style="width: 300px;">2025 TEAM & FREE AGENT REGISTRATION</a>

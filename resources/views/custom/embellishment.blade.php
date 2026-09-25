@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-$hero_bg = asset('images/custom/embellishment/backgroundImage.JPG');
+$hero_bg = asset('images/custom/embellishment/backgroundImage.jpg');
 $deztek_img = asset('images/custom/embellishment/image1.avif');
 $lattek_img = asset('images/custom/embellishment/image2.avif');
 $hydrotek_img = asset('images/custom/embellishment/image3.webp');

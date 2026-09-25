@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/event/theBattleOfTheBay/backgroundImage.JPG');
+$heroBgImage = asset('images/event/theBattleOfTheBay/backgroundImage.jpg');
 $spoLogo = asset('images/event/theBattleOfTheBay/spoLogo.png');
 $image1 = asset('images/event/theBattleOfTheBay/image1.avif');
 $image2a = asset('images/event/theBattleOfTheBay/image2a.avif');
