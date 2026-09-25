@@ -3,9 +3,9 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/berlin/backgroundImage.jpg');
+$heroBgImage = asset('images/international/berlin/backgroundImage.JPG');
 $image1 = asset('images/international/berlin/image1.jpg');
-$image2 = asset('images/international/berlin/image2.png');
+$image2 = asset('images/international/berlin/image2.jpg');
 @endphp
 
 <section id="custom-team-apparel" class="container-fluid px-0">

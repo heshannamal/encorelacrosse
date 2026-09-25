@@ -5,16 +5,12 @@
 @php
 // --- Hero & Logos ---
 $heroBgImage = asset('images/event/kingsShowcase/backgroundImage.jpg');
-$eventLogo = asset('images/event/kingsShowcase/backgroundImageLogo.png');
-$vegasRoomsLogo = asset('images/event/kingsShowcase/vegasLogo.png');
 
 // --- Hotels ---
-$suncoastImg = asset('images/event/kingsShowcase/image1.jpg');
+$suncoastImg = asset('images/event/kingsShowcase/image1.JPG');
 $bestWesternImg = asset('images/event/kingsShowcase/image2.avif');
 $rodewayInnImg = asset('images/event/kingsShowcase/image3.avif');
 $cirqueImg1 = asset('images/event/kingsShowcase/image4.jpg');
-$laQuintaImg = asset('images/event/kingsShowcase/image5.jpg');
-$hamptonTropicanaImg = asset('images/event/kingsShowcase/image6.jpg');
 
 // --- Extras ---
 $photoImg = 'https://ucarecdn.com/2f98d829-706d-4b02-946b-312ce2c12c00/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
@@ -25,7 +21,6 @@ $attractionsImg3 = 'https://ucarecdn.com/07f59c4d-e7ae-4383-886d-a8c0b4f766ef/-/
 $attractionsImg4 = 'https://ucarecdn.com/c6264014-9ab7-4d94-8755-f269138627e3/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
 $attractionsImg5 = 'https://ucarecdn.com/aef2d477-75ec-4610-ab55-646fe3e3c652/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
 $attractionsImg6 = 'https://ucarecdn.com/9b6fc768-b076-420e-8283-70598141c3d7/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
-$gameFilmImg = asset('images/event/kingsShowcase/gameFilmImg.png');
 
 // --- Sponsors (Bottom) ---
 $sponsor1 = 'https://ucarecdn.com/4951de49-397b-47d9-9c97-67cabb2be537/-/format/auto/-/preview/3000x3000/-/quality/lighter/';
@@ -46,7 +41,6 @@ $sponsor12 = 'https://ucarecdn.com/d2bf749d-d0fd-451d-b86b-0307f6280477/-/format
     style="background-image: url('{{ $heroBgImage }}'); background-size: cover; background-position: center; min-height: 500px;">
     <div class="position-absolute top-0 start-0 w-100 h-100 bg-black opacity-50"></div>
     <div class="position-relative z-2 container py-5">
-        <!-- <img src="{{ $eventLogo }}" alt="Kings Showcase Logo" class="img-fluid mb-4" style="max-width: 300px;"> -->
         <h1 class="display-4 fw-bold text-uppercase">JANUARY 24th - 25th, 2026</h1>
     </div>
 </section>

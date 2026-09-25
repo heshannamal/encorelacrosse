@@ -3,16 +3,9 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/phillipines/backgroundImage.jpg');
+$heroBgImage = asset('images/international/phillipines/backgroundImage.JPG');
 $image1 = asset('images/international/phillipines/image1.jpg');
 $image2 = asset('images/international/phillipines/image2.jpg');
-$image3 = asset('images/international/phillipines/image3.jpg');
-$image4 = asset('images/international/phillipines/image4.jpg');
-$image5 = asset('images/international/srilanka/image5.jpg');
-$image6 = asset('images/international/srilanka/image6.jpg');
-$image7 = asset('images/international/srilanka/image7.jpg');
-$image8 = asset('images/international/srilanka/image8.jpg');
-$image9 = asset('images/international/srilanka/image9.jpg');
 @endphp
 
 <section id="custom-team-apparel" class="container-fluid px-0">
@@ -116,7 +109,7 @@ $image9 = asset('images/international/srilanka/image9.jpg');
 
 <section class="p-0">
     <div class="position-relative">
-        <img src="YOUR_BANNER_IMAGE_PATH" class="img-fluid w-100" alt="Banner background">
+        <img src="{{ $image2 }}" class="img-fluid w-100" alt="Philippines lacrosse trip">
 
         <div class="bg-black py-4">
             <div class="container">
