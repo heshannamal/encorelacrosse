@@ -3,13 +3,13 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/uganda/backgroundImage.jpg');
-$image1 = asset('images/international/uganda/image1.jpg');
+$heroBgImage = asset('images/international/uganda/backgroundImage.JPG');
+$image1 = asset('images/international/uganda/image1.JPG');
 $image2 = asset('images/international/uganda/image2.jpg');
 $image3 = asset('images/international/uganda/image3.jpg');
 $image4 = asset('images/international/uganda/image4.jpg');
-$image5 = asset('images/international/uganda/image5.jpg');
-$image6 = asset('images/international/uganda/image6.jpg');
+$image5 = asset('images/international/uganda/image5.JPG');
+$image6 = asset('images/international/uganda/image6.JPG');
 @endphp
 
 <section id="custom-team-apparel" class="container-fluid px-0">
