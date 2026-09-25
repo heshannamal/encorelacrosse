@@ -103,27 +103,112 @@
         </a>
 
         <div class="encore-mobile-actions">
-            <a href="{{ route('allProduct') }}" aria-label="Search products"><i class="bi bi-search"></i></a>
-            <a href="{{ route('cart') }}" class="encore-mobile-cart" aria-label="Cart"><i class="bi bi-bag"></i><span data-encore-cart-count>0</span></a>
-            <button class="encore-mobile-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#encoreMobileMenu" aria-controls="encoreMobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <a href="{{ route('allProduct') }}" aria-label="Search products"><i class="bi bi-search" aria-hidden="true"></i></a>
+            <a href="{{ route('cart') }}" class="encore-mobile-cart" aria-label="Cart">
+                <i class="bi bi-bag" aria-hidden="true"></i><span data-encore-cart-count>0</span>
+            </a>
+            <button class="encore-mobile-toggle" type="button" id="encoreMobileToggle"
+                aria-controls="encoreMobileMenu" aria-expanded="false" aria-label="Open navigation menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
 
-        <div class="collapse encore-mobile-menu" id="encoreMobileMenu">
-            <a href="{{ route('allProduct') }}">Shop</a>
-            <a href="{{ url('/pages/teamwear') }}">Teamwear</a>
-            <a href="{{ url('/') }}">Custom</a>
-            <a href="#">Events</a>
-            <a href="{{ url('/pages/international') }}">International</a>
-            <a href="{{ route('about') }}">About</a>
-            <a href="{{ route('privateTraining') }}">Private Training</a>
-            @if(!empty(session('encore_user_token')) || !empty(session('auth_api_token')))
-                <a href="{{ route('profile') }}">My Account</a>
-            @else
-                <a href="{{ route('login') }}">Account</a>
-            @endif
-        </div>
+        <div class="encore-mobile-backdrop" id="encoreMobileBackdrop" hidden></div>
+
+        <nav class="encore-mobile-menu" id="encoreMobileMenu" aria-label="Mobile navigation" hidden>
+            <ul class="encore-mobile-nav-list">
+                <li class="encore-mobile-nav-item">
+                    <a class="encore-mobile-nav-link" href="{{ route('allProduct') }}">Shop</a>
+                </li>
+
+                <li class="encore-mobile-nav-item">
+                    <div class="encore-mobile-nav-row">
+                        <a class="encore-mobile-nav-link" href="{{ url('/pages/teamwear') }}">Teamwear</a>
+                        <button class="encore-mobile-subtoggle" type="button" aria-label="Show Teamwear links"
+                            aria-expanded="false" aria-controls="encoreMobileTeamwear">
+                            <span class="encore-mobile-chevron" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <ul class="encore-mobile-submenu" id="encoreMobileTeamwear" hidden>
+                        <li><a href="{{ route('teamwear.allTeamwear') }}">All Teamwear</a></li>
+                        <li><a href="{{ route('teamwear.mensGameJerseys') }}">Men's Game Jerseys</a></li>
+                        <li><a href="{{ route('teamwear.mensShorts') }}">Men's Shorts</a></li>
+                        <li><a href="{{ route('teamwear.mensShooters') }}">Men's Shooters</a></li>
+                        <li><a href="{{ route('teamwear.mensReversibles') }}">Men's Reversibles</a></li>
+                        <li><a href="{{ route('teamwear.womensRacerbacks') }}">Women's Racerbacks</a></li>
+                        <li><a href="{{ route('teamwear.womensShortsKilts') }}">Women's Shorts &amp; Kilts</a></li>
+                        <li><a href="{{ route('teamwear.womensShooters') }}">Women's Shooters</a></li>
+                        <li><a href="{{ route('teamwear.outerwear') }}">Outerwear</a></li>
+                        <li><a href="{{ route('teamwear.hoodies') }}">Hoodies</a></li>
+                        <li><a href="{{ route('teamwear.joggersSweats') }}">Joggers &amp; Sweats</a></li>
+                        <li><a href="{{ route('teamwear.lpp') }}">LPP</a></li>
+                    </ul>
+                </li>
+
+                <li class="encore-mobile-nav-item">
+                    <button class="encore-mobile-nav-link encore-mobile-nav-parent" type="button"
+                        aria-expanded="false" aria-controls="encoreMobileCustom">
+                        Custom <span class="encore-mobile-chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="encore-mobile-submenu" id="encoreMobileCustom" hidden>
+                        <li><a href="{{ route('custom.teamStores') }}">Team Stores</a></li>
+                        <li><a href="{{ route('custom.customGraphicDesign') }}">Custom Graphic Design</a></li>
+                        <li><a href="{{ route('custom.sizingCharts') }}">Sizing Charts</a></li>
+                        <li><a href="{{ route('custom.fabric') }}">Fabric</a></li>
+                        <li><a href="{{ route('custom.embellishment') }}">Embellishment</a></li>
+                    </ul>
+                </li>
+
+                <li class="encore-mobile-nav-item">
+                    <button class="encore-mobile-nav-link encore-mobile-nav-parent" type="button"
+                        aria-expanded="false" aria-controls="encoreMobileEvents">
+                        Events <span class="encore-mobile-chevron" aria-hidden="true"></span>
+                    </button>
+                    <ul class="encore-mobile-submenu" id="encoreMobileEvents" hidden>
+                        <li><a href="{{ route('events.battleOfTheBay') }}">Battle of the Bay</a></li>
+                        <li><a href="{{ route('events.impact10Showcase') }}">Impact10 Showcase</a></li>
+                        <li><a href="{{ route('events.hawaiiYouthLacrosseClassic') }}">Hawaii Youth Lacrosse Classic</a></li>
+                        <li><a href="{{ route('events.lasVegasLacrosseShowcase') }}">Las Vegas Lacrosse Showcase</a></li>
+                        <li><a href="{{ route('events.kingsShowcase') }}">King's Showcase</a></li>
+                        <li><a href="{{ route('events.buffaloWingsBoxLacrosse') }}">Buffalo Wings Box Lacrosse</a></li>
+                    </ul>
+                </li>
+
+                <li class="encore-mobile-nav-item">
+                    <div class="encore-mobile-nav-row">
+                        <a class="encore-mobile-nav-link" href="{{ url('/pages/international') }}">International</a>
+                        <button class="encore-mobile-subtoggle" type="button" aria-label="Show International links"
+                            aria-expanded="false" aria-controls="encoreMobileInternational">
+                            <span class="encore-mobile-chevron" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <ul class="encore-mobile-submenu" id="encoreMobileInternational" hidden>
+                        <li><a href="{{ route('international.sriLanka') }}">Sri Lanka</a></li>
+                        <li><a href="{{ route('international.philippines') }}">Philippines</a></li>
+                        <li><a href="{{ route('international.ecuador') }}">Ecuador</a></li>
+                        <li><a href="{{ route('international.uganda') }}">Uganda</a></li>
+                        <li><a href="{{ route('international.japan') }}">Japan</a></li>
+                        <li><a href="{{ route('international.berlin') }}">Berlin</a></li>
+                        <li><a href="{{ route('international.colombia') }}">Colombia</a></li>
+                        <li><a href="{{ route('international.trinidadAndTobago') }}">Trinidad &amp; Tobago Lacrosse</a></li>
+                    </ul>
+                </li>
+
+                <li class="encore-mobile-nav-item">
+                    <a class="encore-mobile-nav-link" href="{{ route('about') }}">About</a>
+                </li>
+                <li class="encore-mobile-nav-item">
+                    <a class="encore-mobile-nav-link" href="{{ route('privateTraining') }}">Private Training</a>
+                </li>
+                <li class="encore-mobile-nav-item">
+                    @if(!empty(session('encore_user_token')) || !empty(session('auth_api_token')))
+                        <a class="encore-mobile-nav-link" href="{{ route('profile') }}">My Account</a>
+                    @else
+                        <a class="encore-mobile-nav-link" href="{{ route('login') }}">Account / Login</a>
+                    @endif
+                </li>
+            </ul>
+        </nav>
     </div>
 </header>
 
@@ -436,38 +521,60 @@
 
         .encore-header-mobile {
             position: relative;
+            width: 100%;
             height: 64px;
-            padding: 0 18px;
+            padding: 0 clamp(12px, 4vw, 22px);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
+        }
+
+        .encore-mobile-logo-link {
+            display: inline-flex;
+            align-items: center;
+            flex: 0 1 140px;
+            min-width: 0;
         }
 
         .encore-mobile-logo {
             display: block;
-            width: 118px;
+            width: min(128px, 100%);
             height: auto;
         }
 
         .encore-mobile-actions {
             display: flex;
+            flex: 0 0 auto;
             align-items: center;
-            gap: 13px;
+            gap: clamp(3px, 1.7vw, 11px);
+        }
+
+        .encore-mobile-actions > a,
+        .encore-mobile-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 44px;
+            flex: 0 0 auto;
+            color: #333;
+            font-size: 21px;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .encore-mobile-actions > a {
             position: relative;
-            color: #333;
-            font-size: 20px;
-            text-decoration: none;
         }
 
         .encore-mobile-cart span {
             position: absolute;
-            top: -7px;
-            right: -8px;
-            width: 15px;
+            top: 1px;
+            right: 1px;
+            min-width: 15px;
             height: 15px;
+            padding: 0 3px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -478,46 +585,277 @@
         }
 
         .encore-mobile-toggle {
-            width: 28px;
-            height: 28px;
-            padding: 4px 0;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0;
             border: 0;
             background: transparent;
+            cursor: pointer;
         }
 
         .encore-mobile-toggle span {
             width: 23px;
-            height: 1px;
-            margin: 4px auto;
+            height: 1.5px;
             display: block;
-            background: #333;
+            background: currentColor;
+            transition: transform .2s ease, opacity .2s ease;
+        }
+
+        .encore-mobile-toggle[aria-expanded="true"] span:first-child {
+            transform: translateY(6.5px) rotate(45deg);
+        }
+
+        .encore-mobile-toggle[aria-expanded="true"] span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .encore-mobile-toggle[aria-expanded="true"] span:last-child {
+            transform: translateY(-6.5px) rotate(-45deg);
+        }
+
+        .encore-mobile-backdrop {
+            position: fixed;
+            inset: 64px 0 0;
+            z-index: 1100;
+            background: rgba(16, 16, 16, .45);
         }
 
         .encore-mobile-menu {
-            position: absolute;
+            position: fixed;
             top: 64px;
-            left: 0;
             right: 0;
-            padding: 10px 18px 18px;
+            z-index: 1101;
+            width: min(400px, 100vw);
+            height: calc(100vh - 64px);
+            height: calc(100dvh - 64px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 12px 20px max(28px, env(safe-area-inset-bottom));
             background: #fff;
-            border-top: 1px solid #eee;
-            box-shadow: 0 8px 18px rgba(0,0,0,.08);
+            box-shadow: -10px 12px 35px rgba(0,0,0,.12);
         }
 
-        .encore-mobile-menu a {
-            padding: 10px 0;
-            display: block;
-            border-bottom: 1px solid #eee;
-            color: #555;
+        .encore-mobile-menu[hidden],
+        .encore-mobile-backdrop[hidden],
+        .encore-mobile-submenu[hidden] {
+            display: none !important;
+        }
+
+        .encore-mobile-nav-list,
+        .encore-mobile-submenu {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .encore-mobile-nav-item {
+            border-bottom: 1px solid #ececec;
+        }
+
+        .encore-mobile-nav-row {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .encore-mobile-nav-link {
+            display: flex;
+            flex: 1 1 auto;
+            min-height: 53px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            width: 100%;
+            margin: 0;
+            padding: 12px 6px;
+            border: 0;
+            background: transparent;
+            color: #4a4a4a;
             font-family: 'Oswald', sans-serif;
             font-size: 17px;
-            font-weight: 300;
+            font-weight: 400;
+            line-height: 1.35;
+            text-align: left;
             text-decoration: none;
             text-transform: uppercase;
+            white-space: normal;
+        }
+
+        .encore-mobile-nav-parent {
+            cursor: pointer;
+        }
+
+        .encore-mobile-subtoggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 46px;
+            min-width: 46px;
+            border: 0;
+            border-left: 1px solid #f0f0f0;
+            background: transparent;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .encore-mobile-chevron {
+            display: inline-block;
+            flex: 0 0 9px;
+            width: 9px;
+            height: 9px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-2px);
+            transition: transform .2s ease;
+        }
+
+        [aria-expanded="true"] > .encore-mobile-chevron {
+            transform: rotate(225deg) translate(-2px, -1px);
+        }
+
+        .encore-mobile-submenu {
+            padding: 3px 0 12px 15px;
+            border-top: 1px solid #f2f2f2;
+            background: #fafafa;
+        }
+
+        .encore-mobile-submenu a {
+            display: flex;
+            align-items: center;
+            min-height: 43px;
+            padding: 9px 9px;
+            color: #555;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.3;
+            text-decoration: none;
+            text-transform: uppercase;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        .encore-mobile-submenu li + li {
+            border-top: 1px solid #ededed;
+        }
+
+        .encore-mobile-nav-link:hover,
+        .encore-mobile-submenu a:hover {
+            color: #d71920;
+        }
+
+        .encore-mobile-actions :focus-visible,
+        .encore-mobile-menu :focus-visible {
+            outline: 2px solid #d71920;
+            outline-offset: -2px;
         }
 
         .encore-fixed-header-offset {
             height: 16px;
         }
+    }
+
+    @media (max-width: 359.98px) {
+        .encore-header-mobile {
+            gap: 6px;
+            padding-inline: 10px;
+        }
+
+        .encore-mobile-logo {
+            width: min(105px, 100%);
+        }
+
+        .encore-mobile-actions > a,
+        .encore-mobile-toggle {
+            width: 35px;
+        }
+
+        .encore-mobile-menu {
+            padding-inline: 15px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .encore-mobile-backdrop,
+        .encore-mobile-menu {
+            display: none !important;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    function initEncoreMobileNavigation() {
+        var toggle = document.getElementById('encoreMobileToggle');
+        var menu = document.getElementById('encoreMobileMenu');
+        var backdrop = document.getElementById('encoreMobileBackdrop');
+        if (!toggle || !menu || !backdrop) return;
+
+        var parentButtons = Array.from(menu.querySelectorAll('[aria-controls].encore-mobile-subtoggle, [aria-controls].encore-mobile-nav-parent'));
+
+        function closeSubmenus() {
+            parentButtons.forEach(function (button) {
+                button.setAttribute('aria-expanded', 'false');
+                var panel = document.getElementById(button.getAttribute('aria-controls'));
+                if (panel) panel.hidden = true;
+            });
+        }
+
+        function setOpen(open, restoreFocus) {
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+            menu.hidden = !open;
+            backdrop.hidden = !open;
+            document.body.classList.toggle('encore-mobile-menu-open', open);
+            if (!open) {
+                closeSubmenus();
+                if (restoreFocus) toggle.focus();
+            }
+        }
+
+        toggle.addEventListener('click', function () {
+            setOpen(menu.hidden);
+        });
+
+        backdrop.addEventListener('click', function () {
+            setOpen(false, true);
+        });
+
+        parentButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var panel = document.getElementById(button.getAttribute('aria-controls'));
+                if (!panel) return;
+                var shouldOpen = panel.hidden;
+                closeSubmenus();
+                if (shouldOpen) {
+                    button.setAttribute('aria-expanded', 'true');
+                    panel.hidden = false;
+                }
+            });
+        });
+
+        menu.addEventListener('click', function (event) {
+            if (event.target.closest('a[href]')) setOpen(false);
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !menu.hidden) setOpen(false, true);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 992 && !menu.hidden) setOpen(false);
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEncoreMobileNavigation);
+    } else {
+        initEncoreMobileNavigation();
+    }
+})();
+</script>
+<style>
+    @media (max-width: 991.98px) {
+        body.encore-mobile-menu-open { overflow: hidden; }
     }
 </style>
