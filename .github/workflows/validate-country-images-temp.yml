@@ -1,0 +1,22 @@
+name: Validate Country Images Temp
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/validate-country-images-temp.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+      - run: composer update laravel/socialite --with-all-dependencies --no-interaction --no-progress
+      - run: php -l tests/Feature/LocalCountryAndEventImagesTest.php
+      - run: vendor/bin/phpunit tests/Feature/LocalCountryAndEventImagesTest.php
+      - run: php artisan view:cache
+        env:
+          CACHE_STORE: array
+          APP_KEY: "base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
