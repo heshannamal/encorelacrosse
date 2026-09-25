@@ -98,7 +98,7 @@ $professionals = [
         <div class="row justify-content-center g-4">
 
             <div class="col-12 text-center">
-                <a href="#" class="btn btn-lg fw-bold text-white d-block mx-auto py-3 cta-button-hover"
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdrWBgAKGsl_FlBS4IFbKZUbXsladFFcURELHIpxMvX1ytjQg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn btn-lg fw-bold text-white d-block mx-auto py-3 cta-button-hover"
                     style="
                         max-width: 500px;
                         max-height: 200px;
@@ -113,7 +113,7 @@ $professionals = [
             </div>
 
             <div class="col-12 text-center mt-4">
-                <a href="#" class="btn btn-lg fw-bold text-white d-block mx-auto py-3 cta-button-hover"
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdiVQB-Ln5UEpH4x-x39ltSawF1gPtO9heqpazRo1Tv0azYwg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn btn-lg fw-bold text-white d-block mx-auto py-3 cta-button-hover"
                     style="
                         max-width: 800px;
                         max-height: 200px;
