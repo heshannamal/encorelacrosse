@@ -3,7 +3,7 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/ecuador/backgroundImage.jpg');
+$heroBgImage = asset('images/international/ecuador/backgroundImage.JPG');
 $image1 = asset('images/international/ecuador/image1.jpg');
 $image2 = asset('images/international/ecuador/image2.jpg');
 $image3 = asset('images/international/ecuador/image3.jpg');

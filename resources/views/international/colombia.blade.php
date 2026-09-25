@@ -3,13 +3,11 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/colombia/backgroundImage.jpg');
-$image1 = asset('images/international/colombia/image1.jpg');
+$heroBgImage = asset('images/international/colombia/backgroundImage.JPG');
+$image1 = asset('images/international/colombia/image1.JPG');
 $image2 = asset('images/international/colombia/image2.jpg');
 $image3 = asset('images/international/colombia/image3.jpg');
 $image4 = asset('images/international/colombia/image4.jpg');
-$image5 = asset('images/international/colombia/image5.jpg');
-$image6 = asset('images/international/colombia/image6.jpg');
 @endphp
 
 <section id="custom-team-apparel" class="container-fluid px-0">
