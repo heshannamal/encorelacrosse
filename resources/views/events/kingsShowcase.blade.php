@@ -7,7 +7,7 @@
 $heroBgImage = asset('images/event/kingsShowcase/backgroundImage.jpg');
 
 // --- Hotels ---
-$suncoastImg = asset('images/event/kingsShowcase/image1.JPG');
+$suncoastImg = asset('images/event/kingsShowcase/image1.jpg');
 $bestWesternImg = asset('images/event/kingsShowcase/image2.avif');
 $rodewayInnImg = asset('images/event/kingsShowcase/image3.avif');
 $cirqueImg1 = asset('images/event/kingsShowcase/image4.jpg');
