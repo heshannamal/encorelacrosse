@@ -114,7 +114,7 @@ $image9 = asset('images/international/srilanka/image9.jpg');
     </div>
 </section>
 
-<section class="p-0">
+{{-- <section class="p-0">
     <div class="position-relative">
         <img src="YOUR_BANNER_IMAGE_PATH" class="img-fluid w-100" alt="Banner background">
 
@@ -126,7 +126,7 @@ $image9 = asset('images/international/srilanka/image9.jpg');
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 
 <section class="py-5">
     <div class="container px-md-5">
