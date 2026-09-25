@@ -3,8 +3,8 @@
 @section('content')
 
 @php
-$heroBgImage = asset('images/international/japan/backgroundImage.JPG');
-$image1 = asset('images/international/japan/image1.JPG');
+$heroBgImage = asset('images/international/japan/backgroundImage.jpg');
+$image1 = asset('images/international/japan/image1.jpg');
 $image2 = asset('images/international/japan/image2.jpg');
 @endphp
 
