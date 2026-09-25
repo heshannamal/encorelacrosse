@@ -30,26 +30,26 @@
         <div class="col-12 col-md-6 text-center">
             <!-- Main Image -->
             <img id="main-image"
-                src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTFRONT_2048x2048.webp') }}"
+                src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTFRONT.webp') }}"
                 alt="Collegiate Jersey"
                 class="main-image img-fluid rounded shadow-sm mb-4"
                 style="max-height: 480px; object-fit: contain;">
 
             <!-- Thumbnails -->
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTBACK_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTBACK.webp') }}"
                     class="thumbnail img-thumbnail"
                     style="width: 80px; cursor: pointer;"
                     onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTFront_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTFront.webp') }}"
                     class="thumbnail img-thumbnail"
                     style="width: 80px; cursor: pointer;"
                     onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTLeft_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTLEFT.webp') }}"
                     class="thumbnail img-thumbnail"
                     style="width: 80px; cursor: pointer;"
                     onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTRight_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PASIFICSHORT/PASIFICSHORTRIGHT.webp') }}"
                     class="thumbnail img-thumbnail"
                     style="width: 80px; cursor: pointer;"
                     onclick="changeImage(this)">
@@ -112,20 +112,20 @@
         <!-- Right Column (Image Section) -->
         <div class="col-12 col-md-6 text-center">
             <img id="main-image"
-                src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTFront_2048x2048.webp') }}"
+                src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTFRONT.webp') }}"
                 alt="Pro 2.0 Jersey"
                 class="main-image img-fluid rounded shadow-sm mb-4"
                 style="max-height: 480px; object-fit: contain;">
 
             <!-- Thumbnails -->
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTFront_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTFRONT.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTBACK_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTBACK.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTLeft_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTLEFT.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTRight_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/PROSHORT/PROSHORTRIGHT.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
             </div>
         </div>
@@ -139,20 +139,20 @@
         <!-- Left Column (Image Section) -->
         <div class="col-12 col-md-6 text-center">
             <img id="main-image"
-                src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTBack_2048x2048.webp') }}"
+                src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTFront.webp') }}"
                 alt="Pro Jersey"
                 class="main-image img-fluid rounded shadow-sm mb-4"
                 style="max-height: 480px; object-fit: contain;">
 
             <!-- Thumbnails -->
             <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTFront_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTFront.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTBack_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTBACK.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTLeft_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTLEFT.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
-                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTRight_2048x2048.webp') }}"
+                <img src="{{ asset('images/teamwear/mensShorts/COLLEGIATESHORT/COLLEGIATESHORTRIGHT.webp') }}"
                     class="thumbnail img-thumbnail" style="width: 80px; cursor: pointer;" onclick="changeImage(this)">
             </div>
         </div>
@@ -186,10 +186,10 @@
 <section id="custom-team-apparel" class="container-fluid px-0">
     <div class="row g-0">
         <!-- Left Column (Image Section) -->
-        <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+        <div class="col-12 col-md-6 d-flex flex-column align-items-center p-4">
             <h2 class="display-4">CUSTOMIZE YOUR LOOK</h2>
             <!-- Main Image -->
-            <img id="main-image" src="{{ asset('images/teamwear/mensShorts/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYRight_2048x2048.webp') }}" class="img-fluid w-100 mb-3" alt="Main Product Image"
+            <img id="main-image" src="{{ asset('images/teamwear/mensGameJerseys/COLLEGIATEGAMEJERSEY/COLLEGIATEGAMEJERSEYRight_2048x2048.webp') }}" class="img-fluid w-100 mb-3" alt="Main Product Image"
                 style="object-fit: cover; width: 100%; height: 100%;">
         </div>
 

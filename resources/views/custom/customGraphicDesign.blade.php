@@ -5,12 +5,12 @@
 $video_banner = asset('images/custom/customGraphicDesign/Design_Banner_20px_bleed_x2.mp4');
 
 // Content Images
-$img_placement_design = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-02.svg');
-$img_color_pattern = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-03.svg');
-$img_custom_design = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-04.svg');
-$img_color_match = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-05.svg');
-$img_replication = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-06.svg');
-$img_total_brand = asset('images/custom/customGraphicDesign/EncoreLacrosse_Graphic_Design_Page-07.svg');
+$img_placement_design = asset('images/custom/customGraphicDesign/encorelacrosse2.svg');
+$img_color_pattern = asset('images/custom/customGraphicDesign/encorelacrosse3.svg');
+$img_custom_design = asset('images/custom/customGraphicDesign/encoreLacrosse4.svg');
+$img_color_match = asset('images/custom/customGraphicDesign/encoreLacrosse5.svg');
+$img_replication = asset('images/custom/customGraphicDesign/encoreLacrosse6.svg');
+$img_total_brand = asset('images/custom/customGraphicDesign/encoreLacrosse7.svg');
 
 // Bottom Grid Images (CDN links from original replaced with asset syntax for consistency)
 $img_grid_design = asset('images/Design_copy.jpg');
@@ -392,7 +392,7 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
         </div>
     </section>
 
-    <section class="container-fluid p-0 mb-5">
+    {{-- <section class="container-fluid p-0 mb-5">
         <div class="row g-1">
             <div class="col-12 col-md-4 grid-tile">
                 <a href="#">
@@ -443,7 +443,7 @@ $img_grid_fabric = asset('images/Fabric_copy.jpg');
                 </a>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 </div>
 @endsection

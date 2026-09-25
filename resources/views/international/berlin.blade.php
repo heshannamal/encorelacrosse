@@ -5,7 +5,7 @@
 @php
 $heroBgImage = asset('images/international/berlin/backgroundImage.jpg');
 $image1 = asset('images/international/berlin/image1.jpg');
-$image2 = asset('images/international/berlin/image2.jpg');
+$image2 = asset('images/international/berlin/image2.png');
 @endphp
 
 <section id="custom-team-apparel" class="container-fluid px-0">

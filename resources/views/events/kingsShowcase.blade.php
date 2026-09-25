@@ -9,9 +9,9 @@ $eventLogo = asset('images/event/kingsShowcase/backgroundImageLogo.png');
 $vegasRoomsLogo = asset('images/event/kingsShowcase/vegasLogo.png');
 
 // --- Hotels ---
-$suncoastImg = asset('images/event/kingsShowcase/image1.avif');
-$bestWesternImg = asset('images/event/kingsShowcase/image2.jpg');
-$rodewayInnImg = asset('images/event/kingsShowcase/image3.jpg');
+$suncoastImg = asset('images/event/kingsShowcase/image1.jpg');
+$bestWesternImg = asset('images/event/kingsShowcase/image2.avif');
+$rodewayInnImg = asset('images/event/kingsShowcase/image3.avif');
 $cirqueImg1 = asset('images/event/kingsShowcase/image4.jpg');
 $laQuintaImg = asset('images/event/kingsShowcase/image5.jpg');
 $hamptonTropicanaImg = asset('images/event/kingsShowcase/image6.jpg');
