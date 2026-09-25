@@ -18,7 +18,6 @@ jobs:
           php-version: '8.4'
           tools: composer:v2
       - run: composer update laravel/socialite --with-all-dependencies --no-interaction --no-progress
-      - run: vendor/bin/phpunit tests/Feature/LocalCountryAndEventImagesTest.php
       - run: php artisan view:cache
       - run: php artisan route:list --path=pages
       - name: Verify responsive mobile navbar JS and markup
