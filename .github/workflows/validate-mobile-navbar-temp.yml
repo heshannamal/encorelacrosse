@@ -1,0 +1,26 @@
+name: Validate Updated Mobile Navbar Temp
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/validate-mobile-navbar-temp.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: testing
+      APP_KEY: "base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      CACHE_STORE: array
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+      - run: composer update laravel/socialite --with-all-dependencies --no-interaction --no-progress
+      - run: vendor/bin/phpunit tests/Feature/LocalCountryAndEventImagesTest.php
+      - run: php artisan view:cache
+      - run: php artisan route:list --path=pages
+      - name: Verify responsive mobile navbar JS and markup
+        run: |
+          node -e "const fs=require('fs');const s=fs.readFileSync('resources/views/layouts/navbar.blade.php','utf8'); const scripts=[...s.matchAll(/<script>([\s\S]*?)<\/script>/g)]; if(!scripts.length)process.exit(2); scripts.forEach(x=>new Function(x[1])); for (const name of ['encoreMobileMenu','encoreMobileTeamwear','encoreMobileEvents','encoreMobileInternational','encoreMobileBackdrop']) if(!s.includes(name)) process.exit(3);"
